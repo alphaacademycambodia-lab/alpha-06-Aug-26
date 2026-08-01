@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>English Grammar Notes — Articles, Prepositions, Conditionals | Alpha Academy Cambodia</title>
+<meta name="description" content="Free English grammar notes with worked examples and a timed 20-question test for each chapter: articles, prepositions, conditionals, reported speech and the passive voice.">
+<link rel="canonical" href="https://www.alphaacademycambodia.com/english-grammar">
+<meta name="theme-color" content="#0b57d0">
+<meta property="og:type" content="website">
+<meta property="og:title" content="English Grammar Notes — Alpha Academy Cambodia">
+<meta property="og:description" content="Five chapters of grammar notes, worked examples and 100 practice questions with explanations.">
+<meta property="og:url" content="https://www.alphaacademycambodia.com/english-grammar.html">
+<meta property="og:image" content="https://www.alphaacademycambodia.com/assets/img/logo.png">
+
+<link rel="icon" href="assets/img/logo.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@700;800&family=Kantumruy+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/lesson.css">
+<link rel="stylesheet" href="assets/css/quiz.css">
+<script src="assets/js/boot.js"></script>
+
+<style>
+/* ------------------------------------------------------- grammar notes */
+.gr-wrap{max-width:1060px;margin-inline:auto;padding-inline:var(--gutter)}
+
+/* -------- chapter picker -------- */
+.gr-grid{display:grid;gap:1.1rem;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));margin-top:2rem}
+.gr-card{
+  display:flex;flex-direction:column;gap:.5rem;text-align:left;
+  appearance:none;cursor:pointer;font:inherit;color:inherit;
+  background:var(--surface);border:1px solid var(--ink-200);border-radius:var(--r-md);
+  padding:1.25rem;box-shadow:var(--shadow-xs);
+  transition:transform .18s var(--ease),box-shadow .18s var(--ease),border-color .18s var(--ease);
+}
+.gr-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);border-color:var(--brand-400)}
+.gr-card .num{
+  display:inline-grid;place-items:center;width:34px;height:34px;border-radius:10px;
+  background:var(--brand-50);color:var(--brand-600);font-weight:700;font-size:.95rem;
+}
+.gr-card h3{margin:.2rem 0 0;font-size:1.06rem}
+.gr-card .sub{
+  font-size:.78rem;color:var(--brand-600);line-height:1.5;align-self:flex-start;
+  font-family:ui-monospace,Menlo,Consolas,monospace;
+  background:var(--brand-50);border-radius:6px;padding:.2rem .45rem;
+}
+.gr-card .foot{
+  margin-top:auto;padding-top:.9rem;display:flex;justify-content:space-between;align-items:center;
+  gap:.6rem;font-size:.78rem;color:var(--ink-400);
+}
+.gr-card .best{color:var(--success-500);font-weight:600}
+
+/* The lesson panel itself — heading, rule blocks, examples and the action
+   row — is styled by assets/css/lesson.css, shared with the tense pages. */
+.hide{display:none !important}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main" data-i18n="common.skip">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <nav class="nav" aria-label="Main">
+      <a class="brand" href="index">
+        <img src="assets/img/logo.png" alt="Alpha Academy Cambodia logo" width="44" height="44">
+        <span class="brand-text"><span class="brand-name">Alpha Academy</span><span class="brand-tag">Cambodia</span></span>
+      </a>
+
+      <div class="nav-menu" id="nav-menu">
+        <ul class="nav-links">
+          <li><a href="index" data-i18n="nav.home">Home</a></li>
+          <li><a href="services" data-i18n="nav.services">Services</a></li>
+          <li><a href="about" data-i18n="nav.about">About</a></li>
+
+          <li class="has-sub">
+            <a href="learning" class="is-active" aria-haspopup="true">
+              <span data-i18n="nav.learning">Learning</span>
+              <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+            </a>
+            <ul class="sub">
+              <li class="sub-item">
+                <a href="learning#math">
+                  <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M12 14v6M9 17h6M5 15l6 6M11 15l-6 6M16 9V4"/><path d="M4 6l4-3 4 3"/></svg></i>
+                  <span><span data-i18n="nav.math">Mathematics</span><small data-i18n="nav.mathSub">Formulas &amp; revision sheets</small></span>
+                  <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+                </a>
+                <ul class="sub2">
+                  <li><a href="grade-12-math-formula"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5a2 2 0 0 1 2-2h13v18H6a2 2 0 0 0-2 2z"/><path d="M8 8h7M8 12h5"/></svg></i><span><span data-i18n="nav.g12">Grade 12 Formula</span><small data-i18n="nav.g12Sub">12 chapters &#183; 57 sections</small></span></a></li>
+                </ul>
+              </li>
+
+              <li class="sub-item">
+                <a href="learning#chemistry">
+                  <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v6.5L4.6 18A2 2 0 0 0 6.3 21h11.4a2 2 0 0 0 1.7-3L14 9.5V3"/><path d="M7.5 15h9"/></svg></i>
+                  <span><span data-i18n="nav.chem">Chemistry</span><small data-i18n="nav.chemSub">Periodic table &amp; reference</small></span>
+                  <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+                </a>
+                <ul class="sub2">
+                  <li><a href="periodic-table-of-elements"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></i><span><span data-i18n="nav.pt">Periodic Table</span><small data-i18n="nav.ptSub">118 elements &#183; reference tables</small></span></a></li>
+                </ul>
+              </li>
+
+              <li class="sub-item">
+                <a href="learning#language">
+                  <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3c-2.6 3-2.6 15 0 18"/></svg></i>
+                  <span><span data-i18n="nav.lang">Language Centre</span><small data-i18n="nav.langSub">English &#183; Khmer &#183; Chinese</small></span>
+                  <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+                </a>
+                <ul class="sub2">
+                  <li><a href="english-tenses"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5a2 2 0 0 1 2-2h13v18H6a2 2 0 0 0-2 2z"/><path d="M8 8h7M8 12h5"/></svg></i><span><span data-i18n="nav.tense">English Tenses</span><small data-i18n="nav.tenseSub">13 chapters &#183; 1,170 questions</small></span></a></li>
+                  <li><a href="english-grammar" aria-current="page"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16M4 12h10M4 19h7"/><circle cx="18.5" cy="17.5" r="3"/></svg></i><span><span data-i18n="nav.gram">Grammar Notes</span><small data-i18n="nav.gramSub">5 chapters &#183; 100 questions</small></span></a></li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+
+          <li><a href="contact" data-i18n="nav.contact">Contact</a></li>
+        </ul>
+        <div class="nav-cta">
+          <a class="btn btn--ghost" href="tel:+85593792767">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>
+            <span data-i18n="common.phone">093 792 767</span>
+          </a>
+          <a class="btn btn--primary" href="contact" data-i18n="common.free">Free Consultation</a>
+        </div>
+      </div>
+
+      <div class="nav-tools">
+        <div class="lang-switch" role="group" aria-label="Language" data-i18n-aria="common.language">
+          <button type="button" data-lang="en" aria-pressed="true">EN</button>
+          <button type="button" data-lang="km" aria-pressed="false">ខ្មែរ</button>
+        </div>
+        <button class="theme-btn" type="button" aria-label="Toggle dark mode" data-i18n-aria="common.toggleTheme" aria-pressed="false">
+          <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.4M12 19.6V22M4.2 4.2l1.7 1.7M18.1 18.1l1.7 1.7M2 12h2.4M19.6 12H22M4.2 19.8l1.7-1.7M18.1 5.9l1.7-1.7"/></svg>
+          <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        </button>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle menu" data-i18n-aria="common.toggleMenu">
+          <span></span>
+        </button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="page-hero learn-hero">
+  <div class="wrap">
+    <div class="page-hero-inner">
+      <nav class="crumbs" aria-label="Breadcrumb">
+        <a href="index" data-i18n="nav.home">Home</a> <span>/</span>
+        <a href="learning" data-i18n="learn.crumb">Learning</a> <span>/</span>
+        <a href="learning#language" data-i18n="nav.lang">Language Centre</a> <span>/</span>
+        <span data-i18n="gram.crumb">Grammar Notes</span>
+      </nav>
+      <h1 data-i18n="gram.h1">English Grammar Notes</h1>
+      <p data-i18n="gram.lede">Five chapters of clear rules, worked examples and a timed twenty-question test — articles, prepositions, conditionals, reported speech and the passive.</p>
+      <div class="chips">
+        <span class="chip" data-i18n="gram.chip1">Notes + examples</span>
+        <span class="chip" data-i18n="gram.chip2">100 questions</span>
+        <span class="chip" data-i18n="gram.chip3">Skip, go back, timed</span>
+        <span class="chip" data-i18n="gram.chip4">No sign-up</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<svg class="wave" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true">
+  <path fill="#ffffff" d="M0 34c180 30 360 42 540 26S900-8 1080 2s240 26 360 30v38H0z"/>
+</svg>
+
+<section class="section" style="padding-top:clamp(2rem,5vw,3.5rem)">
+  <div class="gr-wrap">
+
+    <!-- ================================================== CHAPTER PICKER -->
+    <div id="viewPick">
+      <div class="section-head">
+        <span class="eyebrow" data-i18n="gram.eyebrow">Grammar</span>
+        <h2 data-i18n="gram.h2">Choose a chapter</h2>
+        <p data-i18n="gram.p">Read the notes, work through the examples, then take the test. Each chapter is self-contained, so you can start with whichever one you find hardest.</p>
+      </div>
+      <div class="gr-grid" id="grGrid"></div>
+    </div>
+
+    <!-- ================================================ LESSON + QUIZ -->
+    <div id="viewChapter" class="hide">
+      <div class="ch-bar" id="chapBar"></div>
+      <div class="ls-panel" id="lesson"></div>
+      <div id="quizMount" class="hide"></div>
+    </div>
+
+  </div>
+</section>
+
+<section class="section" style="padding-top:0">
+  <div class="wrap">
+    <div class="cta-band">
+      <div>
+        <h2 data-i18n="gram.ctaH2">Rules make sense until you have to use them</h2>
+        <p data-i18n="gram.ctaP">Our English tutors turn these notes into speaking and writing practice — one to one, at home or online.</p>
+      </div>
+      <div class="btn-row">
+        <a class="btn btn--white btn--lg" href="contact" data-i18n="learn.ctaBtn">Book free consultation</a>
+        <a class="btn btn--onDark btn--lg" href="tel:+85593792767" data-i18n="common.callBtn">Call +855 93 792 767</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">
+          <img src="assets/img/logo.png" alt="" width="42" height="42">
+          <span class="brand-text"><span class="brand-name">Alpha Academy</span><span class="brand-tag">Cambodia</span></span>
+        </div>
+        <p data-i18n="foot.blurb">A leading education service provider in Cambodia — dedicated home and online tutoring committed to enhancing students' academic performance across subjects and languages.</p>
+        <div class="socials">
+          <a href="https://t.me/+85593792767" aria-label="Telegram" data-i18n-aria="common.telegram" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.9 4.3l-3 14.2c-.2 1-.8 1.3-1.7.8l-4.6-3.4-2.2 2.1c-.3.3-.5.5-1 .5l.3-4.7 8.6-7.8c.4-.3-.1-.5-.6-.2L6.1 12.6l-4.5-1.4c-1-.3-1-1 .2-1.4l17.6-6.8c.8-.3 1.5.2 1.2 1.3z"/></svg></a>
+          <a href="mailto:alphaacademycambodia@gmail.com" aria-label="Email us" data-i18n-aria="common.emailUs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 6 10-6"/></svg></a>
+          <a href="tel:+85593792767" aria-label="Call us" data-i18n-aria="common.callUs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg></a>
+        </div>
+      </div>
+      <div>
+        <h4 data-i18n="foot.explore">Explore</h4>
+        <ul class="footer-links">
+          <li><a href="index" data-i18n="nav.home">Home</a></li>
+          <li><a href="services" data-i18n="nav.services">Services</a></li>
+          <li><a href="about" data-i18n="foot.aboutUs">About us</a></li>
+          <li><a href="contact" data-i18n="nav.contact">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 data-i18n="foot.learning">Learning Hub</h4>
+        <ul class="footer-links">
+          <li><a href="grade-12-math-formula" data-i18n="nav.g12">Grade 12 Formula</a></li>
+          <li><a href="periodic-table-of-elements" data-i18n="nav.pt">Periodic Table</a></li>
+          <li><a href="english-tenses" data-i18n="nav.tense">English Tenses</a></li>
+          <li><a href="english-grammar" data-i18n="nav.gram">Grammar Notes</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 data-i18n="foot.touch">Get in touch</h4>
+        <ul class="footer-contact">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg><a href="tel:+85593792767">+855 93 792 767</a></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 6 10-6"/></svg><a href="mailto:alphaacademycambodia@gmail.com">alphaacademycambodia@gmail.com</a></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span data-i18n="foot.location">Phnom Penh, Cambodia</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span data-i18n="foot.hours">Mon–Sun · 8:00 – 20:00</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span data-year>2026</span> <span data-i18n="foot.rights">Alpha Academy Cambodia. All rights reserved.</span></span>
+      <span data-i18n="foot.tagline">Home &amp; online tutoring · Phnom Penh, Cambodia</span>
+    </div>
+  </div>
+</footer>
+
+<div class="float-actions">
+  <button class="fab fab--top" type="button" aria-label="Back to top" data-i18n-aria="common.backTop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>
+  <a class="fab fab--telegram" href="https://t.me/+85593792767" target="_blank" rel="noopener" aria-label="Chat on Telegram" data-i18n-aria="common.telegram"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.9 4.3l-3 14.2c-.2 1-.8 1.3-1.7.8l-4.6-3.4-2.2 2.1c-.3.3-.5.5-1 .5l.3-4.7 8.6-7.8c.4-.3-.1-.5-.6-.2L6.1 12.6l-4.5-1.4c-1-.3-1-1 .2-1.4l17.6-6.8c.8-.3 1.5.2 1.2 1.3z"/></svg></a>
+  <a class="fab" href="tel:+85593792767" aria-label="Call Alpha Academy Cambodia" data-i18n-aria="common.callUs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg></a>
+</div>
+
+<script src="assets/js/i18n.js"></script>
+<script src="assets/js/main.js"></script>
+<script src="assets/js/english-grammar-bank.js"></script>
+<script src="assets/js/lesson-view.js"></script>
+<script src="assets/js/quiz-engine.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  var BANK  = window.GRAMMAR_BANK || [];
+  var STORE = 'aa-grammar-scores';
+  var $ = function (id) { return document.getElementById(id); };
+
+  function esc(s) {
+    return String(s).replace(/[&<>"]/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+    });
+  }
+
+  function bestScores() {
+    try { return JSON.parse(localStorage.getItem(STORE) || '{}'); } catch (e) { return {}; }
+  }
+  function saveScore(key, pct) {
+    try {
+      var all = bestScores();
+      if (!(key in all) || pct > all[key]) { all[key] = pct; localStorage.setItem(STORE, JSON.stringify(all)); }
+    } catch (e) { /* private browsing — nothing is remembered, which is fine */ }
+  }
+
+  var ICON_BOOK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5a2 2 0 0 1 2-2h13v18H6a2 2 0 0 0-2 2z"/><path d="M8 8h7M8 12h5"/></svg>';
+  var ICON_TEST = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l2 2 4-4"/><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M8 2v4M16 2v4"/></svg>';
+
+  var idx = 0;      /* which chapter is open  */
+  var live = false; /* is a test in progress for that chapter */
+
+  function show(which) {
+    ['viewPick', 'viewChapter'].forEach(function (v) {
+      $(v).classList.toggle('hide', v !== which);
+    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  /* Inside a chapter the notes and the test swap places. */
+  function showPane(which) {
+    $('lesson').classList.toggle('hide', which !== 'lesson');
+    $('quizMount').classList.toggle('hide', which !== 'quiz');
+  }
+
+  /* ------------------------------------------------------- chapter bar */
+  function paintChapBar(tab) {
+    var c = BANK[idx];
+    $('chapBar').innerHTML =
+      '<div>' +
+        '<span class="eye">Chapter ' + c.id + ' of ' + BANK.length + '</span>' +
+        '<h2>' + esc(c.title) + '</h2>' +
+        '<span class="form">' + esc(c.sub) + '</span>' +
+      '</div>' +
+      '<div class="ch-tabs" role="tablist">' +
+        '<button type="button" role="tab" data-tab="lesson" aria-selected="' + (tab === 'lesson') + '">' +
+          ICON_BOOK + 'Lesson</button>' +
+        '<button type="button" role="tab" data-tab="quiz" aria-selected="' + (tab === 'quiz') + '">' +
+          ICON_TEST + 'Quiz <span class="lv">' + c.quiz.length + ' Qs</span></button>' +
+      '</div>';
+  }
+
+  $('chapBar').addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-tab]');
+    if (!b) { return; }
+    if (b.dataset.tab === 'lesson') { goLesson(); } else { goQuiz(); }
+  });
+
+  function goLesson() {
+    window.AAQuiz.pause();          // reading the notes should not cost time
+    showPane('lesson');
+    paintChapBar('lesson');
+    $('chapBar').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function goQuiz() {
+    if (live && window.AAQuiz.hasSession()) {
+      window.AAQuiz.resume();
+      showPane('quiz');
+      paintChapBar('quiz');
+      $('chapBar').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      startQuiz(idx);
+    }
+  }
+
+  function leaveChapter() {
+    window.AAQuiz.stop();
+    live = false;
+  }
+
+  /* ------------------------------------------------------------- picker */
+  function paintPicker() {
+    var scores = bestScores();
+    $('grGrid').innerHTML = BANK.map(function (c) {
+      var best = scores[c.key];
+      return '<button class="gr-card" type="button" data-go="' + c.key + '">' +
+               '<span class="num">' + c.id + '</span>' +
+               '<h3>' + esc(c.title) + '</h3>' +
+               '<span class="sub">' + esc(c.sub) + '</span>' +
+               '<span class="foot">' +
+                 '<span>' + c.blocks.length + ' rule sets &middot; ' + c.examples.length +
+                 ' examples &middot; ' + c.quiz.length + ' questions</span>' +
+                 (best === undefined ? '' : '<span class="best">Best ' + best + '%</span>') +
+               '</span>' +
+             '</button>';
+    }).join('');
+  }
+
+  /* ------------------------------------------------------------- lesson */
+  function openLesson(key) {
+    var i = -1;
+    for (var k = 0; k < BANK.length; k++) { if (BANK[k].key === key) { i = k; break; } }
+    if (i < 0) { return; }
+    idx = i;
+
+    var c = BANK[i], best = bestScores()[c.key];
+
+    $('lesson').innerHTML =
+      window.AALesson.html(c) +
+
+      '<div class="ls-cta">' +
+        '<h3>Ready to practise?</h3>' +
+        '<p>Put the rules to work on ' + c.quiz.length + ' multiple-choice questions. ' +
+          'You can skip, go back and see an explanation for every answer.</p>' +
+        '<button class="ls-start" type="button" data-act="quiz">Start the ' + c.quiz.length + '-question test &rarr;</button>' +
+        (best === undefined ? '' : '<span class="best">Your best so far: ' + best + '%</span>') +
+      '</div>' +
+
+      '<div class="ls-actions">' +
+        '<button class="ls-back" type="button" data-act="list">&larr; All chapters</button>' +
+        '<span class="spacer"></span>' +
+        '<button class="ls-move" type="button" data-act="prev"' + (i === 0 ? ' disabled' : '') + '>&larr; Previous</button>' +
+        '<button class="ls-move" type="button" data-act="next"' + (i === BANK.length - 1 ? ' disabled' : '') + '>Next &rarr;</button>' +
+      '</div>';
+
+    showPane('lesson');
+    paintChapBar('lesson');
+    show('viewChapter');
+  }
+
+  $('lesson').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-act]');
+    if (!b) { return; }
+    var act = b.dataset.act;
+    if (act === 'list') { leaveChapter(); paintPicker(); show('viewPick'); }
+    else if (act === 'prev') { leaveChapter(); openLesson(BANK[idx - 1].key); }
+    else if (act === 'next') { leaveChapter(); openLesson(BANK[idx + 1].key); }
+    else if (act === 'quiz') { goQuiz(); }
+  });
+
+  /* --------------------------------------------------------------- quiz */
+  function startQuiz(i) {
+    var c = BANK[i];
+    var qs = c.quiz.map(function (r) {
+      return { q: r[0], opts: [r[1], r[2], r[3], r[4]], ans: r[5], why: r[6] };
+    });
+
+    idx = i;
+    live = true;
+    showPane('quiz');
+    paintChapBar('quiz');
+    show('viewChapter');
+
+    window.AAQuiz.start({
+      mount: $('quizMount'),
+      questions: qs,
+      badge: 'Chapter ' + c.id,
+      title: c.title,
+      subtitle: 'Chapter ' + c.id + ': ' + c.title,
+      exitLabel: 'Back to the lesson',
+      onExit: function () { live = false; openLesson(c.key); },
+      onRetake: function () { startQuiz(i); },
+      onNextUnit: i < BANK.length - 1 ? function () { leaveChapter(); openLesson(BANK[i + 1].key); } : null,
+      nextLabel: 'Next chapter',
+      onFinish: function (r) { saveScore(c.key, r.pct); }
+    });
+  }
+
+  $('grGrid').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-go]');
+    if (b) { openLesson(b.dataset.go); }
+  });
+
+  paintPicker();
+
+  /* Deep link: english-grammar#conditionals opens that chapter directly. */
+  if (location.hash.length > 1) { openLesson(location.hash.slice(1)); }
+})();
+</script>
+</body>
+</html>

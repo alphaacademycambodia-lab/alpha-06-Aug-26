@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>English Tenses — 1,170 Practice Questions | Alpha Academy Cambodia</title>
+<meta name="description" content="Free English tense practice: 13 chapters covering all 12 tenses plus a mixed review, at Easy, Intermediate and Advanced level — 30 questions each, with an explanation for every answer.">
+<link rel="canonical" href="https://www.alphaacademycambodia.com/english-tenses">
+<meta name="theme-color" content="#0b57d0">
+<meta property="og:type" content="website">
+<meta property="og:title" content="English Tenses Practice — Alpha Academy Cambodia">
+<meta property="og:description" content="13 chapters x 3 levels x 30 questions = 1,170 free tense exercises with instant explanations.">
+<meta property="og:url" content="https://www.alphaacademycambodia.com/english-tenses.html">
+<meta property="og:image" content="https://www.alphaacademycambodia.com/assets/img/logo.png">
+
+<link rel="icon" href="assets/img/logo.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@700;800&family=Kantumruy+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/lesson.css">
+<link rel="stylesheet" href="assets/css/quiz.css">
+<script src="assets/js/boot.js"></script>
+
+<style>
+/* ------------------------------------------------- tense picker chrome
+   The quiz itself is drawn by quiz-engine.js and styled by quiz.css. What
+   is left here is the level switch, the chapter grid and the sidebar.   */
+.tense-wrap{max-width:var(--wrap);margin-inline:auto;padding-inline:var(--gutter)}
+
+/* -------- the three level cards, shown wherever a test is chosen ------- */
+.lv-grid{display:grid;gap:.8rem;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));text-align:left}
+.lv-card{
+  display:flex;flex-direction:column;gap:.35rem;
+  appearance:none;cursor:pointer;font:inherit;color:inherit;text-align:left;
+  background:var(--surface);border:1.5px solid var(--ink-200);border-radius:var(--r-md);
+  padding:1rem 1.1rem;transition:transform .16s var(--ease),box-shadow .16s var(--ease),border-color .16s var(--ease);
+}
+.lv-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);border-color:var(--brand-400)}
+.lv-card .nm{font-family:var(--font-display);font-size:1.05rem;font-weight:700;color:var(--brand-600)}
+.lv-card .ds{font-size:.83rem;line-height:1.6;color:var(--ink-500);flex:1}
+.lv-card .ft{
+  display:flex;align-items:center;justify-content:space-between;gap:.5rem;
+  margin-top:.55rem;padding-top:.55rem;border-top:1px dashed var(--ink-200);
+  font-size:.78rem;color:var(--ink-400);
+}
+.lv-card .ft b{color:var(--success-500)}
+.lv-card .go{font-weight:600;color:var(--brand-600)}
+
+.chap-grid{
+  display:grid;gap:1.1rem;margin-top:2.2rem;
+  grid-template-columns:repeat(auto-fill,minmax(265px,1fr));
+}
+.chap-card .scores{display:flex;flex-wrap:wrap;gap:.3rem}
+.chap-card .scores span{
+  font-size:.68rem;font-weight:700;letter-spacing:.03em;
+  padding:.15rem .45rem;border-radius:var(--r-pill);
+  background:color-mix(in srgb, var(--success-500) 14%, transparent);color:var(--success-500);
+}
+.chap-card{
+  display:flex;flex-direction:column;gap:.55rem;
+  background:var(--surface);border:1px solid var(--ink-200);
+  border-radius:var(--r-md);padding:1.25rem 1.25rem 1.15rem;
+  box-shadow:var(--shadow-xs);transition:transform .2s var(--ease),box-shadow .2s var(--ease),border-color .2s var(--ease);
+}
+.chap-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);border-color:var(--brand-300)}
+.chap-card .num{
+  display:inline-grid;place-items:center;width:34px;height:34px;border-radius:10px;
+  background:var(--brand-50);color:var(--brand-600);font-weight:700;font-size:.95rem;
+}
+.chap-card h3{margin:.15rem 0 0;font-size:1.02rem;line-height:1.35}
+.chap-card .form{
+  color:var(--brand-600);font-size:.78rem;line-height:1.5;
+  font-family:ui-monospace,Menlo,Consolas,monospace;
+  background:var(--brand-50);border-radius:6px;padding:.2rem .45rem;align-self:flex-start;
+}
+.chap-card .foot{display:flex;align-items:center;justify-content:space-between;gap:.6rem;margin-top:auto;padding-top:.9rem}
+.chap-card .score{font-size:.78rem;font-weight:600;color:var(--success-500)}
+.chap-card .go{
+  appearance:none;border:0;cursor:pointer;font:inherit;font-weight:600;font-size:.87rem;
+  padding:.6rem 1.05rem;border-radius:var(--r-pill);min-height:42px;
+  background:var(--grad-brand);color:#fff;box-shadow:var(--shadow-xs);
+}
+.chap-card .go:hover{filter:brightness(1.05)}
+
+.quiz-grid{display:grid;gap:1.4rem;grid-template-columns:1fr;align-items:start}
+@media (min-width:1000px){.quiz-grid{grid-template-columns:265px 1fr}}
+
+.toc{background:var(--surface);border:1px solid var(--ink-200);border-radius:var(--r-md);padding:1rem;box-shadow:var(--shadow-xs)}
+@media (min-width:1000px){.toc{position:sticky;top:96px}}
+.toc h4{
+  margin:0 0 .6rem;font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;
+  color:var(--ink-400);display:flex;justify-content:space-between;align-items:center;
+}
+.toc h4 span{color:var(--brand-600)}
+.toc-list{display:flex;flex-direction:column;gap:2px;max-height:58vh;overflow-y:auto}
+.toc-list button{
+  appearance:none;border:0;cursor:pointer;font:inherit;text-align:left;
+  padding:.55rem .7rem;border-radius:9px;font-size:.86rem;color:var(--ink-700);
+  background:transparent;border-left:3px solid transparent;transition:background .15s;
+}
+.toc-list button:hover{background:var(--ink-50)}
+.toc-list button[aria-current="true"]{background:var(--brand-50);color:var(--brand-600);font-weight:600;border-left-color:var(--brand-600)}
+.toc-toggle{
+  display:flex;width:100%;align-items:center;justify-content:space-between;gap:.5rem;
+  appearance:none;cursor:pointer;font:inherit;font-weight:600;font-size:.9rem;min-height:46px;
+  padding:.6rem .9rem;border-radius:var(--r-sm);margin-bottom:.8rem;
+  background:var(--surface);border:1px solid var(--ink-200);color:var(--brand-600);
+}
+@media (min-width:1000px){.toc-toggle{display:none}}
+.hide{display:none !important}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main" data-i18n="common.skip">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <nav class="nav" aria-label="Main">
+      <a class="brand" href="index">
+        <img src="assets/img/logo.png" alt="Alpha Academy Cambodia logo" width="44" height="44">
+        <span class="brand-text"><span class="brand-name">Alpha Academy</span><span class="brand-tag">Cambodia</span></span>
+      </a>
+
+      <div class="nav-menu" id="nav-menu">
+        <ul class="nav-links">
+          <li><a href="index" data-i18n="nav.home">Home</a></li>
+          <li><a href="services" data-i18n="nav.services">Services</a></li>
+          <li><a href="about" data-i18n="nav.about">About</a></li>
+
+          <li class="has-sub">
+            <a href="learning" class="is-active" aria-haspopup="true">
+              <span data-i18n="nav.learning">Learning</span>
+              <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+            </a>
+            <ul class="sub">
+              <li class="sub-item">
+                <a href="learning#math">
+                  <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M12 14v6M9 17h6M5 15l6 6M11 15l-6 6M16 9V4"/><path d="M4 6l4-3 4 3"/></svg></i>
+                  <span><span data-i18n="nav.math">Mathematics</span><small data-i18n="nav.mathSub">Formulas &amp; revision sheets</small></span>
+                  <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+                </a>
+                <ul class="sub2">
+                  <li><a href="grade-12-math-formula"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5a2 2 0 0 1 2-2h13v18H6a2 2 0 0 0-2 2z"/><path d="M8 8h7M8 12h5"/></svg></i><span><span data-i18n="nav.g12">Grade 12 Formula</span><small data-i18n="nav.g12Sub">12 chapters &#183; 57 sections</small></span></a></li>
+                </ul>
+              </li>
+
+              <li class="sub-item">
+                <a href="learning#chemistry">
+                  <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v6.5L4.6 18A2 2 0 0 0 6.3 21h11.4a2 2 0 0 0 1.7-3L14 9.5V3"/><path d="M7.5 15h9"/></svg></i>
+                  <span><span data-i18n="nav.chem">Chemistry</span><small data-i18n="nav.chemSub">Periodic table &amp; reference</small></span>
+                  <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+                </a>
+                <ul class="sub2">
+                  <li><a href="periodic-table-of-elements"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></i><span><span data-i18n="nav.pt">Periodic Table</span><small data-i18n="nav.ptSub">118 elements &#183; reference tables</small></span></a></li>
+                </ul>
+              </li>
+
+              <li class="sub-item">
+                <a href="learning#language">
+                  <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3c-2.6 3-2.6 15 0 18"/></svg></i>
+                  <span><span data-i18n="nav.lang">Language Centre</span><small data-i18n="nav.langSub">English &#183; Khmer &#183; Chinese</small></span>
+                  <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+                </a>
+                <ul class="sub2">
+                  <li><a href="english-tenses" aria-current="page"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5a2 2 0 0 1 2-2h13v18H6a2 2 0 0 0-2 2z"/><path d="M8 8h7M8 12h5"/></svg></i><span><span data-i18n="nav.tense">English Tenses</span><small data-i18n="nav.tenseSub">13 chapters &#183; 1,170 questions</small></span></a></li>
+                  <li><a href="english-grammar"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16M4 12h10M4 19h7"/><circle cx="18.5" cy="17.5" r="3"/></svg></i><span><span data-i18n="nav.gram">Grammar Notes</span><small data-i18n="nav.gramSub">5 chapters &#183; 100 questions</small></span></a></li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+
+          <li><a href="contact" data-i18n="nav.contact">Contact</a></li>
+        </ul>
+        <div class="nav-cta">
+          <a class="btn btn--ghost" href="tel:+85593792767">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>
+            <span data-i18n="common.phone">093 792 767</span>
+          </a>
+          <a class="btn btn--primary" href="contact" data-i18n="common.free">Free Consultation</a>
+        </div>
+      </div>
+
+      <div class="nav-tools">
+        <div class="lang-switch" role="group" aria-label="Language" data-i18n-aria="common.language">
+          <button type="button" data-lang="en" aria-pressed="true">EN</button>
+          <button type="button" data-lang="km" aria-pressed="false">ខ្មែរ</button>
+        </div>
+        <button class="theme-btn" type="button" aria-label="Toggle dark mode" data-i18n-aria="common.toggleTheme" aria-pressed="false">
+          <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.4M12 19.6V22M4.2 4.2l1.7 1.7M18.1 18.1l1.7 1.7M2 12h2.4M19.6 12H22M4.2 19.8l1.7-1.7M18.1 5.9l1.7-1.7"/></svg>
+          <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        </button>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle menu" data-i18n-aria="common.toggleMenu">
+          <span></span>
+        </button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="page-hero learn-hero">
+  <div class="wrap">
+    <div class="page-hero-inner">
+      <nav class="crumbs" aria-label="Breadcrumb">
+        <a href="index" data-i18n="nav.home">Home</a> <span>/</span>
+        <a href="learning" data-i18n="learn.crumb">Learning</a> <span>/</span>
+        <a href="learning#language" data-i18n="nav.lang">Language Centre</a> <span>/</span>
+        <span data-i18n="tns.crumb">English Tenses</span>
+      </nav>
+      <h1 data-i18n="tns.h1">English Tenses</h1>
+      <p data-i18n="tns.lede">All twelve tenses plus a mixed review — thirteen chapters, three levels each, thirty questions per level. Every answer comes with a short grammar explanation.</p>
+      <div class="chips">
+        <span class="chip" data-i18n="tns.chip1">1,170 questions</span>
+        <span class="chip" data-i18n="tns.chip2">Instant explanations</span>
+        <span class="chip" data-i18n="tns.chip5">Skip, go back, timed</span>
+        <span class="chip" data-i18n="tns.chip3">No sign-up</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<svg class="wave" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true">
+  <path fill="#ffffff" d="M0 34c180 30 360 42 540 26S900-8 1080 2s240 26 360 30v38H0z"/>
+</svg>
+
+<section class="section" style="padding-top:clamp(2rem,5vw,3.5rem)">
+  <div class="tense-wrap">
+
+    <!-- ================================================== CHAPTER PICKER -->
+    <div id="viewPick">
+      <div class="section-head">
+        <span class="eyebrow" data-i18n="tns.eyebrow">Practice</span>
+        <h2 data-i18n="tns.h2">Choose a chapter</h2>
+        <p data-i18n="tns.p">Every chapter opens with the rules and worked examples. When you are ready to practise, you choose the level — Easy, Intermediate or Advanced — and each one has its own set of thirty questions.</p>
+      </div>
+
+      <div class="chap-grid" id="chapGrid"></div>
+    </div>
+
+    <!-- =============================================== LESSON + QUIZ -->
+    <div id="viewStudy" class="hide">
+      <button class="toc-toggle" type="button" id="tocToggle" aria-expanded="false" aria-controls="tocPanel">
+        <span data-i18n="tns.toc">Chapters</span>
+        <span aria-hidden="true" id="tocArrow">▾</span>
+      </button>
+
+      <div class="quiz-grid">
+        <aside class="toc" id="tocPanel">
+          <h4><span data-i18n="tns.toc">Chapters</span><span id="tocLevel"></span></h4>
+          <nav class="toc-list" id="tocList"></nav>
+        </aside>
+        <div>
+          <div class="ch-bar" id="chapBar"></div>
+          <div class="ls-panel" id="lessonPanel"></div>
+          <div id="quizMount" class="hide"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="section" style="padding-top:0">
+  <div class="wrap">
+    <div class="cta-band">
+      <div>
+        <h2 data-i18n="tns.ctaH2">Still not sure which tense to use?</h2>
+        <p data-i18n="tns.ctaP">Our English tutors work through the tricky cases with you — one to one, at home or online.</p>
+      </div>
+      <div class="btn-row">
+        <a class="btn btn--white btn--lg" href="contact" data-i18n="learn.ctaBtn">Book free consultation</a>
+        <a class="btn btn--onDark btn--lg" href="tel:+85593792767" data-i18n="common.callBtn">Call +855 93 792 767</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">
+          <img src="assets/img/logo.png" alt="" width="42" height="42">
+          <span class="brand-text"><span class="brand-name">Alpha Academy</span><span class="brand-tag">Cambodia</span></span>
+        </div>
+        <p data-i18n="foot.blurb">A leading education service provider in Cambodia — dedicated home and online tutoring committed to enhancing students' academic performance across subjects and languages.</p>
+        <div class="socials">
+          <a href="https://t.me/+85593792767" aria-label="Telegram" data-i18n-aria="common.telegram" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.9 4.3l-3 14.2c-.2 1-.8 1.3-1.7.8l-4.6-3.4-2.2 2.1c-.3.3-.5.5-1 .5l.3-4.7 8.6-7.8c.4-.3-.1-.5-.6-.2L6.1 12.6l-4.5-1.4c-1-.3-1-1 .2-1.4l17.6-6.8c.8-.3 1.5.2 1.2 1.3z"/></svg></a>
+          <a href="mailto:alphaacademycambodia@gmail.com" aria-label="Email us" data-i18n-aria="common.emailUs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 6 10-6"/></svg></a>
+          <a href="tel:+85593792767" aria-label="Call us" data-i18n-aria="common.callUs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg></a>
+        </div>
+      </div>
+      <div>
+        <h4 data-i18n="foot.explore">Explore</h4>
+        <ul class="footer-links">
+          <li><a href="index" data-i18n="nav.home">Home</a></li>
+          <li><a href="services" data-i18n="nav.services">Services</a></li>
+          <li><a href="about" data-i18n="foot.aboutUs">About us</a></li>
+          <li><a href="contact" data-i18n="nav.contact">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 data-i18n="foot.learning">Learning Hub</h4>
+        <ul class="footer-links">
+          <li><a href="grade-12-math-formula" data-i18n="nav.g12">Grade 12 Formula</a></li>
+          <li><a href="periodic-table-of-elements" data-i18n="nav.pt">Periodic Table</a></li>
+          <li><a href="english-tenses" data-i18n="nav.tense">English Tenses</a></li>
+          <li><a href="english-grammar" data-i18n="nav.gram">Grammar Notes</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 data-i18n="foot.touch">Get in touch</h4>
+        <ul class="footer-contact">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg><a href="tel:+85593792767">+855 93 792 767</a></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 6 10-6"/></svg><a href="mailto:alphaacademycambodia@gmail.com">alphaacademycambodia@gmail.com</a></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span data-i18n="foot.location">Phnom Penh, Cambodia</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span data-i18n="foot.hours">Mon–Sun · 8:00 – 20:00</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span data-year>2026</span> <span data-i18n="foot.rights">Alpha Academy Cambodia. All rights reserved.</span></span>
+      <span data-i18n="foot.tagline">Home &amp; online tutoring · Phnom Penh, Cambodia</span>
+    </div>
+  </div>
+</footer>
+
+<div class="float-actions">
+  <button class="fab fab--top" type="button" aria-label="Back to top" data-i18n-aria="common.backTop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>
+  <a class="fab fab--telegram" href="https://t.me/+85593792767" target="_blank" rel="noopener" aria-label="Chat on Telegram" data-i18n-aria="common.telegram"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.9 4.3l-3 14.2c-.2 1-.8 1.3-1.7.8l-4.6-3.4-2.2 2.1c-.3.3-.5.5-1 .5l.3-4.7 8.6-7.8c.4-.3-.1-.5-.6-.2L6.1 12.6l-4.5-1.4c-1-.3-1-1 .2-1.4l17.6-6.8c.8-.3 1.5.2 1.2 1.3z"/></svg></a>
+  <a class="fab" href="tel:+85593792767" aria-label="Call Alpha Academy Cambodia" data-i18n-aria="common.callUs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg></a>
+</div>
+
+<script src="assets/js/i18n.js"></script>
+<script src="assets/js/main.js"></script>
+<script src="assets/js/english-tense-bank.js"></script>
+<script src="assets/js/english-tense-lessons.js"></script>
+<script src="assets/js/lesson-view.js"></script>
+<script src="assets/js/quiz-engine.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  var CHAPTERS = [
+    { id: 1,  t: 'Present Simple',             f: 'base verb / verb + -s' },
+    { id: 2,  t: 'Present Continuous',         f: 'am / is / are + verb-ing' },
+    { id: 3,  t: 'Present Perfect',            f: 'have / has + past participle' },
+    { id: 4,  t: 'Present Perfect Continuous', f: 'have / has been + verb-ing' },
+    { id: 5,  t: 'Past Simple',                f: 'past form (V2) / did + base' },
+    { id: 6,  t: 'Past Continuous',            f: 'was / were + verb-ing' },
+    { id: 7,  t: 'Past Perfect',               f: 'had + past participle' },
+    { id: 8,  t: 'Past Perfect Continuous',    f: 'had been + verb-ing' },
+    { id: 9,  t: 'Future Simple',              f: 'will + base verb' },
+    { id: 10, t: 'Future Continuous',          f: 'will be + verb-ing' },
+    { id: 11, t: 'Future Perfect',             f: 'will have + past participle' },
+    { id: 12, t: 'Future Perfect Continuous',  f: 'will have been + verb-ing' },
+    { id: 13, t: 'Mixed Tenses Review',        f: 'all twelve tenses combined' }
+  ];
+
+  var ICON_BOOK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5a2 2 0 0 1 2-2h13v18H6a2 2 0 0 0-2 2z"/><path d="M8 8h7M8 12h5"/></svg>';
+  var ICON_TEST = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l2 2 4-4"/><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M8 2v4M16 2v4"/></svg>';
+
+  var LEVELS = {
+    E: { name: 'Easy',         note: 'Recognising the form: clear signal words, one rule per question.' },
+    I: { name: 'Intermediate', note: 'Agreement traps, negatives and questions, and contrast with a neighbouring tense.' },
+    A: { name: 'Advanced',     note: 'Inversion, the subjunctive, state verbs, time clauses and formal register.' }
+  };
+
+  var STORE   = 'aa-tense-scores';
+  var bank    = window.TENSE_BANK || {};
+  var lessons = window.TENSE_LESSONS || {};
+
+  /* The lesson is identical at every level, so no level is chosen until the
+     student actually asks for a test. `level` stays null until then. */
+  var level = null, chapId = null;
+
+  var $ = function (id) { return document.getElementById(id); };
+
+  function bestScores() {
+    try { return JSON.parse(localStorage.getItem(STORE) || '{}'); } catch (e) { return {}; }
+  }
+  function saveScore(key, pct) {
+    try {
+      var all = bestScores();
+      if (!(key in all) || pct > all[key]) { all[key] = pct; localStorage.setItem(STORE, JSON.stringify(all)); }
+    } catch (e) { /* private browsing — scores simply are not remembered */ }
+  }
+
+  /* Rows are stored compactly: [prompt, a, b, c, d, answerIndex, why] */
+  function rows(id, lv) {
+    return ((bank[id] && bank[id][lv]) || []).map(function (r) {
+      return { q: r[0], opts: [r[1], r[2], r[3], r[4]], ans: r[5], why: r[6] };
+    });
+  }
+
+  function esc(s) {
+    return String(s).replace(/[&<>"]/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+    });
+  }
+
+  function show(which) {
+    ['viewPick', 'viewStudy'].forEach(function (v) {
+      $(v).classList.toggle('hide', v !== which);
+    });
+  }
+
+  /* Inside the study view the notes and the test swap places. */
+  function showPane(which) {
+    $('lessonPanel').classList.toggle('hide', which !== 'lesson');
+    $('quizMount').classList.toggle('hide', which !== 'quiz');
+  }
+
+  function paintPicker() {
+    var scores = bestScores();
+
+    $('chapGrid').innerHTML = CHAPTERS.map(function (c) {
+      /* Show whatever levels have been attempted, rather than making the
+         student pick one before they have even read the chapter. */
+      var done = ['E', 'I', 'A'].filter(function (lv) { return scores[c.id + lv] !== undefined; });
+      var foot = done.length
+        ? '<span class="scores">' + done.map(function (lv) {
+            return '<span>' + LEVELS[lv].name.charAt(0) + ' ' + scores[c.id + lv] + '%</span>';
+          }).join('') + '</span>'
+        : '<span class="score" style="color:var(--ink-400)">notes &middot; 3 levels &middot; 30 Qs each</span>';
+
+      return '<article class="chap-card">' +
+               '<span class="num">' + c.id + '</span>' +
+               '<h3>' + esc(c.t) + '</h3>' +
+               '<span class="form">' + esc(c.f) + '</span>' +
+               '<div class="foot">' + foot +
+                 '<button class="go" type="button" data-chap="' + c.id + '">Open</button>' +
+               '</div>' +
+             '</article>';
+    }).join('');
+  }
+
+  /* The three level cards — shown at the foot of the lesson and again on
+     the quiz tab if no test has been chosen yet. */
+  function levelChoiceHtml() {
+    var scores = bestScores();
+    return '<div class="lv-grid">' + ['E', 'I', 'A'].map(function (lv) {
+      var best = scores[chapId + lv];
+      return '<button class="lv-card" type="button" data-lv="' + lv + '">' +
+               '<span class="nm">' + LEVELS[lv].name + '</span>' +
+               '<span class="ds">' + LEVELS[lv].note + '</span>' +
+               '<span class="ft">' +
+                 '<span>' + (best === undefined ? '30 questions' : '<b>Best ' + best + '%</b>') + '</span>' +
+                 '<span class="go">Start &rarr;</span>' +
+               '</span>' +
+             '</button>';
+    }).join('') + '</div>';
+  }
+
+  function paintToc() {
+    $('tocLevel').textContent = '';
+    $('tocList').innerHTML = CHAPTERS.map(function (c) {
+      return '<button type="button" data-chap="' + c.id + '"' +
+             (c.id === chapId ? ' aria-current="true"' : '') + '>' +
+             c.id + '. ' + esc(c.t) + '</button>';
+    }).join('');
+  }
+
+  /* -------------------------------------------------------- chapter bar
+     Two tabs — the lesson and the test — with the chapter identity beside
+     them. `live` records which chapter and level the running quiz belongs
+     to, so switching tabs never throws away a test in progress.          */
+  var live = null;
+
+  function paintChapBar(tab) {
+    var c = CHAPTERS[chapId - 1];
+    $('chapBar').innerHTML =
+      '<div>' +
+        '<span class="eye">Chapter ' + chapId + ' of ' + CHAPTERS.length + '</span>' +
+        '<h2>' + esc(c.t) + '</h2>' +
+        '<span class="form">' + esc(c.f) + '</span>' +
+      '</div>' +
+      '<div class="ch-tabs" role="tablist">' +
+        '<button type="button" role="tab" data-tab="lesson" aria-selected="' + (tab === 'lesson') + '">' +
+          ICON_BOOK + 'Lesson</button>' +
+        '<button type="button" role="tab" data-tab="quiz" aria-selected="' + (tab === 'quiz') + '">' +
+          ICON_TEST + 'Quiz' +
+          (live && live.id === chapId ? ' <span class="lv">' + LEVELS[live.level].name + '</span>' : '') +
+        '</button>' +
+      '</div>';
+  }
+
+  $('chapBar').addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-tab]');
+    if (!b) { return; }
+    if (b.dataset.tab === 'lesson') { goLesson(); } else { goQuiz(); }
+  });
+
+  function goLesson() {
+    window.AAQuiz.pause();          // reading the notes should not cost time
+    showPane('lesson');
+    paintChapBar('lesson');
+    $('chapBar').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function goQuiz() {
+    /* Resume the test already in progress for this chapter; otherwise ask
+       which level to sit, because that is the moment the choice matters. */
+    if (live && live.id === chapId && window.AAQuiz.hasSession()) {
+      window.AAQuiz.resume();
+    } else {
+      window.AAQuiz.stop();
+      live = null;
+      $('quizMount').innerHTML =
+        '<div class="ls-panel ls-cta" style="margin-top:0">' +
+          '<h3>Choose your level</h3>' +
+          '<p>The lesson is the same at every level — only the questions change. ' +
+            'Each level has its own set of thirty questions for this chapter.</p>' +
+          levelChoiceHtml() +
+        '</div>';
+    }
+    showPane('quiz');
+    paintChapBar('quiz');
+    $('chapBar').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  $('quizMount').addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-lv]');
+    if (b) { level = b.dataset.lv; startQuiz(chapId); }
+  });
+
+  /* ------------------------------------------------------------- lesson */
+  function openLesson(id) {
+    var c = CHAPTERS[id - 1], lesson = lessons[id];
+    if (!c || !lesson) { return; }
+    chapId = id;
+
+    $('lessonPanel').innerHTML =
+      window.AALesson.html(lesson) +
+
+      '<div class="ls-cta">' +
+        '<h3>Ready to practise?</h3>' +
+        '<p>Choose the level that suits you. The lesson above applies to all three — only the questions change, and each level has its own thirty for this chapter.</p>' +
+        levelChoiceHtml() +
+      '</div>' +
+
+      '<div class="ls-actions">' +
+        '<button class="ls-back" type="button" data-act="list">&larr; All chapters</button>' +
+        '<span class="spacer"></span>' +
+        '<button class="ls-move" type="button" data-act="prev"' + (id === 1 ? ' disabled' : '') + '>&larr; Previous</button>' +
+        '<button class="ls-move" type="button" data-act="next"' + (id === CHAPTERS.length ? ' disabled' : '') + '>Next &rarr;</button>' +
+      '</div>';
+
+    paintToc();
+    showPane('lesson');
+    paintChapBar('lesson');
+    show('viewStudy');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  $('lessonPanel').addEventListener('click', function (e) {
+    /* Picking a level here is the same act as starting the test. */
+    var lv = e.target.closest('button[data-lv]');
+    if (lv) { leaveChapter(); level = lv.dataset.lv; startQuiz(chapId); return; }
+
+    var b = e.target.closest('[data-act]');
+    if (!b) { return; }
+    var act = b.dataset.act;
+    if (act === 'list') { backToPicker(); }
+    else if (act === 'prev') { leaveChapter(); openLesson(chapId - 1); }
+    else if (act === 'next') { leaveChapter(); openLesson(chapId + 1); }
+  });
+
+  /* --------------------------------------------------------------- quiz */
+  function startQuiz(id) {
+    var qs = rows(id, level);
+    if (!qs.length) { return; }
+    chapId = id;
+    live = { id: id, level: level };
+
+    paintToc();
+    showPane('quiz');
+    paintChapBar('quiz');
+    show('viewStudy');
+
+    window.AAQuiz.start({
+      mount: $('quizMount'),
+      questions: qs,
+      badge: LEVELS[level].name,
+      title: 'Chapter ' + id + ': ' + CHAPTERS[id - 1].t,
+      subtitle: 'Chapter ' + id + ': ' + CHAPTERS[id - 1].t + ' — ' + LEVELS[level].name + ' level',
+      exitLabel: 'Back to the lesson',
+      onExit: function () { live = null; openLesson(id); },
+      onRetake: function () { startQuiz(id); },
+      onNextUnit: id < CHAPTERS.length ? function () { leaveChapter(); openLesson(id + 1); } : null,
+      nextLabel: 'Next chapter',
+      onFinish: function (r) { saveScore(id + level, r.pct); }
+    });
+  }
+
+  function leaveChapter() {
+    window.AAQuiz.stop();
+    live = null;
+  }
+
+  function backToPicker() {
+    leaveChapter();
+    paintPicker();
+    show('viewPick');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  $('chapGrid').addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-chap]');
+    if (b) { openLesson(+b.dataset.chap); }
+  });
+
+  $('tocList').addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-chap]');
+    if (b) { leaveChapter(); openLesson(+b.dataset.chap); closeToc(); }
+  });
+
+  /* The chapter list collapses on narrow screens. */
+  function closeToc() {
+    if (window.matchMedia('(min-width:1000px)').matches) { return; }
+    $('tocPanel').style.display = 'none';
+    $('tocToggle').setAttribute('aria-expanded', 'false');
+    $('tocArrow').textContent = '▾';
+  }
+  $('tocToggle').addEventListener('click', function () {
+    var open = $('tocToggle').getAttribute('aria-expanded') === 'true';
+    $('tocPanel').style.display = open ? 'none' : 'block';
+    $('tocToggle').setAttribute('aria-expanded', String(!open));
+    $('tocArrow').textContent = open ? '▾' : '▴';
+  });
+  function syncToc() {
+    if (window.matchMedia('(min-width:1000px)').matches) { $('tocPanel').style.display = ''; }
+    else if ($('tocToggle').getAttribute('aria-expanded') !== 'true') { $('tocPanel').style.display = 'none'; }
+  }
+  window.addEventListener('resize', syncToc);
+
+  paintPicker();
+  syncToc();
+})();
+</script>
+</body>
+</html>

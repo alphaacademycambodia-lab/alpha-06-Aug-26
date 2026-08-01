@@ -1,0 +1,134 @@
+/* Alpha Academy Cambodia — shared lesson layout
+   ---------------------------------------------------------------------------
+   The notes-and-examples panel used by english-grammar.html and by every
+   chapter of english-tenses.html. The markup is produced by
+   assets/js/lesson-view.js, so class names must stay in step with it.      */
+
+.ls-panel{
+  background:var(--surface);border:1px solid var(--ink-200);border-radius:var(--r-lg);
+  padding:clamp(1.2rem,3vw,2.2rem);box-shadow:var(--shadow-sm);
+}
+
+/* --------------------------------------------------------- chapter bar
+   Sits above the panel and carries the chapter identity plus the two tabs
+   the student switches between: the lesson and the test.                 */
+.ch-bar{
+  display:flex;flex-wrap:wrap;gap:1rem;align-items:flex-end;justify-content:space-between;
+  background:var(--surface);border:1px solid var(--ink-200);border-radius:var(--r-lg);
+  padding:1.1rem clamp(1.1rem,3vw,1.6rem);box-shadow:var(--shadow-xs);margin-bottom:1rem;
+}
+.ch-bar .eye{
+  font-size:.72rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--brand-600);
+}
+.ch-bar h2{margin:.25rem 0 0;font-size:clamp(1.25rem,3vw,1.7rem);line-height:1.2}
+.ch-bar .form{
+  display:inline-block;margin-top:.5rem;font-size:.78rem;
+  font-family:ui-monospace,Menlo,Consolas,monospace;
+  color:var(--brand-600);background:var(--brand-50);padding:.25rem .6rem;border-radius:var(--r-pill);
+}
+
+.ch-tabs{display:flex;gap:.25rem;background:var(--surface-2);border:1px solid var(--ink-200);
+  border-radius:var(--r-pill);padding:.3rem;flex:none}
+.ch-tabs button{
+  appearance:none;border:0;cursor:pointer;font:inherit;font-weight:600;font-size:.88rem;
+  display:inline-flex;align-items:center;gap:.45rem;
+  padding:.55rem 1.15rem;border-radius:var(--r-pill);min-height:44px;
+  background:transparent;color:var(--ink-500);transition:all .16s var(--ease);white-space:nowrap;
+}
+.ch-tabs button:hover{color:var(--brand-600)}
+.ch-tabs button[aria-selected="true"]{
+  background:var(--surface);color:var(--brand-600);box-shadow:var(--shadow-xs);
+}
+.ch-tabs button svg{width:16px;height:16px;flex:none}
+.ch-tabs .lv{
+  font-size:.7rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+  padding:.1rem .45rem;border-radius:var(--r-pill);background:var(--brand-50);color:var(--brand-600);
+}
+
+.ls-intro{font-size:1rem;line-height:1.8;color:var(--ink-700);margin:0 0 1.8rem}
+
+/* --------------------------------------------------------- rule blocks */
+.ls-block{margin-bottom:1.6rem}
+.ls-block > h3{
+  font-size:.95rem;margin:0 0 .7rem;padding-left:.7rem;
+  border-left:4px solid var(--brand-500);line-height:1.4;
+}
+.ls-block ul{margin:0;padding-left:1.25rem;display:flex;flex-direction:column;gap:.5rem}
+.ls-block li{font-size:.93rem;line-height:1.7;color:var(--ink-700)}
+.ls-block em{
+  color:var(--brand-600);font-style:normal;
+  background:var(--brand-50);padding:.05em .35em;border-radius:5px;
+}
+.ls-block code{
+  font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.86em;
+  background:var(--surface-2);border:1px solid var(--ink-200);padding:.05em .35em;border-radius:5px;
+}
+
+.ls-tbl{overflow-x:auto}
+.ls-tbl table{width:100%;border-collapse:collapse;font-size:.88rem;min-width:460px}
+.ls-tbl th,.ls-tbl td{border:1px solid var(--ink-200);padding:.55rem .7rem;text-align:left;vertical-align:top}
+.ls-tbl th{background:var(--brand-600);color:#fff;font-weight:600}
+.ls-tbl tbody tr:nth-child(even){background:var(--surface-2)}
+.ls-tbl em{color:var(--brand-600);font-style:normal}
+.ls-tbl code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.9em}
+
+/* ----------------------------------------------------------- examples */
+.ls-ex{margin-top:2rem;border-top:1px solid var(--ink-200);padding-top:1.5rem}
+.ls-ex > h3{font-size:1.05rem;margin:0 0 1rem}
+.ls-ex ol{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:.75rem}
+.ls-ex li{
+  background:var(--surface-2);border:1px solid var(--ink-200);border-left:4px solid var(--success-500);
+  border-radius:var(--r-sm);padding:.85rem 1rem;
+}
+.ls-ex .s{display:block;font-size:.98rem;line-height:1.7}
+.ls-ex .w{display:block;font-size:.84rem;color:var(--ink-500);margin-top:.35rem;line-height:1.6}
+.ls-ex b{color:var(--brand-600)}
+
+/* ------------------------------------------------------------ actions */
+.ls-actions{
+  display:flex;flex-wrap:wrap;gap:.7rem;align-items:center;
+  margin-top:2rem;border-top:1px solid var(--ink-200);padding-top:1.4rem;
+}
+.ls-actions .spacer{flex:1 1 auto}
+.ls-start{
+  appearance:none;border:0;cursor:pointer;font:inherit;font-weight:600;font-size:.95rem;
+  min-height:50px;padding:.7rem 1.7rem;border-radius:var(--r-pill);
+  background:var(--grad-brand);color:#fff;box-shadow:var(--shadow-xs);
+}
+.ls-start:hover{filter:brightness(1.05)}
+.ls-move{
+  appearance:none;cursor:pointer;font:inherit;font-weight:600;font-size:.86rem;
+  min-height:44px;padding:.55rem 1.1rem;border-radius:var(--r-pill);
+  background:var(--surface-2);border:1px solid var(--ink-200);color:var(--ink-700);
+}
+.ls-move:hover:not(:disabled){border-color:var(--brand-400);color:var(--brand-600)}
+.ls-move:disabled{opacity:.4;cursor:not-allowed}
+.ls-back{
+  appearance:none;border:0;background:none;cursor:pointer;font:inherit;font-weight:600;font-size:.88rem;
+  color:var(--ink-400);min-height:44px;padding:0 .3rem;
+}
+.ls-back:hover{color:var(--brand-600)}
+
+/* ------------------------------- end of the lesson: on to the test -- */
+.ls-cta{
+  margin-top:2.2rem;border-radius:var(--r-md);padding:1.3rem clamp(1.1rem,3vw,1.5rem);
+  background:linear-gradient(160deg, var(--brand-50) 0%, var(--surface-2) 100%);
+  border:1px solid var(--brand-100);text-align:center;
+}
+.ls-cta h3{margin:0 0 .3rem;font-size:1.12rem}
+.ls-cta > p{margin:0 auto 1.1rem;font-size:.9rem;color:var(--ink-500);max-width:56ch;line-height:1.6}
+.ls-switch{
+  display:inline-flex;gap:.25rem;background:var(--surface);border:1px solid var(--ink-200);
+  border-radius:var(--r-pill);padding:.3rem;margin-bottom:.8rem;flex-wrap:wrap;justify-content:center;
+}
+.ls-switch button{
+  appearance:none;border:0;cursor:pointer;font:inherit;font-weight:600;font-size:.86rem;
+  padding:.55rem 1.15rem;border-radius:var(--r-pill);min-height:44px;
+  background:transparent;color:var(--ink-500);transition:all .16s var(--ease);
+}
+.ls-switch button:hover{color:var(--brand-600)}
+.ls-switch button[aria-pressed="true"]{background:var(--grad-brand);color:#fff;box-shadow:var(--shadow-xs)}
+.ls-cta .lvnote{
+  font-size:.85rem;color:var(--ink-500);margin:0 auto 1.2rem;max-width:56ch;line-height:1.6;min-height:2.6em;
+}
+.ls-cta .best{display:block;font-size:.8rem;color:var(--success-500);font-weight:600;margin-top:.8rem}

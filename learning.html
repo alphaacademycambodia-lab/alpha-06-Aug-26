@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Learning Hub | Free Study Resources — Alpha Academy Cambodia</title>
+<meta name="description" content="Free revision resources from Alpha Academy Cambodia — Grade 12 mathematics formulas, the periodic table and chemistry reference, and 1,170 English tense exercises. Organised by subject.">
+<link rel="canonical" href="https://www.alphaacademycambodia.com/learning">
+<meta name="theme-color" content="#0b57d0">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Learning Hub — Alpha Academy Cambodia">
+<meta property="og:description" content="Free revision resources organised by subject: mathematics, physics, chemistry, biology and the language centre.">
+<meta property="og:url" content="https://www.alphaacademycambodia.com/learning.html">
+<meta property="og:image" content="https://www.alphaacademycambodia.com/assets/img/logo.png">
+
+<link rel="icon" href="assets/img/logo.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@700;800&family=Kantumruy+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<script src="assets/js/boot.js"></script>
+
+<style>
+/* ------------------------------------------------- subject arrangement */
+.subject-nav{
+  display:flex;flex-wrap:wrap;gap:.45rem;justify-content:center;margin:0 0 3rem;
+}
+.subject-nav a{
+  display:inline-flex;align-items:center;gap:.45rem;text-decoration:none;
+  font-size:.87rem;font-weight:600;color:var(--ink-700);
+  padding:.5rem .95rem;border-radius:var(--r-pill);
+  background:var(--surface);border:1px solid var(--ink-200);box-shadow:var(--shadow-xs);
+  transition:all .16s var(--ease);
+}
+.subject-nav a:hover{color:var(--sc,var(--brand-600));border-color:var(--sc,var(--brand-300));transform:translateY(-2px)}
+.subject-nav a i{width:9px;height:9px;border-radius:3px;background:var(--sc,var(--brand-500));flex:none}
+
+.subject{margin-bottom:3.4rem;scroll-margin-top:100px}
+.subject-head{
+  display:flex;align-items:center;gap:.95rem;flex-wrap:wrap;
+  padding-bottom:.9rem;margin-bottom:1.4rem;
+  border-bottom:2px solid color-mix(in srgb, var(--sc) 32%, transparent);
+}
+.subject-head .ico{
+  flex:none;display:grid;place-items:center;width:52px;height:52px;border-radius:15px;
+  background:color-mix(in srgb, var(--sc) 14%, transparent);color:var(--sc);
+}
+.subject-head .ico svg{width:27px;height:27px}
+.subject-head h2{margin:0;font-size:clamp(1.2rem,2.8vw,1.55rem);line-height:1.2}
+.subject-head .kh{display:block;font-size:.86rem;font-weight:500;color:var(--ink-500);margin-top:.15rem}
+.subject-head .count{
+  margin-left:auto;font-size:.75rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+  padding:.35rem .8rem;border-radius:var(--r-pill);
+  background:color-mix(in srgb, var(--sc) 13%, transparent);color:var(--sc);
+}
+.subject > p.blurb{margin:0 0 1.3rem;color:var(--ink-500);max-width:70ch;font-size:.95rem}
+
+.res-grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fill,minmax(285px,1fr))}
+.res{
+  display:flex;flex-direction:column;gap:.4rem;position:relative;
+  text-decoration:none;color:inherit;
+  background:var(--surface);border:1px solid var(--ink-200);border-radius:var(--r-md);
+  padding:1.15rem 1.2rem 1.05rem;box-shadow:var(--shadow-xs);
+  transition:transform .18s var(--ease),box-shadow .18s var(--ease),border-color .18s var(--ease);
+}
+a.res:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);border-color:var(--sc)}
+.res .tag{
+  align-self:flex-start;font-size:.66rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
+  padding:.24rem .6rem;border-radius:var(--r-pill);margin-bottom:.25rem;
+}
+.res .tag.open{background:color-mix(in srgb, var(--success-500) 15%, transparent);color:var(--success-500)}
+.res .tag.soon{background:var(--ink-100);color:var(--ink-500)}
+.res h3{margin:0;font-size:1.02rem;line-height:1.35}
+.res p{margin:0;font-size:.86rem;line-height:1.6;color:var(--ink-500)}
+.res .meta{
+  margin-top:auto;padding-top:.85rem;display:flex;align-items:center;justify-content:space-between;gap:.6rem;
+  font-size:.78rem;color:var(--ink-400);
+}
+.res .arrow{display:inline-flex;align-items:center;gap:.3rem;font-weight:600;color:var(--sc)}
+.res .arrow svg{width:15px;height:15px}
+.res--soon{opacity:.72;cursor:default}
+.res--soon:hover{transform:none;box-shadow:var(--shadow-xs);border-color:var(--ink-200)}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main" data-i18n="common.skip">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <nav class="nav" aria-label="Main">
+      <a class="brand" href="index">
+        <img src="assets/img/logo.png" alt="Alpha Academy Cambodia logo" width="44" height="44">
+        <span class="brand-text"><span class="brand-name">Alpha Academy</span><span class="brand-tag">Cambodia</span></span>
+      </a>
+
+      <div class="nav-menu" id="nav-menu">
+        <ul class="nav-links">
+          <li><a href="index" data-i18n="nav.home">Home</a></li>
+          <li><a href="services" data-i18n="nav.services">Services</a></li>
+          <li><a href="about" data-i18n="nav.about">About</a></li>
+
+          <li class="has-sub">
+            <a href="learning" class="is-active" aria-current="page" aria-haspopup="true">
+              <span data-i18n="nav.learning">Learning</span>
+              <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+            </a>
+            <ul class="sub">
+              <li class="sub-item">
+                <a href="learning#math">
+                  <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M12 14v6M9 17h6M5 15l6 6M11 15l-6 6M16 9V4"/><path d="M4 6l4-3 4 3"/></svg></i>
+                  <span><span data-i18n="nav.math">Mathematics</span><small data-i18n="nav.mathSub">Formulas &amp; revision sheets</small></span>
+                  <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+                </a>
+                <ul class="sub2">
+                  <li><a href="grade-12-math-formula"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5a2 2 0 0 1 2-2h13v18H6a2 2 0 0 0-2 2z"/><path d="M8 8h7M8 12h5"/></svg></i><span><span data-i18n="nav.g12">Grade 12 Formula</span><small data-i18n="nav.g12Sub">12 chapters &#183; 57 sections</small></span></a></li>
+                </ul>
+              </li>
+
+              <li class="sub-item">
+                <a href="learning#chemistry">
+                  <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v6.5L4.6 18A2 2 0 0 0 6.3 21h11.4a2 2 0 0 0 1.7-3L14 9.5V3"/><path d="M7.5 15h9"/></svg></i>
+                  <span><span data-i18n="nav.chem">Chemistry</span><small data-i18n="nav.chemSub">Periodic table &amp; reference</small></span>
+                  <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+                </a>
+                <ul class="sub2">
+                  <li><a href="periodic-table-of-elements"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></i><span><span data-i18n="nav.pt">Periodic Table</span><small data-i18n="nav.ptSub">118 elements &#183; reference tables</small></span></a></li>
+                </ul>
+              </li>
+
+              <li class="sub-item">
+                <a href="learning#language">
+                  <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3c-2.6 3-2.6 15 0 18"/></svg></i>
+                  <span><span data-i18n="nav.lang">Language Centre</span><small data-i18n="nav.langSub">English &#183; Khmer &#183; Chinese</small></span>
+                  <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+                </a>
+                <ul class="sub2">
+                  <li><a href="english-tenses"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5a2 2 0 0 1 2-2h13v18H6a2 2 0 0 0-2 2z"/><path d="M8 8h7M8 12h5"/></svg></i><span><span data-i18n="nav.tense">English Tenses</span><small data-i18n="nav.tenseSub">13 chapters &#183; 1,170 questions</small></span></a></li>
+                  <li><a href="english-grammar"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16M4 12h10M4 19h7"/><circle cx="18.5" cy="17.5" r="3"/></svg></i><span><span data-i18n="nav.gram">Grammar Notes</span><small data-i18n="nav.gramSub">5 chapters &#183; 100 questions</small></span></a></li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+
+          <li><a href="contact" data-i18n="nav.contact">Contact</a></li>
+        </ul>
+        <div class="nav-cta">
+          <a class="btn btn--ghost" href="tel:+85593792767">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>
+            <span data-i18n="common.phone">093 792 767</span>
+          </a>
+          <a class="btn btn--primary" href="contact" data-i18n="common.free">Free Consultation</a>
+        </div>
+      </div>
+
+      <div class="nav-tools">
+        <div class="lang-switch" role="group" aria-label="Language" data-i18n-aria="common.language">
+          <button type="button" data-lang="en" aria-pressed="true">EN</button>
+          <button type="button" data-lang="km" aria-pressed="false">ខ្មែរ</button>
+        </div>
+        <button class="theme-btn" type="button" aria-label="Toggle dark mode" data-i18n-aria="common.toggleTheme" aria-pressed="false">
+          <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.4M12 19.6V22M4.2 4.2l1.7 1.7M18.1 18.1l1.7 1.7M2 12h2.4M19.6 12H22M4.2 19.8l1.7-1.7M18.1 5.9l1.7-1.7"/></svg>
+          <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        </button>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle menu" data-i18n-aria="common.toggleMenu">
+          <span></span>
+        </button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ============================================================ PAGE HERO -->
+<section class="page-hero learn-hero">
+  <div class="wrap">
+    <div class="page-hero-inner">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="index" data-i18n="nav.home">Home</a> <span>/</span> <span data-i18n="learn.crumb">Learning</span></nav>
+      <h1 data-i18n="learn.h1">Learning Hub</h1>
+      <p data-i18n="learn.lede">Free revision material put together by our tutors and arranged subject by subject — mathematics, the sciences, and the language centre.</p>
+      <div class="chips">
+        <span class="chip" data-i18n="learn.chip1">Completely free</span>
+        <span class="chip" data-i18n="learn.chip2">Khmer &amp; English</span>
+        <span class="chip" data-i18n="learn.chip3">Phone friendly</span>
+        <span class="chip" data-i18n="learn.chip4">Printable</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<svg class="wave" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true">
+  <path fill="#ffffff" d="M0 34c180 30 360 42 540 26S900-8 1080 2s240 26 360 30v38H0z"/>
+</svg>
+
+<!-- ========================================================== RESOURCES -->
+<section class="section" aria-labelledby="res-h">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow" data-i18n="learn.eyebrow">Resources</span>
+      <h2 id="res-h" data-i18n="learn.h2">Pick a subject</h2>
+      <p data-i18n="learn.p">The same revision material we use in real lessons. Open it for free — no sign-up.</p>
+    </div>
+
+    <nav class="subject-nav reveal" aria-label="Subjects">
+      <a href="#math"      style="--sc:#4f7cff"><i></i><span data-i18n="learn.mathH">Mathematics</span></a>
+      <a href="#physics"   style="--sc:#8b5cf6"><i></i><span data-i18n="learn.phyH">Physics</span></a>
+      <a href="#chemistry" style="--sc:#12b886"><i></i><span data-i18n="learn.chemH">Chemistry</span></a>
+      <a href="#biology"   style="--sc:#e8590c"><i></i><span data-i18n="learn.bioH">Biology</span></a>
+      <a href="#language"  style="--sc:#f0761a"><i></i><span data-i18n="learn.langH">Language Centre</span></a>
+    </nav>
+
+    <!-- ---------------------------------------------------- MATHEMATICS -->
+    <section class="subject reveal" id="math" style="--sc:#4f7cff" aria-labelledby="math-h">
+      <div class="subject-head">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M12 14v6M9 17h6M5 15l6 6M11 15l-6 6M16 9V4"/><path d="M4 6l4-3 4 3"/></svg></span>
+        <div>
+          <h2 id="math-h" data-i18n="learn.mathH">Mathematics</h2>
+          <span class="kh">គណិតវិទ្យា</span>
+        </div>
+        <span class="count"><span data-i18n="learn.avail1">1 resource</span></span>
+      </div>
+      <p class="blurb" data-i18n="learn.mathP">Formula books and revision sheets written for the national examination — every rule in one place, in Khmer.</p>
+
+      <div class="res-grid">
+        <a class="res" href="grade-12-math-formula">
+          <span class="tag open" data-i18n="learn.open">Open</span>
+          <h3 data-i18n="learn.mathT1">Grade 12 Math Formulas</h3>
+          <p data-i18n="learn.mathT1p">Complex numbers, limits, derivatives, integrals, differential equations, conics, solid geometry and probability.</p>
+          <span class="meta">
+            <span data-i18n="learn.mathT1s">12 chapters · 57 sections · 300+ formulas</span>
+            <span class="arrow"><span data-i18n="learn.openIt">Open</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </span>
+        </a>
+
+        <div class="res res--soon">
+          <span class="tag soon" data-i18n="learn.soon">Soon</span>
+          <h3 data-i18n="learn.mathT2">Grade 9 Formulas</h3>
+          <p data-i18n="learn.mathT2p">Algebra, geometry and trigonometry for the lower-secondary examination.</p>
+          <span class="meta"><span data-i18n="learn.prep">In preparation</span></span>
+        </div>
+
+        <div class="res res--soon">
+          <span class="tag soon" data-i18n="learn.soon">Soon</span>
+          <h3 data-i18n="learn.mathT3">Past exam papers</h3>
+          <p data-i18n="learn.mathT3p">Worked solutions to recent national examination papers.</p>
+          <span class="meta"><span data-i18n="learn.prep">In preparation</span></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- -------------------------------------------------------- PHYSICS -->
+    <section class="subject reveal" id="physics" style="--sc:#8b5cf6" aria-labelledby="phy-h">
+      <div class="subject-head">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.2"/><ellipse cx="12" cy="12" rx="10" ry="4.5"/><ellipse cx="12" cy="12" rx="10" ry="4.5" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4.5" transform="rotate(-60 12 12)"/></svg></span>
+        <div>
+          <h2 id="phy-h" data-i18n="learn.phyH">Physics</h2>
+          <span class="kh">រូបវិទ្យា</span>
+        </div>
+        <span class="count"><span data-i18n="learn.soon">Soon</span></span>
+      </div>
+      <p class="blurb" data-i18n="learn.phyP">Formula sheets and constant tables for mechanics, waves, electricity and modern physics. In preparation.</p>
+
+      <div class="res-grid">
+        <div class="res res--soon">
+          <span class="tag soon" data-i18n="learn.soon">Soon</span>
+          <h3 data-i18n="learn.phyT1">Grade 12 Physics formulas</h3>
+          <p data-i18n="learn.phyT1p">Kinematics, dynamics, energy, waves, optics, electricity and magnetism.</p>
+          <span class="meta"><span data-i18n="learn.prep">In preparation</span></span>
+        </div>
+        <div class="res res--soon">
+          <span class="tag soon" data-i18n="learn.soon">Soon</span>
+          <h3 data-i18n="learn.phyT2">Constants &amp; units</h3>
+          <p data-i18n="learn.phyT2p">SI units, prefixes and the physical constants used in the examination.</p>
+          <span class="meta"><span data-i18n="learn.prep">In preparation</span></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ------------------------------------------------------ CHEMISTRY -->
+    <section class="subject reveal" id="chemistry" style="--sc:#12b886" aria-labelledby="chem-h">
+      <div class="subject-head">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v6.5L4.6 18A2 2 0 0 0 6.3 21h11.4a2 2 0 0 0 1.7-3L14 9.5V3"/><path d="M7.5 15h9"/></svg></span>
+        <div>
+          <h2 id="chem-h" data-i18n="learn.chemH">Chemistry</h2>
+          <span class="kh">គីមីវិទ្យា</span>
+        </div>
+        <span class="count"><span data-i18n="learn.avail1">1 resource</span></span>
+      </div>
+      <p class="blurb" data-i18n="learn.chemP">The complete reference sheet: the interactive periodic table, ion and radical tables, solubility rules, formulas, redox potentials and organic naming.</p>
+
+      <div class="res-grid">
+        <a class="res" href="periodic-table-of-elements">
+          <span class="tag open" data-i18n="learn.open">Open</span>
+          <h3 data-i18n="learn.chemT1">Periodic Table of the Elements</h3>
+          <p data-i18n="learn.chemT1p">All 118 elements, colour-coded by family and searchable by touch — with the full chemistry reference underneath.</p>
+          <span class="meta">
+            <span data-i18n="learn.chemT1s">118 elements · 7 reference sections</span>
+            <span class="arrow"><span data-i18n="learn.openIt">Open</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </span>
+        </a>
+
+        <div class="res res--soon">
+          <span class="tag soon" data-i18n="learn.soon">Soon</span>
+          <h3 data-i18n="learn.chemT2">Grade 9 Chemistry basics</h3>
+          <p data-i18n="learn.chemT2p">Atoms, bonding, equations and the mole, written for the lower-secondary syllabus.</p>
+          <span class="meta"><span data-i18n="learn.prep">In preparation</span></span>
+        </div>
+
+        <div class="res res--soon">
+          <span class="tag soon" data-i18n="learn.soon">Soon</span>
+          <h3 data-i18n="learn.chemT3">Reaction practice</h3>
+          <p data-i18n="learn.chemT3p">Balancing, stoichiometry and redox drills with instant answers.</p>
+          <span class="meta"><span data-i18n="learn.prep">In preparation</span></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- -------------------------------------------------------- BIOLOGY -->
+    <section class="subject reveal" id="biology" style="--sc:#e8590c" aria-labelledby="bio-h">
+      <div class="subject-head">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3c0 6 10 6 10 12M17 3c0 6-10 6-10 12M7 21h10M6 8h12M6 16h12"/></svg></span>
+        <div>
+          <h2 id="bio-h" data-i18n="learn.bioH">Biology</h2>
+          <span class="kh">ជីវវិទ្យា</span>
+        </div>
+        <span class="count"><span data-i18n="learn.soon">Soon</span></span>
+      </div>
+      <p class="blurb" data-i18n="learn.bioP">Diagrams, definitions and summary tables for cells, genetics, human systems and ecology. In preparation.</p>
+
+      <div class="res-grid">
+        <div class="res res--soon">
+          <span class="tag soon" data-i18n="learn.soon">Soon</span>
+          <h3 data-i18n="learn.bioT1">Cells &amp; genetics summary</h3>
+          <p data-i18n="learn.bioT1p">Cell structure, mitosis and meiosis, DNA and inheritance.</p>
+          <span class="meta"><span data-i18n="learn.prep">In preparation</span></span>
+        </div>
+        <div class="res res--soon">
+          <span class="tag soon" data-i18n="learn.soon">Soon</span>
+          <h3 data-i18n="learn.bioT2">Human body systems</h3>
+          <p data-i18n="learn.bioT2p">Digestive, circulatory, respiratory and nervous systems at a glance.</p>
+          <span class="meta"><span data-i18n="learn.prep">In preparation</span></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ------------------------------------------------- LANGUAGE CENTRE -->
+    <section class="subject reveal" id="language" style="--sc:#f0761a" aria-labelledby="lang-h">
+      <div class="subject-head">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3c-2.6 3-2.6 15 0 18"/></svg></span>
+        <div>
+          <h2 id="lang-h" data-i18n="learn.langH">Language Centre</h2>
+          <span class="kh">មជ្ឈមណ្ឌលភាសា</span>
+        </div>
+        <span class="count"><span data-i18n="learn.avail2">2 resources</span></span>
+      </div>
+      <p class="blurb" data-i18n="learn.langP">Grammar practice, vocabulary lists and examination material for English, Khmer and Chinese.</p>
+
+      <h3 id="english" style="font-size:.82rem;text-transform:uppercase;letter-spacing:.09em;color:var(--ink-400);margin:.4rem 0 .8rem;scroll-margin-top:100px">
+        <span data-i18n="learn.english">English</span>
+      </h3>
+      <div class="res-grid">
+        <a class="res" href="english-tenses">
+          <span class="tag open" data-i18n="learn.open">Open</span>
+          <h3 data-i18n="learn.engT1">English Tenses — full practice course</h3>
+          <p data-i18n="learn.engT1p">All twelve tenses plus a mixed review. Every chapter has an Easy, Intermediate and Advanced test of thirty questions, each with a grammar explanation.</p>
+          <span class="meta">
+            <span data-i18n="learn.engT1s">13 chapters · 3 levels · 1,170 questions</span>
+            <span class="arrow"><span data-i18n="learn.openIt">Open</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </span>
+        </a>
+
+        <a class="res" href="english-grammar">
+          <span class="tag open" data-i18n="learn.open">Open</span>
+          <h3 data-i18n="learn.engT2">Grammar notes</h3>
+          <p data-i18n="learn.engT2p">Articles, prepositions, conditionals, reported speech and the passive — rules, worked examples and a timed test for every chapter.</p>
+          <span class="meta">
+            <span data-i18n="learn.engT2s">5 chapters · examples · 100 questions</span>
+            <span class="arrow"><span data-i18n="learn.openIt">Open</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </span>
+        </a>
+
+        <div class="res res--soon">
+          <span class="tag soon" data-i18n="learn.soon">Soon</span>
+          <h3 data-i18n="learn.engT3">IELTS vocabulary builder</h3>
+          <p data-i18n="learn.engT3p">Academic word lists with example sentences and self-tests.</p>
+          <span class="meta"><span data-i18n="learn.prep">In preparation</span></span>
+        </div>
+      </div>
+
+      <h3 id="khmer-chinese" style="font-size:.82rem;text-transform:uppercase;letter-spacing:.09em;color:var(--ink-400);margin:1.8rem 0 .8rem">
+        <span data-i18n="learn.otherLang">Khmer &amp; Chinese</span>
+      </h3>
+      <div class="res-grid">
+        <div class="res res--soon">
+          <span class="tag soon" data-i18n="learn.soon">Soon</span>
+          <h3 data-i18n="learn.khT1">Khmer literature notes</h3>
+          <p data-i18n="learn.khT1p">Set texts, essay structure and grammar for the national examination.</p>
+          <span class="meta"><span data-i18n="learn.prep">In preparation</span></span>
+        </div>
+        <div class="res res--soon">
+          <span class="tag soon" data-i18n="learn.soon">Soon</span>
+          <h3 data-i18n="learn.zhT1">HSK vocabulary lists</h3>
+          <p data-i18n="learn.zhT1p">HSK 1 to 4 word lists with pinyin, Khmer glosses and audio.</p>
+          <span class="meta"><span data-i18n="learn.prep">In preparation</span></span>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</section>
+
+<!-- ================================================================ CTA -->
+<section class="section" style="padding-top:0">
+  <div class="wrap">
+    <div class="cta-band reveal">
+      <div>
+        <h2 data-i18n="learn.ctaH2">Want someone to walk you through it?</h2>
+        <p data-i18n="learn.ctaP">Notes help; explanations help more. Book a free consultation and we'll match you with the right tutor.</p>
+      </div>
+      <div class="btn-row">
+        <a class="btn btn--white btn--lg" href="contact" data-i18n="learn.ctaBtn">Book free consultation</a>
+        <a class="btn btn--onDark btn--lg" href="tel:+85593792767" data-i18n="common.callBtn">Call +855 93 792 767</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">
+          <img src="assets/img/logo.png" alt="" width="42" height="42">
+          <span class="brand-text"><span class="brand-name">Alpha Academy</span><span class="brand-tag">Cambodia</span></span>
+        </div>
+        <p data-i18n="foot.blurb">A leading education service provider in Cambodia — dedicated home and online tutoring committed to enhancing students' academic performance across subjects and languages.</p>
+        <div class="socials">
+          <a href="https://t.me/+85593792767" aria-label="Telegram" data-i18n-aria="common.telegram" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.9 4.3l-3 14.2c-.2 1-.8 1.3-1.7.8l-4.6-3.4-2.2 2.1c-.3.3-.5.5-1 .5l.3-4.7 8.6-7.8c.4-.3-.1-.5-.6-.2L6.1 12.6l-4.5-1.4c-1-.3-1-1 .2-1.4l17.6-6.8c.8-.3 1.5.2 1.2 1.3z"/></svg></a>
+          <a href="mailto:alphaacademycambodia@gmail.com" aria-label="Email us" data-i18n-aria="common.emailUs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 6 10-6"/></svg></a>
+          <a href="tel:+85593792767" aria-label="Call us" data-i18n-aria="common.callUs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg></a>
+        </div>
+      </div>
+      <div>
+        <h4 data-i18n="foot.explore">Explore</h4>
+        <ul class="footer-links">
+          <li><a href="index" data-i18n="nav.home">Home</a></li>
+          <li><a href="services" data-i18n="nav.services">Services</a></li>
+          <li><a href="about" data-i18n="foot.aboutUs">About us</a></li>
+          <li><a href="contact" data-i18n="nav.contact">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 data-i18n="foot.learning">Learning Hub</h4>
+        <ul class="footer-links">
+          <li><a href="grade-12-math-formula" data-i18n="nav.g12">Grade 12 Formula</a></li>
+          <li><a href="periodic-table-of-elements" data-i18n="nav.pt">Periodic Table</a></li>
+          <li><a href="english-tenses" data-i18n="nav.tense">English Tenses</a></li>
+          <li><a href="learning" data-i18n="foot.allRes">All resources</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 data-i18n="foot.touch">Get in touch</h4>
+        <ul class="footer-contact">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg><a href="tel:+85593792767">+855 93 792 767</a></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 6 10-6"/></svg><a href="mailto:alphaacademycambodia@gmail.com">alphaacademycambodia@gmail.com</a></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span data-i18n="foot.location">Phnom Penh, Cambodia</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span data-i18n="foot.hours">Mon–Sun · 8:00 – 20:00</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span data-year>2026</span> <span data-i18n="foot.rights">Alpha Academy Cambodia. All rights reserved.</span></span>
+      <span data-i18n="foot.tagline">Home &amp; online tutoring · Phnom Penh, Cambodia</span>
+    </div>
+  </div>
+</footer>
+
+<div class="float-actions">
+  <button class="fab fab--top" type="button" aria-label="Back to top" data-i18n-aria="common.backTop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>
+  <a class="fab fab--telegram" href="https://t.me/+85593792767" target="_blank" rel="noopener" aria-label="Chat on Telegram" data-i18n-aria="common.telegram"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.9 4.3l-3 14.2c-.2 1-.8 1.3-1.7.8l-4.6-3.4-2.2 2.1c-.3.3-.5.5-1 .5l.3-4.7 8.6-7.8c.4-.3-.1-.5-.6-.2L6.1 12.6l-4.5-1.4c-1-.3-1-1 .2-1.4l17.6-6.8c.8-.3 1.5.2 1.2 1.3z"/></svg></a>
+  <a class="fab" href="tel:+85593792767" aria-label="Call Alpha Academy Cambodia" data-i18n-aria="common.callUs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg></a>
+</div>
+
+<script src="assets/js/i18n.js"></script>
+<script src="assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Periodic Table &amp; Chemistry Reference | Alpha Academy Cambodia</title>
+<meta name="description" content="Interactive periodic table of all 118 elements plus a full chemistry reference: ions and radicals, solubility rules, key formulas, standard reduction potentials and organic chemistry — in English, Khmer and French.">
+<link rel="canonical" href="https://www.alphaacademycambodia.com/periodic-table-of-elements">
+<meta name="theme-color" content="#0b57d0">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Periodic Table &amp; Chemistry Reference — Alpha Academy Cambodia">
+<meta property="og:description" content="All 118 elements, ions and radicals, solubility rules, formulas and redox potentials.">
+<meta property="og:url" content="https://www.alphaacademycambodia.com/periodic-table-of-elements.html">
+<meta property="og:image" content="https://www.alphaacademycambodia.com/assets/img/logo.png">
+
+<link rel="icon" href="assets/img/logo.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@700;800&family=Kantumruy+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<script src="assets/js/boot.js"></script>
+
+<style>
+/* ------------------------------------------------------ chemistry sheet */
+.chem-wrap{max-width:1280px;margin-inline:auto;padding-inline:var(--gutter)}
+
+/* Only one language block is visible at a time. */
+body.lang-km .tr:not(.km){display:none}
+body.lang-en .tr:not(.en){display:none}
+body.lang-fr .tr:not(.fr){display:none}
+.tr{display:inline}
+
+.chem-toolbar{
+  display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;justify-content:space-between;
+  background:var(--surface);border:1px solid var(--ink-200);border-radius:var(--r-md);
+  padding:.75rem .9rem;box-shadow:var(--shadow-xs);margin-bottom:1.4rem;
+}
+.chem-toolbar .jump{display:flex;flex-wrap:wrap;gap:.35rem}
+.chem-toolbar .jump a{
+  font-size:.83rem;font-weight:600;text-decoration:none;color:var(--ink-700);
+  padding:.42rem .75rem;border-radius:var(--r-pill);background:var(--surface-2);
+  border:1px solid var(--ink-200);transition:all .15s var(--ease);
+}
+.chem-toolbar .jump a:hover{background:var(--brand-50);color:var(--brand-600);border-color:var(--brand-300)}
+.lang3{display:flex;gap:.25rem;background:var(--surface-2);border:1px solid var(--ink-200);border-radius:var(--r-pill);padding:.25rem}
+.lang3 button{
+  appearance:none;border:0;cursor:pointer;font:inherit;font-size:.8rem;font-weight:600;
+  padding:.4rem .8rem;border-radius:var(--r-pill);min-height:36px;background:transparent;color:var(--ink-500);
+}
+.lang3 button[aria-pressed="true"]{background:var(--surface);color:var(--brand-600);box-shadow:var(--shadow-xs)}
+
+.chem-sec{
+  background:var(--surface);border:1px solid var(--ink-200);border-radius:var(--r-lg);
+  padding:clamp(1.1rem,3vw,1.9rem);box-shadow:var(--shadow-xs);margin-bottom:1.6rem;scroll-margin-top:100px;
+}
+.chem-sec > h2{
+  margin:0 0 1rem;font-size:clamp(1.15rem,2.6vw,1.5rem);
+  padding-bottom:.6rem;border-bottom:2px solid var(--brand-500);
+}
+.chem-sec h3{font-size:1rem;margin:1.4rem 0 .6rem}
+
+/* ---------------------------------------------------- the table itself */
+.pt-scroll{overflow-x:auto;padding-bottom:.6rem;-webkit-overflow-scrolling:touch}
+.pt{
+  display:grid;gap:3px;
+  grid-template-columns:repeat(18,minmax(46px,1fr));
+  min-width:900px;
+}
+.el{
+  position:relative;aspect-ratio:1/1;border:0;cursor:pointer;font:inherit;
+  border-radius:6px;padding:2px;color:#10202e;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.05;
+  transition:transform .12s var(--ease),box-shadow .12s var(--ease),outline-color .12s;
+  outline:2px solid transparent;
+}
+.el:hover,.el:focus-visible{transform:scale(1.12);z-index:5;box-shadow:var(--shadow-md);outline-color:var(--ink-900)}
+.el .z{position:absolute;top:3px;left:4px;font-size:.52rem;opacity:.75}
+.el .sym{font-family:var(--font-display);font-size:clamp(.78rem,1.5vw,1.02rem);font-weight:800}
+.el .nm{font-size:.46rem;text-align:center;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding-inline:2px}
+.el.dim{opacity:.22;pointer-events:none}
+.gapcell{aspect-ratio:1/1;display:grid;place-items:center;font-size:.55rem;color:var(--ink-400);
+  border:1px dashed var(--ink-200);border-radius:6px}
+.pt-spacer{grid-column:1/-1;height:10px}
+
+.legend{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:1rem}
+.legend button{
+  appearance:none;border:1px solid transparent;cursor:pointer;font:inherit;
+  display:inline-flex;align-items:center;gap:.4rem;font-size:.76rem;font-weight:600;
+  padding:.35rem .7rem;border-radius:var(--r-pill);background:var(--surface-2);color:var(--ink-700);
+}
+.legend button[aria-pressed="true"]{border-color:var(--ink-900)}
+.legend i{width:12px;height:12px;border-radius:4px;flex:none}
+
+/* element detail panel */
+.el-card{
+  display:grid;gap:1rem;align-items:center;margin-top:1.2rem;
+  grid-template-columns:96px 1fr;
+  background:var(--surface-2);border:1px solid var(--ink-200);border-radius:var(--r-md);padding:1rem;
+}
+.el-card .big{
+  aspect-ratio:1/1;border-radius:12px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;color:#10202e;
+}
+.el-card .big b{font-family:var(--font-display);font-size:1.9rem;line-height:1}
+.el-card .big span{font-size:.7rem}
+.el-facts{display:grid;gap:.35rem .9rem;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));font-size:.87rem}
+.el-facts div{display:flex;justify-content:space-between;gap:.6rem;border-bottom:1px dashed var(--ink-200);padding:.25rem 0}
+.el-facts b{font-weight:600}
+
+/* ------------------------------------------------------ generic tables */
+.tbl-scroll{overflow-x:auto}
+table.chem{width:100%;border-collapse:collapse;font-size:.88rem;min-width:520px}
+table.chem th,table.chem td{border:1px solid var(--ink-200);padding:.55rem .7rem;text-align:left;vertical-align:top}
+table.chem th{background:var(--brand-600);color:#fff;font-weight:600}
+table.chem tbody tr:nth-child(even){background:var(--surface-2)}
+table.chem tbody tr:hover{background:var(--brand-50)}
+
+.cards{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(255px,1fr))}
+.mini{
+  background:var(--surface-2);border:1px solid var(--ink-200);border-left:4px solid var(--brand-500);
+  border-radius:var(--r-sm);padding:.9rem 1rem;
+}
+.mini h4{margin:0 0 .5rem;font-size:.94rem}
+.mini ul{margin:0;padding-left:1.1rem;font-size:.87rem;line-height:1.75}
+.mini code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.86em}
+.note{font-size:.85rem;color:var(--ink-500);margin:.7rem 0 0}
+</style>
+</head>
+<body class="lang-en">
+<a class="skip-link" href="#main" data-i18n="common.skip">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <nav class="nav" aria-label="Main">
+      <a class="brand" href="index">
+        <img src="assets/img/logo.png" alt="Alpha Academy Cambodia logo" width="44" height="44">
+        <span class="brand-text"><span class="brand-name">Alpha Academy</span><span class="brand-tag">Cambodia</span></span>
+      </a>
+
+      <div class="nav-menu" id="nav-menu">
+        <ul class="nav-links">
+          <li><a href="index" data-i18n="nav.home">Home</a></li>
+          <li><a href="services" data-i18n="nav.services">Services</a></li>
+          <li><a href="about" data-i18n="nav.about">About</a></li>
+
+          <li class="has-sub">
+            <a href="learning" class="is-active" aria-haspopup="true">
+              <span data-i18n="nav.learning">Learning</span>
+              <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+            </a>
+            <ul class="sub">
+              <li class="sub-item">
+                <a href="learning#math">
+                  <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M12 14v6M9 17h6M5 15l6 6M11 15l-6 6M16 9V4"/><path d="M4 6l4-3 4 3"/></svg></i>
+                  <span><span data-i18n="nav.math">Mathematics</span><small data-i18n="nav.mathSub">Formulas &amp; revision sheets</small></span>
+                  <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+                </a>
+                <ul class="sub2">
+                  <li><a href="grade-12-math-formula"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5a2 2 0 0 1 2-2h13v18H6a2 2 0 0 0-2 2z"/><path d="M8 8h7M8 12h5"/></svg></i><span><span data-i18n="nav.g12">Grade 12 Formula</span><small data-i18n="nav.g12Sub">12 chapters &#183; 57 sections</small></span></a></li>
+                </ul>
+              </li>
+
+              <li class="sub-item">
+                <a href="learning#chemistry">
+                  <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v6.5L4.6 18A2 2 0 0 0 6.3 21h11.4a2 2 0 0 0 1.7-3L14 9.5V3"/><path d="M7.5 15h9"/></svg></i>
+                  <span><span data-i18n="nav.chem">Chemistry</span><small data-i18n="nav.chemSub">Periodic table &amp; reference</small></span>
+                  <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+                </a>
+                <ul class="sub2">
+                  <li><a href="periodic-table-of-elements" aria-current="page"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></i><span><span data-i18n="nav.pt">Periodic Table</span><small data-i18n="nav.ptSub">118 elements &#183; reference tables</small></span></a></li>
+                </ul>
+              </li>
+
+              <li class="sub-item">
+                <a href="learning#language">
+                  <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3c-2.6 3-2.6 15 0 18"/></svg></i>
+                  <span><span data-i18n="nav.lang">Language Centre</span><small data-i18n="nav.langSub">English &#183; Khmer &#183; Chinese</small></span>
+                  <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+                </a>
+                <ul class="sub2">
+                  <li><a href="english-tenses"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5a2 2 0 0 1 2-2h13v18H6a2 2 0 0 0-2 2z"/><path d="M8 8h7M8 12h5"/></svg></i><span><span data-i18n="nav.tense">English Tenses</span><small data-i18n="nav.tenseSub">13 chapters &#183; 1,170 questions</small></span></a></li>
+                  <li><a href="english-grammar"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16M4 12h10M4 19h7"/><circle cx="18.5" cy="17.5" r="3"/></svg></i><span><span data-i18n="nav.gram">Grammar Notes</span><small data-i18n="nav.gramSub">5 chapters &#183; 100 questions</small></span></a></li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+
+          <li><a href="contact" data-i18n="nav.contact">Contact</a></li>
+        </ul>
+        <div class="nav-cta">
+          <a class="btn btn--ghost" href="tel:+85593792767">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>
+            <span data-i18n="common.phone">093 792 767</span>
+          </a>
+          <a class="btn btn--primary" href="contact" data-i18n="common.free">Free Consultation</a>
+        </div>
+      </div>
+
+      <div class="nav-tools">
+        <div class="lang-switch" role="group" aria-label="Language" data-i18n-aria="common.language">
+          <button type="button" data-lang="en" aria-pressed="true">EN</button>
+          <button type="button" data-lang="km" aria-pressed="false">ខ្មែរ</button>
+        </div>
+        <button class="theme-btn" type="button" aria-label="Toggle dark mode" data-i18n-aria="common.toggleTheme" aria-pressed="false">
+          <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.4M12 19.6V22M4.2 4.2l1.7 1.7M18.1 18.1l1.7 1.7M2 12h2.4M19.6 12H22M4.2 19.8l1.7-1.7M18.1 5.9l1.7-1.7"/></svg>
+          <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        </button>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle menu" data-i18n-aria="common.toggleMenu">
+          <span></span>
+        </button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="page-hero learn-hero">
+  <div class="wrap">
+    <div class="page-hero-inner">
+      <nav class="crumbs" aria-label="Breadcrumb">
+        <a href="index" data-i18n="nav.home">Home</a> <span>/</span>
+        <a href="learning" data-i18n="learn.crumb">Learning</a> <span>/</span>
+        <a href="learning#chemistry" data-i18n="nav.chem">Chemistry</a> <span>/</span>
+        <span data-i18n="pt.crumb">Periodic Table</span>
+      </nav>
+      <h1 data-i18n="pt.h1">Periodic Table &amp; Chemistry Reference</h1>
+      <p data-i18n="pt.lede">All 118 elements, plus the ion tables, solubility rules, formulas and redox potentials students need for the national examination.</p>
+      <div class="chips">
+        <span class="chip" data-i18n="pt.chip1">118 elements</span>
+        <span class="chip" data-i18n="pt.chip2">Khmer · English · French</span>
+        <span class="chip" data-i18n="pt.chip3">Phone friendly</span>
+        <span class="chip" data-i18n="pt.chip4">Printable</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<svg class="wave" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true">
+  <path fill="#ffffff" d="M0 34c180 30 360 42 540 26S900-8 1080 2s240 26 360 30v38H0z"/>
+</svg>
+
+<section class="section" style="padding-top:clamp(2rem,5vw,3rem)">
+  <div class="chem-wrap">
+
+    <div class="chem-toolbar">
+      <nav class="jump" aria-label="Sections">
+        <a href="#table"><span class="tr km">តារាងខួប</span><span class="tr en">Periodic table</span><span class="tr fr">Tableau périodique</span></a>
+        <a href="#groups"><span class="tr km">ក្រុម និងវ៉ាឡង់</span><span class="tr en">Groups &amp; valence</span><span class="tr fr">Groupes et valences</span></a>
+        <a href="#ions"><span class="tr km">អ៊ីយ៉ុង</span><span class="tr en">Ions &amp; radicals</span><span class="tr fr">Ions et radicaux</span></a>
+        <a href="#compounds"><span class="tr km">សមាសធាតុ</span><span class="tr en">Compounds</span><span class="tr fr">Composés</span></a>
+        <a href="#solubility"><span class="tr km">ភាពរលាយ</span><span class="tr en">Solubility</span><span class="tr fr">Solubilité</span></a>
+        <a href="#formulas"><span class="tr km">រូបមន្ត</span><span class="tr en">Formulas</span><span class="tr fr">Formules</span></a>
+        <a href="#redox"><span class="tr km">រេដុក</span><span class="tr en">Redox (E°)</span><span class="tr fr">Rédox (E°)</span></a>
+        <a href="#organic"><span class="tr km">គីមីសរីរាង្គ</span><span class="tr en">Organic</span><span class="tr fr">Organique</span></a>
+      </nav>
+      <div class="lang3" role="group" aria-label="Reference language">
+        <button type="button" data-l3="en" aria-pressed="true">EN</button>
+        <button type="button" data-l3="km" aria-pressed="false">ខ្មែរ</button>
+        <button type="button" data-l3="fr" aria-pressed="false">FR</button>
+      </div>
+    </div>
+
+    <!-- ================================================ PERIODIC TABLE -->
+    <section class="chem-sec" id="table">
+      <h2>
+        <span class="tr km">តារាងខួបនៃធាតុគីមី</span>
+        <span class="tr en">Periodic Table of the Elements</span>
+        <span class="tr fr">Tableau périodique des éléments</span>
+      </h2>
+      <p class="note">
+        <span class="tr km">ចុចលើធាតុណាមួយដើម្បីមើលព័ត៌មានលម្អិត។ ចុចលើពណ៌ខាងក្រោមដើម្បីច្រោះតាមក្រុម។</span>
+        <span class="tr en">Tap any element for its details. Tap a colour below to filter the table by family.</span>
+        <span class="tr fr">Touchez un élément pour voir ses détails. Touchez une couleur ci-dessous pour filtrer par famille.</span>
+      </p>
+
+      <div class="pt-scroll"><div class="pt" id="ptGrid"></div></div>
+      <div class="legend" id="ptLegend"></div>
+      <div class="el-card" id="elCard" hidden></div>
+    </section>
+
+    <!-- ================================================ GROUPS/VALENCE -->
+    <section class="chem-sec" id="groups">
+      <h2>
+        <span class="tr km">ចំណាត់ថ្នាក់ក្រុម និងវ៉ាឡង់</span>
+        <span class="tr en">Group Classifications and Valences</span>
+        <span class="tr fr">Classifications des groupes et valences</span>
+      </h2>
+      <div class="cards">
+        <div class="mini">
+          <h4><span class="tr km">ក្រុមមេ (A)</span><span class="tr en">Main groups (A)</span><span class="tr fr">Groupes principaux (A)</span></h4>
+          <ul>
+            <li><strong>IA</strong> — <span class="tr km">លោហៈអាល់កាឡាំង, វ៉ាឡង់ 1</span><span class="tr en">Alkali metals, valence 1</span><span class="tr fr">Métaux alcalins, valence 1</span></li>
+            <li><strong>IIA</strong> — <span class="tr km">លោហៈអាល់កាលីណូទែ, វ៉ាឡង់ 2</span><span class="tr en">Alkaline earth metals, valence 2</span><span class="tr fr">Métaux alcalino-terreux, valence 2</span></li>
+            <li><strong>IIIA</strong> — <span class="tr km">វ៉ាឡង់ 3</span><span class="tr en">Valence 3</span><span class="tr fr">Valence 3</span></li>
+            <li><strong>IVA</strong> — <span class="tr km">វ៉ាឡង់ 4</span><span class="tr en">Valence 4</span><span class="tr fr">Valence 4</span></li>
+          </ul>
+        </div>
+        <div class="mini">
+          <h4><span class="tr km">ក្រុមមេ (បន្ត)</span><span class="tr en">Main groups (continued)</span><span class="tr fr">Groupes principaux (suite)</span></h4>
+          <ul>
+            <li><strong>VA</strong> — <span class="tr km">វ៉ាឡង់ 3</span><span class="tr en">Valence 3</span><span class="tr fr">Valence 3</span></li>
+            <li><strong>VIA</strong> — <span class="tr km">វ៉ាឡង់ 2</span><span class="tr en">Valence 2</span><span class="tr fr">Valence 2</span></li>
+            <li><strong>VIIA</strong> — <span class="tr km">អាឡូសែន, វ៉ាឡង់ 1</span><span class="tr en">Halogens, valence 1</span><span class="tr fr">Halogènes, valence 1</span></li>
+            <li><strong>VIIIA</strong> — <span class="tr km">ឧស្ម័នកម្រ, វ៉ាឡង់ 0</span><span class="tr en">Noble gases, valence 0</span><span class="tr fr">Gaz nobles, valence 0</span></li>
+          </ul>
+        </div>
+        <div class="mini">
+          <h4><span class="tr km">លោហៈឆ្លង</span><span class="tr en">Transition metals</span><span class="tr fr">Métaux de transition</span></h4>
+          <ul>
+            <li><strong>IB–VIIIB</strong> — <span class="tr km">លោហៈឆ្លង មានវ៉ាឡង់ច្រើន</span><span class="tr en">Transition metals, variable valence</span><span class="tr fr">Métaux de transition, valence variable</span></li>
+            <li>Fe: 2, 3 &nbsp;|&nbsp; Cu: 1, 2 &nbsp;|&nbsp; Cr: 2, 3, 6</li>
+            <li>Mn: 2, 4, 6, 7 &nbsp;|&nbsp; Zn: 2 &nbsp;|&nbsp; Ag: 1</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================== IONS -->
+    <section class="chem-sec" id="ions">
+      <h2>
+        <span class="tr km">រ៉ាឌីកាល់ និងអ៊ីយ៉ុង</span>
+        <span class="tr en">Radicals &amp; Ions</span>
+        <span class="tr fr">Radicaux et ions</span>
+      </h2>
+      <div class="tbl-scroll">
+        <table class="chem">
+          <thead>
+            <tr>
+              <th><span class="tr km">អ៊ីយ៉ុងវិជ្ជមាន (Cations)</span><span class="tr en">Positive ions (cations)</span><span class="tr fr">Ions positifs (cations)</span></th>
+              <th><span class="tr km">អ៊ីយ៉ុងអវិជ្ជមាន (Anions)</span><span class="tr en">Negative ions (anions)</span><span class="tr fr">Ions négatifs (anions)</span></th>
+              <th><span class="tr km">រ៉ាឌីកាល់ផ្សេងៗ</span><span class="tr en">Other radicals</span><span class="tr fr">Autres radicaux</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>H<sup>+</sup> — <span class="tr km">ប្រូតុង</span><span class="tr en">Proton</span><span class="tr fr">Proton</span></td>
+              <td>OH<sup>&minus;</sup> — <span class="tr km">អ៊ីដ្រុកស៊ីត</span><span class="tr en">Hydroxide</span><span class="tr fr">Hydroxyde</span></td>
+              <td>S<sub>2</sub>O<sub>3</sub><sup>2&minus;</sup> — <span class="tr km">ធីយ៉ូស៊ុលផាត</span><span class="tr en">Thiosulfate</span><span class="tr fr">Thiosulfate</span></td>
+            </tr>
+            <tr>
+              <td>Li<sup>+</sup> — <span class="tr km">លីចូម</span><span class="tr en">Lithium</span><span class="tr fr">Lithium</span></td>
+              <td>NO<sub>3</sub><sup>&minus;</sup> — <span class="tr km">នីត្រាត</span><span class="tr en">Nitrate</span><span class="tr fr">Nitrate</span></td>
+              <td>S<sub>2</sub>O<sub>8</sub><sup>2&minus;</sup> — <span class="tr km">ពែអុកសូឌីស៊ុលផាត</span><span class="tr en">Peroxodisulfate</span><span class="tr fr">Peroxodisulfate</span></td>
+            </tr>
+            <tr>
+              <td>Na<sup>+</sup> — <span class="tr km">សូដ្យូម</span><span class="tr en">Sodium</span><span class="tr fr">Sodium</span></td>
+              <td>CO<sub>3</sub><sup>2&minus;</sup> — <span class="tr km">កាបូណាត</span><span class="tr en">Carbonate</span><span class="tr fr">Carbonate</span></td>
+              <td>Cr<sub>2</sub>O<sub>7</sub><sup>2&minus;</sup> — <span class="tr km">ឌីក្រូម៉ាត</span><span class="tr en">Dichromate</span><span class="tr fr">Dichromate</span></td>
+            </tr>
+            <tr>
+              <td>K<sup>+</sup> — <span class="tr km">ប៉ូតាស្យូម</span><span class="tr en">Potassium</span><span class="tr fr">Potassium</span></td>
+              <td>PO<sub>4</sub><sup>3&minus;</sup> — <span class="tr km">ផូស្វាត</span><span class="tr en">Phosphate</span><span class="tr fr">Phosphate</span></td>
+              <td>MnO<sub>4</sub><sup>&minus;</sup> — <span class="tr km">ពែម៉ង់កាណាត</span><span class="tr en">Permanganate</span><span class="tr fr">Permanganate</span></td>
+            </tr>
+            <tr>
+              <td>NH<sub>4</sub><sup>+</sup> — <span class="tr km">អាម៉ូញ៉ូម</span><span class="tr en">Ammonium</span><span class="tr fr">Ammonium</span></td>
+              <td>SO<sub>4</sub><sup>2&minus;</sup> — <span class="tr km">ស៊ុលផាត</span><span class="tr en">Sulfate</span><span class="tr fr">Sulfate</span></td>
+              <td>O<sub>2</sub><sup>2&minus;</sup> — <span class="tr km">ពែអុកស៊ីត</span><span class="tr en">Peroxide</span><span class="tr fr">Peroxyde</span></td>
+            </tr>
+            <tr>
+              <td>Ca<sup>2+</sup> — <span class="tr km">កាល់ស្យូម</span><span class="tr en">Calcium</span><span class="tr fr">Calcium</span></td>
+              <td>SO<sub>3</sub><sup>2&minus;</sup> — <span class="tr km">ស៊ុលភីត</span><span class="tr en">Sulfite</span><span class="tr fr">Sulfite</span></td>
+              <td>C<sub>2</sub><sup>2&minus;</sup> — <span class="tr km">កាប្យួ</span><span class="tr en">Carbide (acetylide)</span><span class="tr fr">Carbure</span></td>
+            </tr>
+            <tr>
+              <td>Mg<sup>2+</sup> — <span class="tr km">ម៉ាញេស្យូម</span><span class="tr en">Magnesium</span><span class="tr fr">Magnésium</span></td>
+              <td>F<sup>&minus;</sup>, Cl<sup>&minus;</sup>, Br<sup>&minus;</sup>, I<sup>&minus;</sup> — <span class="tr km">អាឡូសែនួ</span><span class="tr en">Halides</span><span class="tr fr">Halogénures</span></td>
+              <td>S<sup>2&minus;</sup> — <span class="tr km">ស៊ុលផួ</span><span class="tr en">Sulfide</span><span class="tr fr">Sulfure</span></td>
+            </tr>
+            <tr>
+              <td>Al<sup>3+</sup> — <span class="tr km">អាលុយមីញ៉ូម</span><span class="tr en">Aluminium</span><span class="tr fr">Aluminium</span></td>
+              <td>HCO<sub>3</sub><sup>&minus;</sup> — <span class="tr km">អ៊ីដ្រូសែនកាបូណាត</span><span class="tr en">Hydrogen carbonate</span><span class="tr fr">Hydrogénocarbonate</span></td>
+              <td>CH<sub>3</sub>COO<sup>&minus;</sup> — <span class="tr km">អាសេតាត</span><span class="tr en">Acetate</span><span class="tr fr">Acétate</span></td>
+            </tr>
+            <tr>
+              <td>Fe<sup>2+</sup>, Fe<sup>3+</sup> — <span class="tr km">ហ្វែរ</span><span class="tr en">Iron(II), Iron(III)</span><span class="tr fr">Fer(II), Fer(III)</span></td>
+              <td>NO<sub>2</sub><sup>&minus;</sup> — <span class="tr km">នីទ្រីត</span><span class="tr en">Nitrite</span><span class="tr fr">Nitrite</span></td>
+              <td>CrO<sub>4</sub><sup>2&minus;</sup> — <span class="tr km">ក្រូម៉ាត</span><span class="tr en">Chromate</span><span class="tr fr">Chromate</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ===================================================== COMPOUNDS -->
+    <section class="chem-sec" id="compounds">
+      <h2>
+        <span class="tr km">សមាសធាតុគីមី</span>
+        <span class="tr en">Chemical Compounds</span>
+        <span class="tr fr">Composés chimiques</span>
+      </h2>
+      <div class="tbl-scroll">
+        <table class="chem">
+          <thead>
+            <tr>
+              <th>Cation \ Anion</th>
+              <th>F<sup>&minus;</sup></th>
+              <th>Cl<sup>&minus;</sup></th>
+              <th>OH<sup>&minus;</sup></th>
+              <th>NO<sub>3</sub><sup>&minus;</sup></th>
+              <th>SO<sub>4</sub><sup>2&minus;</sup></th>
+              <th>CO<sub>3</sub><sup>2&minus;</sup></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>H<sup>+</sup></strong></td><td>HF</td><td>HCl</td><td>H<sub>2</sub>O</td><td>HNO<sub>3</sub></td><td>H<sub>2</sub>SO<sub>4</sub></td><td>H<sub>2</sub>CO<sub>3</sub></td></tr>
+            <tr><td><strong>Li<sup>+</sup></strong></td><td>LiF</td><td>LiCl</td><td>LiOH</td><td>LiNO<sub>3</sub></td><td>Li<sub>2</sub>SO<sub>4</sub></td><td>Li<sub>2</sub>CO<sub>3</sub></td></tr>
+            <tr><td><strong>Na<sup>+</sup></strong></td><td>NaF</td><td>NaCl</td><td>NaOH</td><td>NaNO<sub>3</sub></td><td>Na<sub>2</sub>SO<sub>4</sub></td><td>Na<sub>2</sub>CO<sub>3</sub></td></tr>
+            <tr><td><strong>K<sup>+</sup></strong></td><td>KF</td><td>KCl</td><td>KOH</td><td>KNO<sub>3</sub></td><td>K<sub>2</sub>SO<sub>4</sub></td><td>K<sub>2</sub>CO<sub>3</sub></td></tr>
+            <tr><td><strong>NH<sub>4</sub><sup>+</sup></strong></td><td>NH<sub>4</sub>F</td><td>NH<sub>4</sub>Cl</td><td>NH<sub>4</sub>OH</td><td>NH<sub>4</sub>NO<sub>3</sub></td><td>(NH<sub>4</sub>)<sub>2</sub>SO<sub>4</sub></td><td>(NH<sub>4</sub>)<sub>2</sub>CO<sub>3</sub></td></tr>
+            <tr><td><strong>Mg<sup>2+</sup></strong></td><td>MgF<sub>2</sub></td><td>MgCl<sub>2</sub></td><td>Mg(OH)<sub>2</sub></td><td>Mg(NO<sub>3</sub>)<sub>2</sub></td><td>MgSO<sub>4</sub></td><td>MgCO<sub>3</sub></td></tr>
+            <tr><td><strong>Ca<sup>2+</sup></strong></td><td>CaF<sub>2</sub></td><td>CaCl<sub>2</sub></td><td>Ca(OH)<sub>2</sub></td><td>Ca(NO<sub>3</sub>)<sub>2</sub></td><td>CaSO<sub>4</sub></td><td>CaCO<sub>3</sub></td></tr>
+            <tr><td><strong>Ba<sup>2+</sup></strong></td><td>BaF<sub>2</sub></td><td>BaCl<sub>2</sub></td><td>Ba(OH)<sub>2</sub></td><td>Ba(NO<sub>3</sub>)<sub>2</sub></td><td>BaSO<sub>4</sub></td><td>BaCO<sub>3</sub></td></tr>
+            <tr><td><strong>Al<sup>3+</sup></strong></td><td>AlF<sub>3</sub></td><td>AlCl<sub>3</sub></td><td>Al(OH)<sub>3</sub></td><td>Al(NO<sub>3</sub>)<sub>3</sub></td><td>Al<sub>2</sub>(SO<sub>4</sub>)<sub>3</sub></td><td>&mdash;</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">
+        <span class="tr km">សរសេររូបមន្តដោយឆ្លងបន្ទុក៖ បន្ទុកអ៊ីយ៉ុងវិជ្ជមានក្លាយជាសន្ទស្សន៍អ៊ីយ៉ុងអវិជ្ជមាន និងផ្ទុយមកវិញ។</span>
+        <span class="tr en">Build a formula by crossing over the charges: the charge on the cation becomes the subscript of the anion, and vice versa.</span>
+        <span class="tr fr">Écrivez la formule en croisant les charges : la charge du cation devient l'indice de l'anion, et inversement.</span>
+      </p>
+    </section>
+
+    <!-- ==================================================== SOLUBILITY -->
+    <section class="chem-sec" id="solubility">
+      <h2>
+        <span class="tr km">តារាងភាពរលាយ និងថេរលំនឹង</span>
+        <span class="tr en">Solubility Rules &amp; Equilibrium Constants</span>
+        <span class="tr fr">Règles de solubilité et constantes d'équilibre</span>
+      </h2>
+      <div class="mini">
+        <h4><span class="tr km">ចំណុចសំខាន់</span><span class="tr en">Key rules</span><span class="tr fr">Règles clés</span></h4>
+        <ul>
+          <li><strong><span class="tr km">រលាយជានិច្ច៖</span><span class="tr en">Always soluble:</span><span class="tr fr">Toujours soluble :</span></strong>
+            Li<sup>+</sup>, Na<sup>+</sup>, K<sup>+</sup>, NH<sub>4</sub><sup>+</sup>, NO<sub>3</sub><sup>&minus;</sup>, CH<sub>3</sub>COO<sup>&minus;</sup>.</li>
+          <li><strong>Cl<sup>&minus;</sup>, Br<sup>&minus;</sup>, I<sup>&minus;</sup>:</strong>
+            <span class="tr km">មិនរលាយជាមួយ</span><span class="tr en">insoluble with</span><span class="tr fr">insoluble avec</span> Ag<sup>+</sup>, Pb<sup>2+</sup>, Hg<sub>2</sub><sup>2+</sup>.</li>
+          <li><strong>SO<sub>4</sub><sup>2&minus;</sup>:</strong>
+            <span class="tr km">មិនរលាយជាមួយ</span><span class="tr en">insoluble with</span><span class="tr fr">insoluble avec</span> Ag<sup>+</sup>, Pb<sup>2+</sup>, Sr<sup>2+</sup>, Ba<sup>2+</sup>, Ca<sup>2+</sup> (<span class="tr km">រលាយតិច</span><span class="tr en">slightly</span><span class="tr fr">peu soluble</span>).</li>
+          <li><strong>CO<sub>3</sub><sup>2&minus;</sup>, PO<sub>4</sub><sup>3&minus;</sup>:</strong>
+            <span class="tr km">រលាយតែជាមួយ</span><span class="tr en">soluble only with</span><span class="tr fr">soluble seulement avec</span> Li<sup>+</sup>, Na<sup>+</sup>, K<sup>+</sup>, Rb<sup>+</sup>, Cs<sup>+</sup>, NH<sub>4</sub><sup>+</sup>.</li>
+          <li><strong>OH<sup>&minus;</sup>, S<sup>2&minus;</sup>:</strong>
+            <span class="tr km">រលាយជាមួយ</span><span class="tr en">soluble with</span><span class="tr fr">soluble avec</span> Li<sup>+</sup>, Na<sup>+</sup>, K<sup>+</sup>, Rb<sup>+</sup>, Cs<sup>+</sup>, NH<sub>4</sub><sup>+</sup>, Ca<sup>2+</sup>, Sr<sup>2+</sup>, Ba<sup>2+</sup>.</li>
+        </ul>
+      </div>
+
+      <h3><span class="tr km">តម្លៃថេរលំនឹងអាស៊ីត និងបាស</span><span class="tr en">Acid and base constants at 25 °C</span><span class="tr fr">Constantes d'acidité et de basicité à 25 °C</span></h3>
+      <div class="tbl-scroll">
+        <table class="chem">
+          <thead>
+            <tr>
+              <th><span class="tr km">អាស៊ីតខ្សោយ</span><span class="tr en">Weak acid</span><span class="tr fr">Acide faible</span></th>
+              <th>K<sub>a</sub></th>
+              <th><span class="tr km">បាសខ្សោយ</span><span class="tr en">Weak base</span><span class="tr fr">Base faible</span></th>
+              <th>K<sub>b</sub></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>HF</td><td>6.6 &times; 10<sup>&minus;4</sup></td><td>NH<sub>3</sub></td><td>1.8 &times; 10<sup>&minus;5</sup></td></tr>
+            <tr><td>HNO<sub>2</sub></td><td>7.2 &times; 10<sup>&minus;4</sup></td><td>CH<sub>3</sub>NH<sub>2</sub></td><td>4.4 &times; 10<sup>&minus;4</sup></td></tr>
+            <tr><td>CH<sub>3</sub>COOH</td><td>1.8 &times; 10<sup>&minus;5</sup></td><td>C<sub>6</sub>H<sub>5</sub>NH<sub>2</sub></td><td>4.6 &times; 10<sup>&minus;10</sup></td></tr>
+            <tr><td>H<sub>2</sub>CO<sub>3</sub> (K<sub>a1</sub>)</td><td>4.3 &times; 10<sup>&minus;7</sup></td><td>C<sub>5</sub>H<sub>5</sub>N</td><td>1.7 &times; 10<sup>&minus;9</sup></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">K<sub>a</sub> &times; K<sub>b</sub> = K<sub>w</sub> = 1.0 &times; 10<sup>&minus;14</sup> &nbsp;·&nbsp; pH + pOH = 14</p>
+    </section>
+
+    <!-- ====================================================== FORMULAS -->
+    <section class="chem-sec" id="formulas">
+      <h2>
+        <span class="tr km">រូបមន្តគីមីសំខាន់ៗ</span>
+        <span class="tr en">Key Chemical Formulas</span>
+        <span class="tr fr">Formules chimiques clés</span>
+      </h2>
+      <div class="cards">
+        <div class="mini">
+          <h4><span class="tr km">ម៉ូល និងមាឌ</span><span class="tr en">Moles and volume</span><span class="tr fr">Moles et volume</span></h4>
+          <ul>
+            <li><code>n = m / M</code></li>
+            <li><code>n = V / V<sub>M</sub></code></li>
+            <li><code>n = N / N<sub>A</sub></code> &nbsp;(N<sub>A</sub> = 6.02 &times; 10<sup>23</sup>)</li>
+            <li>STP (0 °C, 1 atm): V<sub>M</sub> = 22.4 L/mol</li>
+            <li>RTP (25 °C, 1 atm): V<sub>M</sub> = 24 L/mol</li>
+            <li><code>PV = nRT</code> &nbsp;(R = 8.314 J·mol<sup>&minus;1</sup>·K<sup>&minus;1</sup>)</li>
+          </ul>
+        </div>
+        <div class="mini">
+          <h4><span class="tr km">កំហាប់សូលុយស្យុង</span><span class="tr en">Concentration</span><span class="tr fr">Concentration</span></h4>
+          <ul>
+            <li><code>C<sub>m</sub> = m / V<sub>s</sub></code></li>
+            <li><code>C = n / V<sub>s</sub></code> &nbsp;|&nbsp; <code>C = C<sub>m</sub> / M</code></li>
+            <li><code>C<sub>1</sub>V<sub>1</sub> = C<sub>2</sub>V<sub>2</sub></code></li>
+            <li><code>C% = (m / m<sub>s</sub>) &times; 100%</code></li>
+            <li><code>pH = &minus;log[H<sup>+</sup>]</code></li>
+          </ul>
+        </div>
+        <div class="mini">
+          <h4><span class="tr km">អគ្គិសនី និងទិន្នផល</span><span class="tr en">Electrolysis &amp; yield</span><span class="tr fr">Électrolyse et rendement</span></h4>
+          <ul>
+            <li><code>q = n &times; F</code> &nbsp;(F = 96 500 C/mol)</li>
+            <li><code>q = I &times; t</code></li>
+            <li><code>d<sub>s</sub> = m<sub>s</sub> / V<sub>s</sub></code></li>
+            <li><code>Rd (%) = (m<sub>actual</sub> / m<sub>theoretical</sub>) &times; 100%</code></li>
+            <li><code>E<sub>cell</sub> = E°<sub>cathode</sub> &minus; E°<sub>anode</sub></code></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================= REDOX -->
+    <section class="chem-sec" id="redox">
+      <h2>
+        <span class="tr km">សក្តានុពលរេដុកស្តង់ដា (E°)</span>
+        <span class="tr en">Standard Reduction Potentials (E°)</span>
+        <span class="tr fr">Potentiels de réduction standards (E°)</span>
+      </h2>
+      <div class="tbl-scroll">
+        <table class="chem">
+          <thead>
+            <tr>
+              <th><span class="tr km">គូអុកស៊ីដូ-រេដុក</span><span class="tr en">Redox pair</span><span class="tr fr">Couple rédox</span></th>
+              <th><span class="tr km">ប្រតិកម្មពាក់កណ្តាល</span><span class="tr en">Half-reaction</span><span class="tr fr">Demi-réaction</span></th>
+              <th>E° (V)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>F<sub>2</sub> / F<sup>&minus;</sup></td><td>F<sub>2</sub> + 2e<sup>&minus;</sup> &#8652; 2F<sup>&minus;</sup></td><td>+2.87</td></tr>
+            <tr><td>MnO<sub>4</sub><sup>&minus;</sup> / Mn<sup>2+</sup></td><td>MnO<sub>4</sub><sup>&minus;</sup> + 8H<sup>+</sup> + 5e<sup>&minus;</sup> &#8652; Mn<sup>2+</sup> + 4H<sub>2</sub>O</td><td>+1.51</td></tr>
+            <tr><td>Cl<sub>2</sub> / Cl<sup>&minus;</sup></td><td>Cl<sub>2</sub> + 2e<sup>&minus;</sup> &#8652; 2Cl<sup>&minus;</sup></td><td>+1.36</td></tr>
+            <tr><td>O<sub>2</sub> / H<sub>2</sub>O</td><td>O<sub>2</sub> + 4H<sup>+</sup> + 4e<sup>&minus;</sup> &#8652; 2H<sub>2</sub>O</td><td>+1.23</td></tr>
+            <tr><td>Ag<sup>+</sup> / Ag</td><td>Ag<sup>+</sup> + e<sup>&minus;</sup> &#8652; Ag</td><td>+0.80</td></tr>
+            <tr><td>Fe<sup>3+</sup> / Fe<sup>2+</sup></td><td>Fe<sup>3+</sup> + e<sup>&minus;</sup> &#8652; Fe<sup>2+</sup></td><td>+0.77</td></tr>
+            <tr><td>Cu<sup>2+</sup> / Cu</td><td>Cu<sup>2+</sup> + 2e<sup>&minus;</sup> &#8652; Cu</td><td>+0.34</td></tr>
+            <tr><td>H<sup>+</sup> / H<sub>2</sub></td><td>2H<sup>+</sup> + 2e<sup>&minus;</sup> &#8652; H<sub>2</sub></td><td>0.00</td></tr>
+            <tr><td>Pb<sup>2+</sup> / Pb</td><td>Pb<sup>2+</sup> + 2e<sup>&minus;</sup> &#8652; Pb</td><td>&minus;0.13</td></tr>
+            <tr><td>Fe<sup>2+</sup> / Fe</td><td>Fe<sup>2+</sup> + 2e<sup>&minus;</sup> &#8652; Fe</td><td>&minus;0.44</td></tr>
+            <tr><td>Zn<sup>2+</sup> / Zn</td><td>Zn<sup>2+</sup> + 2e<sup>&minus;</sup> &#8652; Zn</td><td>&minus;0.76</td></tr>
+            <tr><td>Al<sup>3+</sup> / Al</td><td>Al<sup>3+</sup> + 3e<sup>&minus;</sup> &#8652; Al</td><td>&minus;1.66</td></tr>
+            <tr><td>Mg<sup>2+</sup> / Mg</td><td>Mg<sup>2+</sup> + 2e<sup>&minus;</sup> &#8652; Mg</td><td>&minus;2.37</td></tr>
+            <tr><td>Na<sup>+</sup> / Na</td><td>Na<sup>+</sup> + e<sup>&minus;</sup> &#8652; Na</td><td>&minus;2.71</td></tr>
+            <tr><td>Li<sup>+</sup> / Li</td><td>Li<sup>+</sup> + e<sup>&minus;</sup> &#8652; Li</td><td>&minus;3.04</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="mini" style="margin-top:1rem">
+        <h4><span class="tr km">វិធានហ្គាម៉ា</span><span class="tr en">The gamma rule</span><span class="tr fr">La règle gamma</span></h4>
+        <ul>
+          <li>E°<sub>1</sub> &gt; E°<sub>2</sub> &nbsp;&rarr;&nbsp; Ox<sub>1</sub> + Red<sub>2</sub> &rarr; Red<sub>1</sub> + Ox<sub>2</sub></li>
+          <li><span class="tr km">អុកស៊ីដង់ខ្លាំងបំផុត ប្រតិកម្មជាមួយរេដុកទ័រខ្លាំងបំផុត។</span>
+              <span class="tr en">The strongest oxidising agent reacts with the strongest reducing agent.</span>
+              <span class="tr fr">L'oxydant le plus fort réagit avec le réducteur le plus fort.</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ======================================================= ORGANIC -->
+    <section class="chem-sec" id="organic">
+      <h2>
+        <span class="tr km">គីមីសរីរាង្គ</span>
+        <span class="tr en">Organic Chemistry</span>
+        <span class="tr fr">Chimie organique</span>
+      </h2>
+      <div class="cards">
+        <div class="mini">
+          <h4><span class="tr km">បុព្វបទចំនួន</span><span class="tr en">Number prefixes</span><span class="tr fr">Préfixes numériques</span></h4>
+          <ul>
+            <li>1 Mono &nbsp;·&nbsp; 2 Di &nbsp;·&nbsp; 3 Tri</li>
+            <li>4 Tetra &nbsp;·&nbsp; 5 Penta &nbsp;·&nbsp; 6 Hexa</li>
+            <li>7 Hepta &nbsp;·&nbsp; 8 Octa &nbsp;·&nbsp; 9 Nona &nbsp;·&nbsp; 10 Deca</li>
+          </ul>
+        </div>
+        <div class="mini">
+          <h4><span class="tr km">បុព្វបទអាល់កាន</span><span class="tr en">Alkane stems</span><span class="tr fr">Préfixes des alcanes</span></h4>
+          <ul>
+            <li>C1 Meth &nbsp;·&nbsp; C2 Eth &nbsp;·&nbsp; C3 Prop</li>
+            <li>C4 But &nbsp;·&nbsp; C5 Pent &nbsp;·&nbsp; C6 Hex</li>
+            <li>C7 Hept &nbsp;·&nbsp; C8 Oct &nbsp;·&nbsp; C9 Non &nbsp;·&nbsp; C10 Dec</li>
+            <li>C<sub>n</sub>H<sub>2n+2</sub> alkane &nbsp;·&nbsp; C<sub>n</sub>H<sub>2n</sub> alkene &nbsp;·&nbsp; C<sub>n</sub>H<sub>2n&minus;2</sub> alkyne</li>
+          </ul>
+        </div>
+        <div class="mini">
+          <h4><span class="tr km">បង្គុំនាទី</span><span class="tr en">Functional groups</span><span class="tr fr">Groupes fonctionnels</span></h4>
+          <ul>
+            <li>Alkane C&ndash;C &nbsp;·&nbsp; Alkene C=C &nbsp;·&nbsp; Alkyne C&equiv;C</li>
+            <li>Alcohol R&ndash;OH &nbsp;·&nbsp; Ether R&ndash;O&ndash;R&prime;</li>
+            <li>Aldehyde R&ndash;CHO &nbsp;·&nbsp; Ketone R&ndash;CO&ndash;R&prime;</li>
+            <li>Carboxylic acid R&ndash;COOH &nbsp;·&nbsp; Ester R&ndash;COO&ndash;R&prime;</li>
+            <li>Amide R&ndash;CONH<sub>2</sub> &nbsp;·&nbsp; Amine R&ndash;NH<sub>2</sub></li>
+            <li>Acyl chloride R&ndash;COCl &nbsp;·&nbsp; Anhydride (R&ndash;CO)<sub>2</sub>O</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</section>
+
+<section class="section" style="padding-top:0">
+  <div class="wrap">
+    <div class="cta-band">
+      <div>
+        <h2 data-i18n="pt.ctaH2">Chemistry making less sense than it should?</h2>
+        <p data-i18n="pt.ctaP">Our science tutors work through moles, redox and organic naming step by step — at home or online.</p>
+      </div>
+      <div class="btn-row">
+        <a class="btn btn--white btn--lg" href="contact" data-i18n="learn.ctaBtn">Book free consultation</a>
+        <a class="btn btn--onDark btn--lg" href="tel:+85593792767" data-i18n="common.callBtn">Call +855 93 792 767</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">
+          <img src="assets/img/logo.png" alt="" width="42" height="42">
+          <span class="brand-text"><span class="brand-name">Alpha Academy</span><span class="brand-tag">Cambodia</span></span>
+        </div>
+        <p data-i18n="foot.blurb">A leading education service provider in Cambodia — dedicated home and online tutoring committed to enhancing students' academic performance across subjects and languages.</p>
+        <div class="socials">
+          <a href="https://t.me/+85593792767" aria-label="Telegram" data-i18n-aria="common.telegram" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.9 4.3l-3 14.2c-.2 1-.8 1.3-1.7.8l-4.6-3.4-2.2 2.1c-.3.3-.5.5-1 .5l.3-4.7 8.6-7.8c.4-.3-.1-.5-.6-.2L6.1 12.6l-4.5-1.4c-1-.3-1-1 .2-1.4l17.6-6.8c.8-.3 1.5.2 1.2 1.3z"/></svg></a>
+          <a href="mailto:alphaacademycambodia@gmail.com" aria-label="Email us" data-i18n-aria="common.emailUs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 6 10-6"/></svg></a>
+          <a href="tel:+85593792767" aria-label="Call us" data-i18n-aria="common.callUs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg></a>
+        </div>
+      </div>
+      <div>
+        <h4 data-i18n="foot.explore">Explore</h4>
+        <ul class="footer-links">
+          <li><a href="index" data-i18n="nav.home">Home</a></li>
+          <li><a href="services" data-i18n="nav.services">Services</a></li>
+          <li><a href="about" data-i18n="foot.aboutUs">About us</a></li>
+          <li><a href="contact" data-i18n="nav.contact">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 data-i18n="foot.learning">Learning Hub</h4>
+        <ul class="footer-links">
+          <li><a href="grade-12-math-formula" data-i18n="nav.g12">Grade 12 Formula</a></li>
+          <li><a href="periodic-table-of-elements" data-i18n="nav.pt">Periodic Table</a></li>
+          <li><a href="english-tenses" data-i18n="nav.tense">English Tenses</a></li>
+          <li><a href="learning" data-i18n="foot.allRes">All resources</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 data-i18n="foot.touch">Get in touch</h4>
+        <ul class="footer-contact">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg><a href="tel:+85593792767">+855 93 792 767</a></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 6 10-6"/></svg><a href="mailto:alphaacademycambodia@gmail.com">alphaacademycambodia@gmail.com</a></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span data-i18n="foot.location">Phnom Penh, Cambodia</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span data-i18n="foot.hours">Mon–Sun · 8:00 – 20:00</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span data-year>2026</span> <span data-i18n="foot.rights">Alpha Academy Cambodia. All rights reserved.</span></span>
+      <span data-i18n="foot.tagline">Home &amp; online tutoring · Phnom Penh, Cambodia</span>
+    </div>
+  </div>
+</footer>
+
+<div class="float-actions">
+  <button class="fab fab--top" type="button" aria-label="Back to top" data-i18n-aria="common.backTop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>
+  <a class="fab fab--telegram" href="https://t.me/+85593792767" target="_blank" rel="noopener" aria-label="Chat on Telegram" data-i18n-aria="common.telegram"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.9 4.3l-3 14.2c-.2 1-.8 1.3-1.7.8l-4.6-3.4-2.2 2.1c-.3.3-.5.5-1 .5l.3-4.7 8.6-7.8c.4-.3-.1-.5-.6-.2L6.1 12.6l-4.5-1.4c-1-.3-1-1 .2-1.4l17.6-6.8c.8-.3 1.5.2 1.2 1.3z"/></svg></a>
+  <a class="fab" href="tel:+85593792767" aria-label="Call Alpha Academy Cambodia" data-i18n-aria="common.callUs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg></a>
+</div>
+
+<script src="assets/js/i18n.js"></script>
+<script src="assets/js/main.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  /* Element families. Colours are deliberately light so the dark symbol
+     text stays legible in both the light and the dark site theme.       */
+  var FAM = [
+    { c: '#ff8a65', en: 'Alkali metal',        km: 'លោហៈអាល់កាឡាំង',   fr: 'Métal alcalin' },
+    { c: '#ffb74d', en: 'Alkaline earth metal',km: 'លោហៈអាល់កាលីណូទែ', fr: 'Métal alcalino-terreux' },
+    { c: '#64b5f6', en: 'Transition metal',    km: 'លោហៈឆ្លង',          fr: 'Métal de transition' },
+    { c: '#4db6ac', en: 'Post-transition metal',km:'លោហៈក្រោយឆ្លង',     fr: 'Métal pauvre' },
+    { c: '#9575cd', en: 'Metalloid',           km: 'ពាក់កណ្តាលលោហៈ',    fr: 'Métalloïde' },
+    { c: '#81c784', en: 'Reactive non-metal',  km: 'អលោហៈ',            fr: 'Non-métal' },
+    { c: '#4dd0e1', en: 'Halogen',             km: 'អាឡូសែន',           fr: 'Halogène' },
+    { c: '#f06292', en: 'Noble gas',           km: 'ឧស្ម័នកម្រ',         fr: 'Gaz noble' },
+    { c: '#ba68c8', en: 'Lanthanide',          km: 'ឡង់តានីត',          fr: 'Lanthanide' },
+    { c: '#f48fb1', en: 'Actinide',            km: 'អាក់ទីនីត',          fr: 'Actinide' },
+    { c: '#b0bec5', en: 'Unknown properties',  km: 'មិនទាន់ដឹងច្បាស់',   fr: 'Propriétés inconnues' }
+  ];
+
+  /* [ Z, symbol, name, atomic mass, family index, column 1-18, row ]
+     Rows 9 and 10 hold the lanthanides and actinides.                   */
+  var EL = [
+    [1,'H','Hydrogen',1.008,5,1,1],       [2,'He','Helium',4.003,7,18,1],
+    [3,'Li','Lithium',6.94,0,1,2],        [4,'Be','Beryllium',9.012,1,2,2],
+    [5,'B','Boron',10.81,4,13,2],         [6,'C','Carbon',12.011,5,14,2],
+    [7,'N','Nitrogen',14.007,5,15,2],     [8,'O','Oxygen',15.999,5,16,2],
+    [9,'F','Fluorine',18.998,6,17,2],     [10,'Ne','Neon',20.180,7,18,2],
+    [11,'Na','Sodium',22.990,0,1,3],      [12,'Mg','Magnesium',24.305,1,2,3],
+    [13,'Al','Aluminium',26.982,3,13,3],  [14,'Si','Silicon',28.085,4,14,3],
+    [15,'P','Phosphorus',30.974,5,15,3],  [16,'S','Sulfur',32.06,5,16,3],
+    [17,'Cl','Chlorine',35.45,6,17,3],    [18,'Ar','Argon',39.95,7,18,3],
+    [19,'K','Potassium',39.098,0,1,4],    [20,'Ca','Calcium',40.078,1,2,4],
+    [21,'Sc','Scandium',44.956,2,3,4],    [22,'Ti','Titanium',47.867,2,4,4],
+    [23,'V','Vanadium',50.942,2,5,4],     [24,'Cr','Chromium',51.996,2,6,4],
+    [25,'Mn','Manganese',54.938,2,7,4],   [26,'Fe','Iron',55.845,2,8,4],
+    [27,'Co','Cobalt',58.933,2,9,4],      [28,'Ni','Nickel',58.693,2,10,4],
+    [29,'Cu','Copper',63.546,2,11,4],     [30,'Zn','Zinc',65.38,2,12,4],
+    [31,'Ga','Gallium',69.723,3,13,4],    [32,'Ge','Germanium',72.630,4,14,4],
+    [33,'As','Arsenic',74.922,4,15,4],    [34,'Se','Selenium',78.971,5,16,4],
+    [35,'Br','Bromine',79.904,6,17,4],    [36,'Kr','Krypton',83.798,7,18,4],
+    [37,'Rb','Rubidium',85.468,0,1,5],    [38,'Sr','Strontium',87.62,1,2,5],
+    [39,'Y','Yttrium',88.906,2,3,5],      [40,'Zr','Zirconium',91.224,2,4,5],
+    [41,'Nb','Niobium',92.906,2,5,5],     [42,'Mo','Molybdenum',95.95,2,6,5],
+    [43,'Tc','Technetium',98,2,7,5],      [44,'Ru','Ruthenium',101.07,2,8,5],
+    [45,'Rh','Rhodium',102.91,2,9,5],     [46,'Pd','Palladium',106.42,2,10,5],
+    [47,'Ag','Silver',107.87,2,11,5],     [48,'Cd','Cadmium',112.41,2,12,5],
+    [49,'In','Indium',114.82,3,13,5],     [50,'Sn','Tin',118.71,3,14,5],
+    [51,'Sb','Antimony',121.76,4,15,5],   [52,'Te','Tellurium',127.60,4,16,5],
+    [53,'I','Iodine',126.90,6,17,5],      [54,'Xe','Xenon',131.29,7,18,5],
+    [55,'Cs','Caesium',132.91,0,1,6],     [56,'Ba','Barium',137.33,1,2,6],
+    [57,'La','Lanthanum',138.91,8,3,9],   [58,'Ce','Cerium',140.12,8,4,9],
+    [59,'Pr','Praseodymium',140.91,8,5,9],[60,'Nd','Neodymium',144.24,8,6,9],
+    [61,'Pm','Promethium',145,8,7,9],     [62,'Sm','Samarium',150.36,8,8,9],
+    [63,'Eu','Europium',151.96,8,9,9],    [64,'Gd','Gadolinium',157.25,8,10,9],
+    [65,'Tb','Terbium',158.93,8,11,9],    [66,'Dy','Dysprosium',162.50,8,12,9],
+    [67,'Ho','Holmium',164.93,8,13,9],    [68,'Er','Erbium',167.26,8,14,9],
+    [69,'Tm','Thulium',168.93,8,15,9],    [70,'Yb','Ytterbium',173.05,8,16,9],
+    [71,'Lu','Lutetium',174.97,8,17,9],   [72,'Hf','Hafnium',178.49,2,4,6],
+    [73,'Ta','Tantalum',180.95,2,5,6],    [74,'W','Tungsten',183.84,2,6,6],
+    [75,'Re','Rhenium',186.21,2,7,6],     [76,'Os','Osmium',190.23,2,8,6],
+    [77,'Ir','Iridium',192.22,2,9,6],     [78,'Pt','Platinum',195.08,2,10,6],
+    [79,'Au','Gold',196.97,2,11,6],       [80,'Hg','Mercury',200.59,2,12,6],
+    [81,'Tl','Thallium',204.38,3,13,6],   [82,'Pb','Lead',207.2,3,14,6],
+    [83,'Bi','Bismuth',208.98,3,15,6],    [84,'Po','Polonium',209,3,16,6],
+    [85,'At','Astatine',210,6,17,6],      [86,'Rn','Radon',222,7,18,6],
+    [87,'Fr','Francium',223,0,1,7],       [88,'Ra','Radium',226,1,2,7],
+    [89,'Ac','Actinium',227,9,3,10],      [90,'Th','Thorium',232.04,9,4,10],
+    [91,'Pa','Protactinium',231.04,9,5,10],[92,'U','Uranium',238.03,9,6,10],
+    [93,'Np','Neptunium',237,9,7,10],     [94,'Pu','Plutonium',244,9,8,10],
+    [95,'Am','Americium',243,9,9,10],     [96,'Cm','Curium',247,9,10,10],
+    [97,'Bk','Berkelium',247,9,11,10],    [98,'Cf','Californium',251,9,12,10],
+    [99,'Es','Einsteinium',252,9,13,10],  [100,'Fm','Fermium',257,9,14,10],
+    [101,'Md','Mendelevium',258,9,15,10], [102,'No','Nobelium',259,9,16,10],
+    [103,'Lr','Lawrencium',266,9,17,10],  [104,'Rf','Rutherfordium',267,2,4,7],
+    [105,'Db','Dubnium',268,2,5,7],       [106,'Sg','Seaborgium',269,2,6,7],
+    [107,'Bh','Bohrium',270,2,7,7],       [108,'Hs','Hassium',269,2,8,7],
+    [109,'Mt','Meitnerium',278,10,9,7],   [110,'Ds','Darmstadtium',281,10,10,7],
+    [111,'Rg','Roentgenium',282,10,11,7], [112,'Cn','Copernicium',285,2,12,7],
+    [113,'Nh','Nihonium',286,10,13,7],    [114,'Fl','Flerovium',289,10,14,7],
+    [115,'Mc','Moscovium',290,10,15,7],   [116,'Lv','Livermorium',293,10,16,7],
+    [117,'Ts','Tennessine',294,10,17,7],  [118,'Og','Oganesson',294,10,18,7]
+  ];
+
+  var grid = document.getElementById('ptGrid');
+  var card = document.getElementById('elCard');
+  var lang = 'en';
+  var filter = null;
+  var shownZ = null;
+
+  function t(o) { return o[lang] || o.en; }
+
+  /* ------------------------------------------------------ build the grid */
+  function build() {
+    var html = '';
+    EL.forEach(function (e) {
+      html += '<button class="el" type="button" data-z="' + e[0] + '" data-fam="' + e[4] + '"' +
+              ' style="background:' + FAM[e[4]].c + ';grid-column:' + e[5] + ';grid-row:' + e[6] + '"' +
+              ' title="' + e[2] + '">' +
+                '<span class="z">' + e[0] + '</span>' +
+                '<span class="sym">' + e[1] + '</span>' +
+                '<span class="nm">' + e[2] + '</span>' +
+              '</button>';
+    });
+    /* Markers that stand in for the two f-block rows. */
+    html += '<span class="gapcell" style="grid-column:3;grid-row:6">57&ndash;71</span>';
+    html += '<span class="gapcell" style="grid-column:3;grid-row:7">89&ndash;103</span>';
+    html += '<span class="pt-spacer" style="grid-row:8"></span>';
+    grid.innerHTML = html;
+
+    document.getElementById('ptLegend').innerHTML = FAM.map(function (f, i) {
+      return '<button type="button" data-fam="' + i + '" aria-pressed="false">' +
+             '<i style="background:' + f.c + '"></i><span class="fam-label">' + t(f) + '</span></button>';
+    }).join('');
+  }
+
+  function applyFilter() {
+    document.querySelectorAll('.el').forEach(function (b) {
+      b.classList.toggle('dim', filter !== null && +b.dataset.fam !== filter);
+    });
+    document.querySelectorAll('#ptLegend button').forEach(function (b) {
+      b.setAttribute('aria-pressed', String(filter !== null && +b.dataset.fam === filter));
+    });
+  }
+
+  function showElement(z) {
+    var e = null;
+    for (var i = 0; i < EL.length; i++) { if (EL[i][0] === z) { e = EL[i]; break; } }
+    if (!e) { return; }
+    shownZ = z;
+    var fam = FAM[e[4]];
+    var group = e[6] <= 7 ? e[5] : '—';
+    var period = e[6] <= 7 ? e[6] : (e[6] === 9 ? 6 : 7);
+    var L = {
+      en: ['Atomic number', 'Atomic mass', 'Family', 'Group', 'Period'],
+      km: ['លេខអាតូមិក', 'ម៉ាសអាតូមិក', 'ក្រុមគ្រួសារ', 'ក្រុម', 'ខួប'],
+      fr: ['Numéro atomique', 'Masse atomique', 'Famille', 'Groupe', 'Période']
+    }[lang];
+
+    card.hidden = false;
+    card.innerHTML =
+      '<div class="big" style="background:' + fam.c + '"><b>' + e[1] + '</b><span>' + e[0] + '</span></div>' +
+      '<div><h3 style="margin:0 0 .5rem">' + e[2] + '</h3><div class="el-facts">' +
+        '<div><span>' + L[0] + '</span><b>' + e[0] + '</b></div>' +
+        '<div><span>' + L[1] + '</span><b>' + e[3] + '</b></div>' +
+        '<div><span>' + L[2] + '</span><b>' + t(fam) + '</b></div>' +
+        '<div><span>' + L[3] + '</span><b>' + group + '</b></div>' +
+        '<div><span>' + L[4] + '</span><b>' + period + '</b></div>' +
+      '</div></div>';
+  }
+
+  grid.addEventListener('click', function (e) {
+    var b = e.target.closest('.el');
+    if (b) { showElement(+b.dataset.z); }
+  });
+
+  document.getElementById('ptLegend').addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-fam]');
+    if (!b) { return; }
+    var f = +b.dataset.fam;
+    filter = (filter === f) ? null : f;
+    applyFilter();
+  });
+
+  /* ------------------------------------------------------ language wiring
+     The three-way switch controls the reference text on this page. The
+     site's own EN/KM switch in the header keeps the chrome in step, so we
+     follow it too.                                                       */
+  function setLang(l) {
+    lang = l;
+    ['en', 'km', 'fr'].forEach(function (x) {
+      document.body.classList.toggle('lang-' + x, x === l);
+    });
+    document.querySelectorAll('.lang3 button').forEach(function (b) {
+      b.setAttribute('aria-pressed', String(b.dataset.l3 === l));
+    });
+    document.querySelectorAll('#ptLegend button').forEach(function (b, i) {
+      b.querySelector('.fam-label').textContent = t(FAM[i]);
+    });
+    if (shownZ !== null) { showElement(shownZ); }
+  }
+
+  document.querySelector('.lang3').addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-l3]');
+    if (b) { setLang(b.dataset.l3); }
+  });
+
+  document.addEventListener('aa:langchange', function (e) {
+    setLang(e.detail.lang === 'km' ? 'km' : 'en');
+  });
+
+  build();
+  setLang(window.AAi18n && window.AAi18n.get() === 'km' ? 'km' : 'en');
+})();
+</script>
+</body>
+</html>

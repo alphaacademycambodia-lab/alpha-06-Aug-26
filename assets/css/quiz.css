@@ -1,0 +1,135 @@
+/* Alpha Academy Cambodia — shared quiz interface
+   ---------------------------------------------------------------------------
+   Used by english-tenses.html and english-grammar.html. The markup is written
+   by assets/js/quiz-engine.js, so if you rename a class here, rename it there
+   too. All colours come from the site tokens in style.css, which is why the
+   quiz follows light and dark mode without any extra work.                  */
+
+.aq-card{
+  background:var(--surface);border:1px solid var(--ink-200);border-radius:var(--r-lg);
+  padding:clamp(1.2rem,3vw,2rem);box-shadow:var(--shadow-sm);
+}
+
+/* -------------------------------------------------------------- header */
+.aq-head{
+  display:flex;flex-wrap:wrap;gap:.8rem;align-items:flex-start;justify-content:space-between;
+  border-bottom:1px solid var(--ink-200);padding-bottom:1rem;margin-bottom:1.1rem;
+}
+.aq-pill{
+  display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
+  padding:.28rem .65rem;border-radius:var(--r-pill);background:var(--brand-50);color:var(--brand-600);
+}
+.aq-head h2{margin:.4rem 0 0;font-size:clamp(1.05rem,2.4vw,1.3rem)}
+.aq-stats{display:flex;gap:1.4rem;text-align:right;margin-left:auto}
+.aq-stats > div{line-height:1.2}
+.aq-stats small{
+  display:block;font-size:.68rem;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-400);
+}
+.aq-stats b{font-size:1.12rem;color:var(--brand-600);font-family:var(--font-display);font-variant-numeric:tabular-nums}
+.aq-stats .aq-clock b{color:var(--ink-700)}
+
+.aq-bar{height:7px;border-radius:var(--r-pill);background:var(--ink-100);overflow:hidden;margin-bottom:1.4rem}
+.aq-bar i{display:block;height:100%;width:0;background:var(--grad-brand);transition:width .3s var(--ease)}
+
+/* ------------------------------------------------------------ question */
+.aq-q{font-size:clamp(1rem,2.4vw,1.16rem);line-height:1.75;margin:0 0 1.2rem;font-weight:500}
+.aq-q .n{color:var(--ink-400);font-weight:700;margin-right:.15rem}
+.aq-q .gap{
+  display:inline-block;min-width:5.5ch;border-bottom:2px solid var(--brand-400);
+  vertical-align:baseline;margin-inline:.15rem;
+}
+
+.aq-opts{display:flex;flex-direction:column;gap:.6rem;margin-bottom:1.2rem}
+.aq-opt{
+  display:flex;align-items:center;gap:.75rem;width:100%;min-height:52px;
+  appearance:none;cursor:pointer;font:inherit;text-align:left;
+  padding:.75rem .95rem;border-radius:var(--r-sm);
+  background:var(--surface-2);border:1.5px solid var(--ink-200);color:inherit;
+  transition:border-color .15s,background .15s;
+}
+.aq-opt:hover:not(:disabled){border-color:var(--brand-400);background:var(--brand-50)}
+.aq-opt:disabled{cursor:default}
+.aq-opt .key{
+  flex:none;display:grid;place-items:center;width:26px;height:26px;border-radius:7px;
+  background:var(--surface);border:1px solid var(--ink-200);font-size:.78rem;font-weight:700;color:var(--ink-500);
+}
+.aq-opt .txt{flex:1}
+.aq-opt .mark{flex:none;font-weight:700;font-size:1.05rem}
+.aq-opt.is-right{border-color:var(--success-500);background:rgba(22,163,74,.10)}
+.aq-opt.is-right .key{border-color:var(--success-500);color:var(--success-500)}
+.aq-opt.is-right .mark{color:var(--success-500)}
+.aq-opt.is-wrong{border-color:#dc2626;background:rgba(220,38,38,.10)}
+.aq-opt.is-wrong .key{border-color:#dc2626;color:#dc2626}
+.aq-opt.is-wrong .mark{color:#dc2626}
+.aq-opt.is-dim{opacity:.5}
+
+.aq-why{
+  border-left:4px solid var(--brand-500);border-radius:var(--r-sm);
+  background:var(--brand-50);padding:.9rem 1rem;margin-bottom:1.2rem;
+}
+.aq-why b{display:block;font-size:.86rem;margin-bottom:.2rem}
+.aq-why p{margin:0;font-size:.92rem;line-height:1.65;color:var(--ink-700)}
+.aq-why.ok{border-left-color:var(--success-500)}
+.aq-why.no{border-left-color:#dc2626}
+.aq-why.skip{border-left-color:var(--accent-500);background:var(--accent-100)}
+
+/* ------------------------------------------------------------- footer */
+.aq-foot{
+  display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;
+  border-top:1px solid var(--ink-200);padding-top:1.1rem;
+}
+.aq-foot .spacer{flex:1 1 auto}
+.aq-nav{
+  appearance:none;cursor:pointer;font:inherit;font-weight:600;font-size:.88rem;
+  min-height:44px;padding:.55rem 1.1rem;border-radius:var(--r-pill);
+  background:var(--surface-2);border:1px solid var(--ink-200);color:var(--ink-700);
+  transition:all .15s var(--ease);
+}
+.aq-nav:hover:not(:disabled){border-color:var(--brand-400);color:var(--brand-600)}
+.aq-nav:disabled{opacity:.4;cursor:not-allowed}
+.aq-exit{
+  appearance:none;border:0;background:none;cursor:pointer;font:inherit;font-weight:600;font-size:.88rem;
+  color:var(--ink-400);min-height:44px;padding:0 .3rem;
+}
+.aq-exit:hover{color:var(--brand-600)}
+.aq-next{
+  appearance:none;border:0;cursor:pointer;font:inherit;font-weight:600;font-size:.9rem;
+  min-height:46px;padding:.6rem 1.5rem;border-radius:var(--r-pill);
+  background:var(--grad-brand);color:#fff;box-shadow:var(--shadow-xs);
+}
+.aq-next:hover:not(:disabled){filter:brightness(1.05)}
+.aq-next:disabled{opacity:.45;cursor:not-allowed}
+.aq-hint{
+  flex-basis:100%;font-size:.76rem;color:var(--ink-400);margin:.2rem 0 0;
+}
+
+/* ------------------------------------------------------------ results */
+.aq-done{text-align:center}
+.aq-done h2{margin:.5rem 0 .2rem}
+.aq-done .sub{color:var(--ink-500);margin:0}
+.aq-grid{display:grid;gap:1.6rem;align-items:center;margin:1.6rem 0}
+@media (min-width:760px){.aq-grid{grid-template-columns:210px 1fr}}
+.aq-donut{position:relative;width:200px;height:200px;margin-inline:auto}
+.aq-donut svg{transform:rotate(-90deg)}
+.aq-donut .mid{position:absolute;inset:0;display:grid;place-content:center;text-align:center}
+.aq-donut .mid b{font-family:var(--font-display);font-size:1.9rem;color:var(--brand-600);line-height:1}
+.aq-donut .mid small{font-size:.68rem;text-transform:uppercase;letter-spacing:.09em;color:var(--ink-400)}
+.aq-metrics{
+  background:var(--surface-2);border:1px solid var(--ink-200);border-radius:var(--r-md);
+  padding:1.1rem 1.2rem;text-align:left;
+}
+.aq-metrics div{display:flex;justify-content:space-between;gap:1rem;padding:.42rem 0;font-size:.93rem}
+.aq-metrics div+div{border-top:1px dashed var(--ink-200)}
+.aq-metrics b{font-weight:600;font-variant-numeric:tabular-nums}
+
+.aq-review{margin-top:1.6rem;border-top:1px solid var(--ink-200);padding-top:1.2rem;text-align:left}
+.aq-review h3{font-size:1rem;margin:0 0 .9rem}
+.aq-review ol{margin:0;padding-left:1.15rem;display:flex;flex-direction:column;gap:.95rem}
+.aq-review li{font-size:.9rem;line-height:1.65;color:var(--ink-700)}
+.aq-review .yours{color:#dc2626}
+.aq-review .skipped{color:var(--accent-500)}
+.aq-review .right{color:var(--success-500);font-weight:600}
+.aq-review .note{color:var(--ink-500)}
+
+.aq-btns{display:flex;flex-wrap:wrap;gap:.7rem;justify-content:center}
+.aq-hide{display:none !important}
