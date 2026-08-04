@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Learning Hub | Free Study Resources — Alpha Academy Cambodia</title>
-<meta name="description" content="Free revision resources from Alpha Academy Cambodia — Grade 12 mathematics formulas, the periodic table and chemistry reference, and 1,170 English tense exercises. Organised by subject.">
+<meta name="description" content="Free revision resources from Alpha Academy Cambodia — Grade 12 mathematics formulas, the periodic table and chemistry reference, and 1,170 English tense exercises. Organised by subject, then by grade and by language.">
 <link rel="canonical" href="https://www.alphaacademycambodia.com/learning">
 <meta name="theme-color" content="#0b57d0">
 <meta property="og:type" content="website">
@@ -80,6 +80,30 @@ a.res:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);border-color:
 .res .arrow svg{width:15px;height:15px}
 .res--soon{opacity:.72;cursor:default}
 .res--soon:hover{transform:none;box-shadow:var(--shadow-xs);border-color:var(--ink-200)}
+
+/* ------------------------------------------- group cards (grade / language) */
+.res--group h3{font-size:1.12rem}
+.res--group .mini{display:flex;flex-wrap:wrap;gap:.3rem;margin:.6rem 0 .15rem}
+.res--group .mini span{
+  font-size:.7rem;font-weight:600;white-space:nowrap;
+  color:var(--ink-500);background:var(--ink-100);
+  border-radius:var(--r-pill);padding:.22rem .55rem;
+  transition:background .16s var(--ease),color .16s var(--ease);
+}
+a.res--group:hover .mini span{background:color-mix(in srgb, var(--sc) 13%, transparent);color:var(--sc)}
+
+/* ------------------------------------------------------ drilled-down views */
+.view{scroll-margin-top:100px}
+.back-link{
+  display:inline-flex;align-items:center;gap:.45rem;text-decoration:none;
+  font-size:.86rem;font-weight:600;color:var(--ink-500);
+  padding:.45rem .9rem;border-radius:var(--r-pill);margin-bottom:1.5rem;
+  background:var(--surface);border:1px solid var(--ink-200);box-shadow:var(--shadow-xs);
+  transition:all .16s var(--ease);
+}
+.back-link:hover{color:var(--sc);border-color:var(--sc);transform:translateX(-3px)}
+.back-link svg{width:15px;height:15px}
+[hidden]{display:none !important}
 </style>
 </head>
 <body>
@@ -117,6 +141,8 @@ a.res:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);border-color:
                   <li><a href="grade-12-limit"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18c4 0 4-12 8-12s4 12 8 12"/><path d="M3 21h18"/></svg></i><span><span data-i18n="nav.lim">Limits</span><small data-i18n="nav.limSub">Lesson &#183; 51 exercises</small></span></a></li>
                   <li><a href="grade-12-integral"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 20c0-8 0-16 5-16 1.5 0 2.5 1 2.5 2.5"/><path d="M6 12h8"/></svg></i><span><span data-i18n="nav.int">Integrals</span><small data-i18n="nav.intSub">Lesson &#183; 28 exercises</small></span></a></li>
                   <li><a href="grade-12-derivative"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20c6 0 6-16 12-16"/><path d="M14 14l6 6M20 14l-6 6"/></svg></i><span><span data-i18n="nav.der">Derivatives</span><small data-i18n="nav.derSub">Lesson &#183; 13 exercises</small></span></a></li>
+                  <li><a href="grade-12-function"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 3v16a2 2 0 0 0 2 2h15"/><path d="M6 17c4 0 5-10 9-10 2 0 3 2 5 3"/></svg></i><span><span data-i18n="nav.fn">Functions</span><small data-i18n="nav.fnSub">Lesson &#183; 33 exercises</small></span></a></li>
+                  <li><a href="grade-12-conic"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="12" rx="9" ry="5.5"/><path d="M3 12a9 5.5 0 0 0 18 0"/><circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none"/></svg></i><span><span data-i18n="nav.con">Conics</span><small data-i18n="nav.conSub">Lesson &#183; 55 exercises</small></span></a></li>
                   <li><a href="grade-12-differential-equation"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17c5 0 5-10 9-10s4 6 9 6"/><path d="M15 3l3 3-3 3"/></svg></i><span><span data-i18n="nav.diff">Differential Equations</span><small data-i18n="nav.diffSub">Lesson &#183; 98 exercises</small></span></a></li>
                   <li><a href="grade-12-probability-exercise"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.4" fill="currentColor" stroke="none"/><circle cx="15.5" cy="15.5" r="1.4" fill="currentColor" stroke="none"/><circle cx="15.5" cy="8.5" r="1.4" fill="currentColor" stroke="none"/></svg></i><span><span data-i18n="nav.prob">Probability</span><small data-i18n="nav.probSub">Lesson &#183; 108 exercises</small></span></a></li>
                 </ul>
@@ -202,13 +228,16 @@ a.res:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);border-color:
 <!-- ========================================================== RESOURCES -->
 <section class="section" aria-labelledby="res-h">
   <div class="wrap">
-    <div class="section-head reveal">
+    <!-- ============================================== LEVEL 1 — subject hub
+         Everything marked .hub-part is the subject index. Opening a grade or
+         a language hides it and shows the matching .view instead.          -->
+    <div class="section-head reveal hub-part">
       <span class="eyebrow" data-i18n="learn.eyebrow">Resources</span>
       <h2 id="res-h" data-i18n="learn.h2">Pick a subject</h2>
       <p data-i18n="learn.p">The same revision material we use in real lessons. Open it for free — no sign-up.</p>
     </div>
 
-    <nav class="subject-nav reveal" aria-label="Subjects">
+    <nav class="subject-nav reveal hub-part" aria-label="Subjects">
       <a href="#math"      style="--sc:#4f7cff"><i></i><span data-i18n="learn.mathH">Mathematics</span></a>
       <a href="#physics"   style="--sc:#8b5cf6"><i></i><span data-i18n="learn.phyH">Physics</span></a>
       <a href="#chemistry" style="--sc:#12b886"><i></i><span data-i18n="learn.chemH">Chemistry</span></a>
@@ -217,16 +246,64 @@ a.res:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);border-color:
     </nav>
 
     <!-- ---------------------------------------------------- MATHEMATICS -->
-    <section class="subject reveal" id="math" style="--sc:#4f7cff" aria-labelledby="math-h">
+    <section class="subject reveal hub-part" id="math" style="--sc:#4f7cff" aria-labelledby="math-h">
       <div class="subject-head">
         <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M12 14v6M9 17h6M5 15l6 6M11 15l-6 6M16 9V4"/><path d="M4 6l4-3 4 3"/></svg></span>
         <div>
           <h2 id="math-h" data-i18n="learn.mathH">Mathematics</h2>
           <span class="kh">គណិតវិទ្យា</span>
         </div>
-        <span class="count"><span data-i18n="learn.avail7">7 resources</span></span>
+        <span class="count"><span data-i18n="learn.avail9">9 resources</span></span>
       </div>
-      <p class="blurb" data-i18n="learn.mathP">Formula books and revision sheets written for the national examination — every rule in one place, in Khmer.</p>
+      <p class="blurb" data-i18n="learn.mathPick">Choose a grade — every lesson, formula sheet and exercise set for that year sits inside.</p>
+
+      <div class="res-grid">
+        <a class="res res--group" href="#math-grade-12">
+          <span class="tag open" data-i18n="learn.open">Open</span>
+          <h3 data-i18n="learn.g12Card">Mathematics Grade 12</h3>
+          <p data-i18n="learn.g12CardP">The whole Grade 12 syllabus — complex numbers, limits, derivatives, integrals, differential equations and probability, plus the formula book.</p>
+          <span class="mini">
+            <span data-i18n="nav.g12">Grade 12 Formula</span>
+            <span data-i18n="nav.cx">Complex Numbers</span>
+            <span data-i18n="nav.lim">Limits</span>
+            <span data-i18n="nav.der">Derivatives</span>
+            <span data-i18n="nav.fn">Functions</span>
+            <span data-i18n="nav.con">Conics</span>
+            <span data-i18n="nav.int">Integrals</span>
+            <span data-i18n="nav.diff">Differential Equations</span>
+            <span data-i18n="nav.prob">Probability</span>
+          </span>
+          <span class="meta">
+            <span data-i18n="learn.g12CardS">9 resources · 449 exercises</span>
+            <span class="arrow"><span data-i18n="learn.openIt">Open</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </span>
+        </a>
+
+        <div class="res res--soon">
+          <span class="tag soon" data-i18n="learn.soon">Soon</span>
+          <h3 data-i18n="learn.g9Card">Mathematics Grade 9</h3>
+          <p data-i18n="learn.mathT2p">Algebra, geometry and trigonometry for the lower-secondary examination.</p>
+          <span class="meta"><span data-i18n="learn.prep">In preparation</span></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================= LEVEL 2 — MATHEMATICS GRADE 12 -->
+    <section class="view" id="math-grade-12" style="--sc:#4f7cff" aria-labelledby="g12-h">
+      <a class="back-link" href="#math">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+        <span data-i18n="learn.backHub">Back to Learning Hub</span>
+      </a>
+
+      <div class="subject-head">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M12 14v6M9 17h6M5 15l6 6M11 15l-6 6M16 9V4"/><path d="M4 6l4-3 4 3"/></svg></span>
+        <div>
+          <h2 id="g12-h" data-i18n="learn.g12H">Mathematics — Grade 12</h2>
+          <span class="kh">គណិតវិទ្យា ថ្នាក់ទី១២</span>
+        </div>
+        <span class="count"><span data-i18n="learn.avail9">9 resources</span></span>
+      </div>
+      <p class="blurb" data-i18n="learn.g12P">Every Grade 12 chapter we have so far, in syllabus order. Each one is a lesson with worked examples followed by exercises — readable in Khmer or English.</p>
 
       <div class="res-grid">
         <a class="res" href="grade-12-math-formula">
@@ -259,6 +336,26 @@ a.res:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);border-color:
           </span>
         </a>
 
+        <a class="res" href="grade-12-conic">
+          <span class="tag open" data-i18n="learn.open">Open</span>
+          <h3 data-i18n="learn.mathT11">Conics — lesson &amp; exercises</h3>
+          <p data-i18n="learn.mathT11p">The parabola, the ellipse and the hyperbola as reference tables — standard equation, vertex, focus, directrix, asymptotes and eccentricity, both centred at the origin and at I(h,k) — then 55 exercises in three sets.</p>
+          <span class="meta">
+            <span data-i18n="learn.mathT11s">Lesson &#183; 55 exercises &#183; ខ្មែរ / EN</span>
+            <span class="arrow"><span data-i18n="learn.openIt">Open</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </span>
+        </a>
+
+        <a class="res" href="grade-12-function">
+          <span class="tag open" data-i18n="learn.open">Open</span>
+          <h3 data-i18n="learn.mathT10">Functions — lesson &amp; exercises</h3>
+          <p data-i18n="learn.mathT10p">Asymptotes, the plan for studying a function, variation, relative extrema, inflection points, symmetry, tangent lines and the position of two curves — then 33 exercises on rational, exponential and logarithm functions, curve sketching included.</p>
+          <span class="meta">
+            <span data-i18n="learn.mathT10s">Lesson &#183; 33 exercises &#183; ខ្មែរ / EN</span>
+            <span class="arrow"><span data-i18n="learn.openIt">Open</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </span>
+        </a>
+
         <a class="res" href="grade-12-derivative">
           <span class="tag open" data-i18n="learn.open">Open</span>
           <h3 data-i18n="learn.mathT6">Derivatives — lesson &amp; exercises</h3>
@@ -282,9 +379,9 @@ a.res:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);border-color:
         <a class="res" href="grade-12-differential-equation">
           <span class="tag open" data-i18n="learn.open">Open</span>
           <h3 data-i18n="learn.mathT9">Differential Equations — lesson &amp; exercises</h3>
-          <p data-i18n="learn.mathT9p">First and second order in one page: separable equations, integrating factors, variation of constants, the characteristic equation and undetermined coefficients — then 36 multiple-choice and 62 written exercises including past national examination questions.</p>
+          <p data-i18n="learn.mathT9p">First and second order in one page: separable equations, integrating factors, variation of constants, the characteristic equation and undetermined coefficients — then 36 multiple-choice and 62 written exercises, plus the BaccII question from every year since 2002.</p>
           <span class="meta">
-            <span data-i18n="learn.mathT9s">Lesson &#183; 98 exercises &#183; ខ្មែរ / EN</span>
+            <span data-i18n="learn.mathT9s">Lesson &#183; 98 exercises &#183; 23 BaccII years</span>
             <span class="arrow"><span data-i18n="learn.openIt">Open</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
           </span>
         </a>
@@ -301,13 +398,6 @@ a.res:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);border-color:
 
         <div class="res res--soon">
           <span class="tag soon" data-i18n="learn.soon">Soon</span>
-          <h3 data-i18n="learn.mathT2">Grade 9 Formulas</h3>
-          <p data-i18n="learn.mathT2p">Algebra, geometry and trigonometry for the lower-secondary examination.</p>
-          <span class="meta"><span data-i18n="learn.prep">In preparation</span></span>
-        </div>
-
-        <div class="res res--soon">
-          <span class="tag soon" data-i18n="learn.soon">Soon</span>
           <h3 data-i18n="learn.mathT3">Past exam papers</h3>
           <p data-i18n="learn.mathT3p">Worked solutions to recent national examination papers.</p>
           <span class="meta"><span data-i18n="learn.prep">In preparation</span></span>
@@ -316,7 +406,7 @@ a.res:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);border-color:
     </section>
 
     <!-- -------------------------------------------------------- PHYSICS -->
-    <section class="subject reveal" id="physics" style="--sc:#8b5cf6" aria-labelledby="phy-h">
+    <section class="subject reveal hub-part" id="physics" style="--sc:#8b5cf6" aria-labelledby="phy-h">
       <div class="subject-head">
         <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.2"/><ellipse cx="12" cy="12" rx="10" ry="4.5"/><ellipse cx="12" cy="12" rx="10" ry="4.5" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4.5" transform="rotate(-60 12 12)"/></svg></span>
         <div>
@@ -344,7 +434,7 @@ a.res:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);border-color:
     </section>
 
     <!-- ------------------------------------------------------ CHEMISTRY -->
-    <section class="subject reveal" id="chemistry" style="--sc:#12b886" aria-labelledby="chem-h">
+    <section class="subject reveal hub-part" id="chemistry" style="--sc:#12b886" aria-labelledby="chem-h">
       <div class="subject-head">
         <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v6.5L4.6 18A2 2 0 0 0 6.3 21h11.4a2 2 0 0 0 1.7-3L14 9.5V3"/><path d="M7.5 15h9"/></svg></span>
         <div>
@@ -383,7 +473,7 @@ a.res:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);border-color:
     </section>
 
     <!-- -------------------------------------------------------- BIOLOGY -->
-    <section class="subject reveal" id="biology" style="--sc:#e8590c" aria-labelledby="bio-h">
+    <section class="subject reveal hub-part" id="biology" style="--sc:#e8590c" aria-labelledby="bio-h">
       <div class="subject-head">
         <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3c0 6 10 6 10 12M17 3c0 6-10 6-10 12M7 21h10M6 8h12M6 16h12"/></svg></span>
         <div>
@@ -411,7 +501,7 @@ a.res:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);border-color:
     </section>
 
     <!-- ------------------------------------------------- LANGUAGE CENTRE -->
-    <section class="subject reveal" id="language" style="--sc:#f0761a" aria-labelledby="lang-h">
+    <section class="subject reveal hub-part" id="language" style="--sc:#f0761a" aria-labelledby="lang-h">
       <div class="subject-head">
         <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3c-2.6 3-2.6 15 0 18"/></svg></span>
         <div>
@@ -420,11 +510,68 @@ a.res:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);border-color:
         </div>
         <span class="count"><span data-i18n="learn.avail3">3 resources</span></span>
       </div>
-      <p class="blurb" data-i18n="learn.langP">Grammar practice, vocabulary lists and examination material for English, Khmer and Chinese.</p>
+      <p class="blurb" data-i18n="learn.langPick">Choose a language — the lessons, vocabulary and practice tests for it all sit inside.</p>
 
-      <h3 id="english" style="font-size:.82rem;text-transform:uppercase;letter-spacing:.09em;color:var(--ink-400);margin:.4rem 0 .8rem;scroll-margin-top:100px">
-        <span data-i18n="learn.english">English</span>
-      </h3>
+      <div class="res-grid">
+        <a class="res res--group" href="#lang-english" style="--sc:#f0761a">
+          <span class="tag open" data-i18n="learn.open">Open</span>
+          <h3 data-i18n="learn.english">English</h3>
+          <p data-i18n="learn.engCardP">Tenses, grammar notes and examination vocabulary — every chapter has the rules, worked examples and a timed test.</p>
+          <span class="mini">
+            <span data-i18n="nav.tense">English Tenses</span>
+            <span data-i18n="nav.gram">Grammar Notes</span>
+          </span>
+          <span class="meta">
+            <span data-i18n="learn.engCardS">2 resources · 1,270 questions</span>
+            <span class="arrow"><span data-i18n="learn.openIt">Open</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </span>
+        </a>
+
+        <a class="res res--group" href="#lang-chinese" style="--sc:#e03131">
+          <span class="tag open" data-i18n="learn.open">Open</span>
+          <h3 data-i18n="learn.chinese">Chinese</h3>
+          <p data-i18n="learn.zhCardP">Pinyin, the four tones, character writing and everyday conversation — written for complete beginners.</p>
+          <span class="mini">
+            <span data-i18n="nav.zh">Chinese for Beginners</span>
+          </span>
+          <span class="meta">
+            <span data-i18n="learn.zhCardS">1 resource · 6 modules</span>
+            <span class="arrow"><span data-i18n="learn.openIt">Open</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </span>
+        </a>
+
+        <a class="res res--group" href="#lang-khmer" style="--sc:#1c7ed6">
+          <span class="tag soon" data-i18n="learn.soon">Soon</span>
+          <h3 data-i18n="learn.khmer">Khmer</h3>
+          <p data-i18n="learn.khCardP">Literature, essay structure and grammar for the national examination.</p>
+          <span class="mini">
+            <span data-i18n="learn.khT1">Khmer literature notes</span>
+          </span>
+          <span class="meta">
+            <span data-i18n="learn.prep">In preparation</span>
+            <span class="arrow"><span data-i18n="learn.seePlan">See what's coming</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ============================================== LEVEL 2 — ENGLISH -->
+    <section class="view" id="lang-english" style="--sc:#f0761a" aria-labelledby="eng-h">
+      <a class="back-link" href="#language">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+        <span data-i18n="learn.backHub">Back to Learning Hub</span>
+      </a>
+
+      <div class="subject-head">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3c-2.6 3-2.6 15 0 18"/></svg></span>
+        <div>
+          <h2 id="eng-h" data-i18n="learn.english">English</h2>
+          <span class="kh">ភាសាអង់គ្លេស</span>
+        </div>
+        <span class="count"><span data-i18n="learn.avail2">2 resources</span></span>
+      </div>
+      <p class="blurb" data-i18n="learn.engP">Grammar, tenses and vocabulary — the same lessons and tests we use in real classes, free to open.</p>
+
       <div class="res-grid">
         <a class="res" href="english-tenses">
           <span class="tag open" data-i18n="learn.open">Open</span>
@@ -454,9 +601,25 @@ a.res:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);border-color:
         </div>
       </div>
 
-      <h3 id="khmer-chinese" style="font-size:.82rem;text-transform:uppercase;letter-spacing:.09em;color:var(--ink-400);margin:1.8rem 0 .8rem">
-        <span data-i18n="learn.otherLang">Khmer &amp; Chinese</span>
-      </h3>
+    </section>
+
+    <!-- ============================================== LEVEL 2 — CHINESE -->
+    <section class="view" id="lang-chinese" style="--sc:#e03131" aria-labelledby="zh-h">
+      <a class="back-link" href="#language">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+        <span data-i18n="learn.backHub">Back to Learning Hub</span>
+      </a>
+
+      <div class="subject-head">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h8M7 5v2c0 3.5-1.5 6.5-4 8.5"/><path d="M4.5 11.5c1.6 2.4 3.9 4.2 6.5 5"/><path d="M13 21l4-9 4 9M14.4 18h5.2"/></svg></span>
+        <div>
+          <h2 id="zh-h" data-i18n="learn.chinese">Chinese</h2>
+          <span class="kh">ភាសាចិន</span>
+        </div>
+        <span class="count"><span data-i18n="learn.avail1">1 resource</span></span>
+      </div>
+      <p class="blurb" data-i18n="learn.zhP">Mandarin from the very first character — pronunciation, writing and everyday speech, with audio on every line.</p>
+
       <div class="res-grid">
         <a class="res" href="chinese-beginner">
           <span class="tag open" data-i18n="learn.open">Open</span>
@@ -470,14 +633,35 @@ a.res:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);border-color:
 
         <div class="res res--soon">
           <span class="tag soon" data-i18n="learn.soon">Soon</span>
-          <h3 data-i18n="learn.khT1">Khmer literature notes</h3>
-          <p data-i18n="learn.khT1p">Set texts, essay structure and grammar for the national examination.</p>
-          <span class="meta"><span data-i18n="learn.prep">In preparation</span></span>
-        </div>
-        <div class="res res--soon">
-          <span class="tag soon" data-i18n="learn.soon">Soon</span>
           <h3 data-i18n="learn.zhT1">HSK vocabulary lists</h3>
           <p data-i18n="learn.zhT1p">HSK 1 to 4 word lists with pinyin, Khmer glosses and audio.</p>
+          <span class="meta"><span data-i18n="learn.prep">In preparation</span></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================ LEVEL 2 — KHMER -->
+    <section class="view" id="lang-khmer" style="--sc:#1c7ed6" aria-labelledby="kh-h">
+      <a class="back-link" href="#language">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+        <span data-i18n="learn.backHub">Back to Learning Hub</span>
+      </a>
+
+      <div class="subject-head">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5a2 2 0 0 1 2-2h13v18H6a2 2 0 0 0-2 2z"/><path d="M8 8h7M8 12h5"/></svg></span>
+        <div>
+          <h2 id="kh-h" data-i18n="learn.khmer">Khmer</h2>
+          <span class="kh">ភាសាខ្មែរ</span>
+        </div>
+        <span class="count"><span data-i18n="learn.soon">Soon</span></span>
+      </div>
+      <p class="blurb" data-i18n="learn.khP">Khmer for the national examination. Our tutors are writing this now — here is what is on the way.</p>
+
+      <div class="res-grid">
+        <div class="res res--soon">
+          <span class="tag soon" data-i18n="learn.soon">Soon</span>
+          <h3 data-i18n="learn.khT1">Khmer literature notes</h3>
+          <p data-i18n="learn.khT1p">Set texts, essay structure and grammar for the national examination.</p>
           <span class="meta"><span data-i18n="learn.prep">In preparation</span></span>
         </div>
       </div>
@@ -535,6 +719,8 @@ a.res:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);border-color:
           <li><a href="grade-12-complex-number" data-i18n="nav.cx">Complex Numbers</a></li>
           <li><a href="grade-12-limit" data-i18n="nav.lim">Limits</a></li>
           <li><a href="grade-12-derivative" data-i18n="nav.der">Derivatives</a></li>
+          <li><a href="grade-12-function" data-i18n="nav.fn">Functions</a></li>
+          <li><a href="grade-12-conic" data-i18n="nav.con">Conics</a></li>
           <li><a href="grade-12-integral" data-i18n="nav.int">Integrals</a></li>
           <li><a href="grade-12-differential-equation" data-i18n="nav.diff">Differential Equations</a></li>
           <li><a href="grade-12-probability-exercise" data-i18n="nav.prob">Probability</a></li>
@@ -569,5 +755,46 @@ a.res:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);border-color:
 
 <script src="assets/js/i18n.js"></script>
 <script src="assets/js/main.js"></script>
+
+<script>
+/* ---------------------------------------------------------- Hub ⇄ drill-down
+   The hub (.hub-part) and the detail views (.view) all live in the markup, so
+   the page is complete and indexable with JavaScript off — it simply reads as
+   one long list. With JavaScript on, the hash picks exactly one of them.     */
+(function () {
+  'use strict';
+
+  var hub   = Array.prototype.slice.call(document.querySelectorAll('.hub-part'));
+  var views = Array.prototype.slice.call(document.querySelectorAll('.view'));
+  if (!hub.length || !views.length) return;
+
+  function reveal(el) {
+    if (el.classList.contains('reveal')) el.classList.add('is-visible');
+    el.querySelectorAll('.reveal').forEach(function (r) { r.classList.add('is-visible'); });
+  }
+
+  function route(firstRun) {
+    var id = decodeURIComponent((location.hash || '').slice(1));
+    var view = null;
+
+    views.forEach(function (v) {
+      var on = v.id === id;
+      v.hidden = !on;
+      if (on) view = v;
+    });
+    hub.forEach(function (el) { el.hidden = !!view; });
+
+    var target = view || (id ? document.getElementById(id) : null);
+    if (!target || (firstRun && !id)) return;
+
+    reveal(target);
+    // The browser already tried to scroll before we un-hid anything, so redo it.
+    requestAnimationFrame(function () { target.scrollIntoView({ block: 'start' }); });
+  }
+
+  window.addEventListener('hashchange', function () { route(false); });
+  route(true);
+})();
+</script>
 </body>
 </html>

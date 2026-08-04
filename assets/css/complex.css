@@ -157,6 +157,11 @@ mjx-container[display="true"] { margin: 0 !important; }
   background: var(--brand-50); color: var(--brand-600); font-weight: 700; font-size: 1rem;
 }
 .cx-card.is-done .cx-num { background: var(--success-500); color: #fff; }
+/* A four-digit examination year needs a pill, not the square number chip. */
+.cx-num--year {
+  width: auto; min-width: 38px; padding: 0 .7rem; border-radius: var(--r-pill);
+  font-size: .86rem; letter-spacing: .02em; font-variant-numeric: tabular-nums;
+}
 .cx-q { flex: 1; min-width: 0; font-size: .98rem; color: var(--ink-900); }
 
 .cx-badge {
@@ -185,9 +190,35 @@ mjx-container[display="true"] { margin: 0 !important; }
 .cx-parts .k { flex: none; min-width: 1.8em; font-weight: 700; color: var(--brand-600); }
 .cx-parts .tt { flex: 1; min-width: 0; color: var(--ink-700); overflow-x: auto; }
 
+/* =========================================== reference tables (conics) */
+.cx-tblwrap { overflow-x: auto; margin: 1rem 0 1.4rem; -webkit-overflow-scrolling: touch; }
+.cx-tblcap {
+  margin: 0 0 .5rem; font-weight: 700; font-size: .93rem; color: var(--ink-700);
+}
+.cx-tbl {
+  border-collapse: collapse; width: 100%; min-width: 460px;
+  background: var(--surface); font-size: .92rem;
+  border: 1px solid var(--ink-200); border-radius: var(--r-sm); overflow: hidden;
+}
+.cx-tbl th, .cx-tbl td {
+  border: 1px solid var(--ink-200); padding: .55rem .7rem; text-align: center;
+  vertical-align: middle;
+}
+.cx-tbl thead th {
+  background: var(--brand-50); color: var(--brand-600); font-weight: 700;
+}
+.cx-tbl tbody th {
+  background: var(--surface-2); color: var(--ink-700); font-weight: 600;
+  text-align: left; white-space: nowrap;
+}
+.cx-tbl tbody tr:hover td { background: var(--surface-2); }
+
 .cx-empty { text-align: center; color: var(--ink-400); font-size: .95rem; padding: 3rem 0; }
 
-@media (max-width: 640px) { .cx-parts { padding-left: 0; } }
+/* Year pills are wider than number chips, so the parts hang further in. */
+.cx-card--year .cx-parts { padding-left: calc(62px + .8rem); }
+
+@media (max-width: 640px) { .cx-parts, .cx-card--year .cx-parts { padding-left: 0; } }
 
 /* ============================================= multiple choice (limits) */
 .lm-group {

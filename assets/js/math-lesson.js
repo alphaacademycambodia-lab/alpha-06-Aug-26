@@ -15,6 +15,7 @@
   var LESSON = B.lesson || [];
   var MC = B.mc || [];
   var WR = B.exercises || [];
+  var BC = B.bac || [];              /* past national-examination papers, by year */
   var STORE = 'aa-' + (B.key || 'math') + '-done';
   var PICKS = 'aa-' + (B.key || 'math') + '-picks';
   var $ = function (id) { return document.getElementById(id); };
@@ -29,11 +30,10 @@
   function L(o) { return o ? (o[lang()] || o.en || o.km || '') : ''; }
 
   var KM_DIGITS = '០១២៣៤៥៦៧៨៩';
-  function num(n) {
-    return lang() === 'km'
-      ? String(n).replace(/\d/g, function (d) { return KM_DIGITS.charAt(+d); })
-      : String(n);
+  function kmDigits(n) {
+    return String(n).replace(/\d/g, function (d) { return KM_DIGITS.charAt(+d); });
   }
+  function num(n) { return lang() === 'km' ? kmDigits(n) : String(n); }
   var KM_LETTERS = ['ក', 'ខ', 'គ', 'ឃ', 'ង', 'ច', 'ឆ', 'ជ'];
   function label(k) {
     if (/^\d+$/.test(k)) { return num(k) + '.'; }
@@ -62,7 +62,12 @@
     showing:   { km: 'កំពុងបង្ហាញ', en: 'Showing' },
     finished:  { km: 'ធ្វើរួច', en: 'Finished' },
     empty:     { km: 'រកមិនឃើញលំហាត់ត្រូវនឹងពាក្យស្វែងរក។', en: 'Nothing matches that search.' },
-    markDone:  { km: 'សម្គាល់ថាបានធ្វើរួច', en: 'Mark as done' }
+    markDone:  { km: 'សម្គាល់ថាបានធ្វើរួច', en: 'Mark as done' },
+    bac:       { km: 'បាក់ឌុប', en: 'BaccII' },
+    bacHead:   { km: 'លំហាត់ធ្លាប់ចេញបាក់ឌុប', en: 'Questions set in the national examination' },
+    bacNote:   { km: 'លំហាត់ឌីផេរ៉ង់ស្យែលដែលធ្លាប់ចេញក្នុងវិញ្ញាសាបាក់ឌុប រៀបតាមឆ្នាំ។ ស្វែងរកតាមឆ្នាំបានផងដែរ ឧ. ២០១៨។',
+                 en: 'The differential-equation question exactly as it was set in each national examination, newest last. You can search by year, e.g. 2018.' },
+    bacSearch: { km: 'ស្វែងរកតាមឆ្នាំ ឬតាមសមីការ…', en: 'Search by year or by equation…' }
   };
   function t(k) { return L(T[k]); }
 
@@ -80,7 +85,10 @@
   var picks = load(PICKS, '{}');
   if (!picks || typeof picks !== 'object') { picks = {}; }
 
-  function key(ex) { return (ex.kind === 'mc' ? 'm' : 'w') + ex.n; }
+  /* `uid` is only needed by banks whose numbering restarts per family. */
+  function key(ex) {
+    return (ex.kind === 'mc' ? 'm' : ex.kind === 'bac' ? 'b' : 'w') + (ex.uid || ex.n);
+  }
   function isDone(k) { return done.indexOf(k) > -1; }
 
   function typeset(el) {
@@ -100,6 +108,24 @@
       }).join('') + '</ul>';
     }
     if (b.t === 'note') { return '<p class="cx-note">' + L(b) + '</p>'; }
+    /* A reference table. First cell of each row is the row heading; any cell
+       may be { tex: '…' } for maths instead of { km, en } for prose.       */
+    if (b.t === 'tbl') {
+      function cell(c, tag) {
+        return '<' + tag + (tag === 'th' ? ' scope="row"' : '') + '>' +
+          (c && c.tex ? '\\(' + c.tex + '\\)' : L(c)) + '</' + tag + '>';
+      }
+      return '<div class="cx-tblwrap">' +
+        (b.cap ? '<p class="cx-tblcap">' + L(b.cap) + '</p>' : '') +
+        '<table class="cx-tbl">' +
+          (b.head ? '<thead><tr>' + b.head.map(function (h) {
+            return '<th scope="col">' + L(h) + '</th>';
+          }).join('') + '</tr></thead>' : '') +
+          '<tbody>' + (b.rows || []).map(function (r) {
+            return '<tr>' + r.map(function (c, i) { return cell(c, i === 0 ? 'th' : 'td'); }).join('') + '</tr>';
+          }).join('') + '</tbody>' +
+        '</table></div>';
+    }
     if (b.t === 'eg') {
       return '<div class="cx-eg"><span class="tag">' + esc(t('example')) + '</span>' +
         '<p class="q">' + L(b) + '</p>' +
@@ -149,16 +175,19 @@
       '</article>';
   }
 
+  /* The same card serves the written exercises and the examination papers —
+     only the chip differs: a number for one, a four-digit year for the other. */
   function wrCard(ex) {
-    var k = key(ex);
-    var hay = (ex.q.km + ' ' + ex.q.en + ' ' + (ex.p || []).map(function (p) {
-      return p.t.km + ' ' + p.t.en;
-    }).join(' ')).toLowerCase();
+    var k = key(ex), yearly = ex.kind === 'bac';
+    /* Both digit forms go in, so "2018" and "២០១៨" find the same paper. */
+    var hay = (ex.n + ' ' + kmDigits(ex.n) + ' ' + ex.q.km + ' ' + ex.q.en + ' ' +
+      (ex.p || []).map(function (p) { return p.t.km + ' ' + p.t.en; }).join(' ')).toLowerCase();
 
-    return '<article class="cx-card' + (isDone(k) ? ' is-done' : '') + '" data-k="' + k + '" ' +
+    return '<article class="cx-card' + (yearly ? ' cx-card--year' : '') +
+        (isDone(k) ? ' is-done' : '') + '" data-k="' + k + '" ' +
         'data-find="' + esc(hay) + '">' +
         '<div class="cx-head">' +
-          '<span class="cx-num">' + num(ex.n) + '</span>' +
+          '<span class="cx-num' + (yearly ? ' cx-num--year' : '') + '">' + num(ex.n) + '</span>' +
           '<div class="cx-q">' + L(ex.q) +
             (ex.extra ? '<span class="cx-badge cx-badge--extra">' + esc(t('extra')) + '</span>' : '') +
           '</div>' +
@@ -173,15 +202,45 @@
       '</article>';
   }
 
-  function total() { return MC.length + WR.length; }
+  /* A bank may split its written exercises into named families (the conics
+     chapter has three: parabola, ellipse, hyperbola). Each run of items
+     sharing a `grp` gets its own heading and its own grid; a bank whose
+     items carry no `grp` renders as one grid, exactly as before.          */
+  function writtenList() {
+    var html = '', open = false, prev = null;
+    WR.forEach(function (ex, i) {
+      var g = ex.grp || null;
+      if (i === 0 || g !== prev) {
+        if (open) { html += '</div>'; open = false; }
+        if (g) {
+          var n = 0;
+          for (var k = i; k < WR.length && (WR[k].grp || null) === g; k++) { n++; }
+          html += '<h3 class="lm-group">' + L(g) + ' <span class="c">' + num(n) + '</span></h3>';
+        }
+        html += '<div class="cx-list-ex">';
+        open = true;
+        prev = g;
+      }
+      html += wrCard(ex);
+    });
+    return html + (open ? '</div>' : '');
+  }
 
-  function renderExercises() {
+  function total() { return view === 'bacc' ? BC.length : MC.length + WR.length; }
+
+  /* Ticks are stored in one list, so each view counts only its own prefix. */
+  function doneHere() {
+    var bacc = view === 'bacc';
+    return done.filter(function (k) { return (k.charAt(0) === 'b') === bacc; }).length;
+  }
+
+  function toolbar(placeholder) {
     return '<div class="cx-bar">' +
         '<div class="cx-search">' +
           '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">' +
             '<circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>' +
-          '<input id="lmSearch" type="search" autocomplete="off" placeholder="' + esc(t('search')) + '" ' +
-            'aria-label="' + esc(t('search')) + '">' +
+          '<input id="lmSearch" type="search" autocomplete="off" placeholder="' + esc(placeholder) + '" ' +
+            'aria-label="' + esc(placeholder) + '">' +
         '</div>' +
         '<button class="cx-btn cx-toggle" type="button" id="lmHideDone" aria-pressed="false">' + esc(t('hideDone')) + '</button>' +
         '<button class="cx-btn" type="button" id="lmReset">' + esc(t('reset')) + '</button>' +
@@ -191,7 +250,19 @@
         '<span>' + esc(t('showing')) + ' <b id="lmShown">' + num(total()) + '</b></span>' +
         '<span>' + esc(t('finished')) + ' <b id="lmDone">' + num(0) + '</b> / <b>' + num(total()) + '</b></span>' +
         '<span class="cx-progress"><i id="lmBar"></i></span>' +
-      '</p>' +
+      '</p>';
+  }
+
+  function renderBacc() {
+    return toolbar(t('bacSearch')) +
+      '<h3 class="lm-group">' + esc(t('bacHead')) + ' <span class="c">' + num(BC.length) + '</span></h3>' +
+      '<p class="cx-note">' + esc(t('bacNote')) + '</p>' +
+      '<div class="cx-list-ex">' + BC.map(wrCard).join('') + '</div>' +
+      '<p class="cx-empty cx-hide" id="lmEmpty">' + esc(t('empty')) + '</p>';
+  }
+
+  function renderExercises() {
+    return toolbar(t('search')) +
 
       (MC.length
         ? '<h3 class="lm-group">' + esc(t('mcHead')) + ' <span class="c">' + num(MC.length) + '</span></h3>' +
@@ -200,7 +271,7 @@
         : '') +
 
       (MC.length ? '<h3 class="lm-group">' + esc(t('wrHead')) + ' <span class="c">' + num(WR.length) + '</span></h3>' : '') +
-      '<div class="cx-list-ex">' + WR.map(wrCard).join('') + '</div>' +
+      writtenList() +
 
       '<p class="cx-empty cx-hide" id="lmEmpty">' + esc(t('empty')) + '</p>';
   }
@@ -226,7 +297,7 @@
 
   function paintProgress() {
     if (!$('lmDone')) { return; }
-    var n = done.length, tot = total();
+    var n = doneHere(), tot = total();
     $('lmDone').textContent = num(n);
     $('lmBar').style.width = (tot ? (n / tot * 100) : 0) + '%';
   }
@@ -242,23 +313,33 @@
         esc(t('lesson')) + '</button>' +
       '<button type="button" role="tab" data-view="exercises" aria-selected="' + (view === 'exercises') + '">' +
         '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l2 2 4-4"/><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M8 2v4M16 2v4"/></svg>' +
-        esc(t('exercises')) + ' <span class="lv">' + num(total()) + '</span></button>';
+        esc(t('exercises')) + ' <span class="lv">' + num(MC.length + WR.length) + '</span></button>' +
+      (BC.length
+        ? '<button type="button" role="tab" data-view="bacc" aria-selected="' + (view === 'bacc') + '">' +
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 9L12 4 2 9l10 5 10-5z"/><path d="M6 11.5V16c0 1.7 2.7 3 6 3s6-1.3 6-3v-4.5"/></svg>' +
+            esc(t('bac')) + ' <span class="lv">' + num(BC.length) + '</span></button>'
+        : '');
   }
 
   function paint(scroll) {
     paintTabs();
     var host = $('cxBody');
-    host.innerHTML = view === 'lesson' ? renderLesson() : renderExercises();
+    host.innerHTML = view === 'lesson' ? renderLesson()
+                   : view === 'bacc'   ? renderBacc()
+                                       : renderExercises();
 
-    if (view === 'exercises') {
+    if (view !== 'lesson') {
       $('lmSearch').addEventListener('input', applyFilter);
       $('lmHideDone').addEventListener('click', function () {
         this.setAttribute('aria-pressed', String(this.getAttribute('aria-pressed') !== 'true'));
         applyFilter();
       });
+      /* Clear only what this view shows, so the two tabs never wipe each other. */
       $('lmReset').addEventListener('click', function () {
-        done = []; picks = {};
-        save(STORE, done); save(PICKS, picks);
+        var bacc = view === 'bacc';
+        done = done.filter(function (k) { return (k.charAt(0) === 'b') !== bacc; });
+        if (!bacc) { picks = {}; save(PICKS, picks); }
+        save(STORE, done);
         paint(false);
       });
       $('lmPrint').addEventListener('click', function () { window.print(); });
@@ -306,6 +387,7 @@
   document.addEventListener('aa:langchange', function () { paint(false); });
 
   var start = (location.hash || '').replace('#', '');
-  if (start === 'exercises' || start === 'lesson') { view = start; }
+  if (start === 'exercises' || start === 'lesson' ||
+      (start === 'bacc' && BC.length)) { view = start; }
   paint(false);
 })();
