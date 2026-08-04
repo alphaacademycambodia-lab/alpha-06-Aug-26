@@ -1,0 +1,562 @@
+/* Alpha Academy Cambodia — Chinese for Beginners
+   ---------------------------------------------------------------------------
+   Everything on chinese-beginner.html that the shared design system does not
+   already own. Class names are namespaced zh* because style.css owns .card,
+   .tag, .chip and friends.
+
+   The markup these rules style is produced by assets/js/chinese-beginner.js,
+   so keep the two in step.                                                  */
+
+:root {
+  /* Chinese text needs its own stack — the site body font has no hanzi. */
+  --font-zh: "Noto Sans SC", "PingFang SC", "Hiragino Sans GB",
+             "Microsoft YaHei", "Heiti SC", "SimHei", sans-serif;
+  --font-zh-hand: "Noto Serif SC", "Kaiti SC", "KaiTi", "STKaiti",
+                  "Songti SC", "SimSun", serif;
+  --font-py: ui-monospace, Menlo, Consolas, "Courier New", monospace;
+}
+
+.zh-wrap { max-width: var(--wrap); margin-inline: auto; padding-inline: var(--gutter); }
+.zh-hide { display: none !important; }
+
+/* ================================================== layout: rail + content
+   One column on a phone with the contents list folded away at the top; two
+   columns from 1080px, where the rail sticks under the site header.        */
+.zh-layout { display: grid; gap: 1.2rem; grid-template-columns: minmax(0, 1fr); }
+.zh-main { min-width: 0; }
+
+@media (min-width: 1080px) {
+  .zh-layout { grid-template-columns: 258px minmax(0, 1fr); gap: 1.8rem; align-items: start; }
+  .zh-side {
+    position: sticky; top: 96px; align-self: start;
+    max-height: calc(100vh - 130px); display: flex; flex-direction: column;
+  }
+  .zh-outline { overflow-y: auto; overscroll-behavior: contain; }
+}
+
+/* --------------------------------------------------------- contents rail */
+.zh-side {
+  background: var(--surface); border: 1px solid var(--ink-200);
+  border-radius: var(--r-md); box-shadow: var(--shadow-xs); overflow: hidden;
+}
+.zh-side-head {
+  display: flex; align-items: center; justify-content: space-between; gap: .6rem;
+  padding: .7rem .8rem .7rem 1rem; border-bottom: 1px solid var(--ink-200);
+  background: var(--surface-2);
+}
+.zh-side.is-collapsed .zh-side-head { border-bottom: 0; }
+.zh-side-head .ttl {
+  font-size: .74rem; font-weight: 700; letter-spacing: .09em;
+  text-transform: uppercase; color: var(--ink-400);
+}
+.zh-side-toggle {
+  appearance: none; cursor: pointer; font: inherit; font-size: .78rem; font-weight: 600;
+  display: inline-flex; align-items: center; gap: .4rem; min-height: 40px;
+  padding: .35rem .7rem; border-radius: var(--r-pill);
+  background: var(--surface); border: 1px solid var(--ink-200); color: var(--ink-500);
+}
+.zh-side-toggle:hover { border-color: var(--brand-400); color: var(--brand-600); }
+.zh-side-toggle svg { width: 16px; height: 16px; }
+.zh-side.is-collapsed .zh-outline { display: none; }
+
+.zh-outline { padding: .5rem; }
+.zh-og + .zh-og { margin-top: .15rem; }
+.zh-og-top { display: flex; align-items: stretch; gap: .2rem; }
+.zh-og-link {
+  appearance: none; cursor: pointer; font: inherit; text-align: left; flex: 1;
+  display: flex; align-items: center; gap: .55rem; min-width: 0;
+  padding: .55rem .6rem; border-radius: var(--r-sm); min-height: 44px;
+  background: transparent; border: 0; color: var(--ink-700);
+  transition: background .15s var(--ease), color .15s var(--ease);
+}
+.zh-og-link:hover { background: var(--surface-2); color: var(--brand-600); }
+.zh-og-link .hz {
+  font-family: var(--font-zh); font-size: 1.05rem; color: var(--brand-600);
+  flex: none; width: 2.1em; text-align: center;
+}
+.zh-og-link .en { font-weight: 600; font-size: .9rem; }
+.zh-og.is-on .zh-og-link { background: var(--brand-50); color: var(--brand-600); }
+.zh-og.is-on .zh-og-link .en { font-weight: 700; }
+
+.zh-og-caret {
+  appearance: none; cursor: pointer; border: 0; background: transparent;
+  color: var(--ink-400); width: 38px; border-radius: var(--r-sm); flex: none;
+  display: grid; place-items: center;
+}
+.zh-og-caret:hover { background: var(--surface-2); color: var(--brand-600); }
+.zh-og-caret svg { width: 16px; height: 16px; transition: transform .18s var(--ease); }
+.zh-og-caret[aria-expanded="false"] svg { transform: rotate(-90deg); }
+
+.zh-og-secs { list-style: none; margin: .1rem 0 .4rem; padding: 0 0 0 .55rem; }
+.zh-og-secs li { position: relative; }
+.zh-og-secs button {
+  appearance: none; cursor: pointer; font: inherit; text-align: left; width: 100%;
+  font-size: .82rem; line-height: 1.45; color: var(--ink-500);
+  padding: .42rem .6rem .42rem .8rem; border: 0; background: transparent;
+  border-left: 2px solid var(--ink-200); border-radius: 0 var(--r-sm) var(--r-sm) 0;
+}
+.zh-og-secs button:hover { color: var(--brand-600); border-left-color: var(--brand-400); background: var(--surface-2); }
+.zh-og-secs button.is-here {
+  color: var(--brand-600); font-weight: 600;
+  border-left-color: var(--brand-500); background: var(--brand-50);
+}
+
+/* ============================================================ module tabs */
+.zh-tabs {
+  display: flex; gap: .3rem; overflow-x: auto; scrollbar-width: thin;
+  background: var(--surface-2); border: 1px solid var(--ink-200);
+  border-radius: var(--r-pill); padding: .35rem; margin-bottom: 1rem;
+}
+.zh-tabs button {
+  appearance: none; border: 0; cursor: pointer; font: inherit;
+  font-weight: 600; font-size: .88rem; white-space: nowrap;
+  display: inline-flex; align-items: center; gap: .45rem;
+  padding: .6rem 1.05rem; border-radius: var(--r-pill); min-height: 44px;
+  background: transparent; color: var(--ink-500); transition: all .16s var(--ease);
+}
+.zh-tabs button:hover { color: var(--brand-600); }
+.zh-tabs button[aria-selected="true"] {
+  background: var(--grad-brand); color: #fff; box-shadow: var(--shadow-xs);
+}
+.zh-tabs button .zh-t-hz { font-family: var(--font-zh); font-size: 1rem; }
+
+/* ========================================================= audio toolbar */
+/* The site header is sticky and 76px tall, so this sits just under it. */
+.zh-bar {
+  position: sticky; top: 77px; z-index: 20;
+  display: flex; flex-wrap: wrap; gap: .7rem; align-items: center;
+  background: var(--surface); border: 1px solid var(--ink-200);
+  border-radius: var(--r-md); padding: .6rem .8rem;
+  box-shadow: var(--shadow-xs); margin-bottom: 1.4rem;
+}
+.zh-bar .lab {
+  font-size: .74rem; font-weight: 700; letter-spacing: .07em;
+  text-transform: uppercase; color: var(--ink-400);
+}
+.zh-speed { display: inline-flex; gap: .2rem; background: var(--surface-2);
+  border: 1px solid var(--ink-200); border-radius: var(--r-pill); padding: .22rem; }
+.zh-speed button {
+  appearance: none; border: 0; cursor: pointer; font: inherit;
+  font-weight: 600; font-size: .8rem; padding: .4rem .85rem;
+  border-radius: var(--r-pill); min-height: 36px;
+  background: transparent; color: var(--ink-500);
+}
+.zh-speed button[aria-pressed="true"] { background: var(--brand-600); color: #fff; }
+.zh-bar .zh-stop {
+  appearance: none; cursor: pointer; font: inherit; font-weight: 600; font-size: .8rem;
+  background: var(--surface-2); border: 1px solid var(--ink-200); color: var(--ink-700);
+  border-radius: var(--r-pill); padding: .4rem .9rem; min-height: 36px;
+}
+.zh-bar .zh-stop:hover { border-color: var(--brand-400); color: var(--brand-600); }
+.zh-bar .spacer { flex: 1 1 auto; }
+.zh-voice { font-size: .78rem; color: var(--ink-400); line-height: 1.5; }
+.zh-voice.is-warn { color: #b45309; }
+:root[data-theme="dark"] .zh-voice.is-warn { color: var(--accent-500); }
+
+/* ============================================================ speak button */
+.zh-say {
+  appearance: none; border: 0; cursor: pointer; flex: none;
+  display: inline-grid; place-items: center;
+  width: 38px; height: 38px; border-radius: 50%;
+  background: var(--brand-50); color: var(--brand-600);
+  border: 1px solid var(--brand-100); transition: all .15s var(--ease);
+}
+.zh-say svg { width: 18px; height: 18px; }
+.zh-say:hover { background: var(--brand-600); color: #fff; border-color: var(--brand-600); }
+.zh-say.is-on { background: var(--brand-600); color: #fff; border-color: var(--brand-600);
+  animation: zh-pulse 1s var(--ease) infinite; }
+.zh-say--sm { width: 32px; height: 32px; }
+.zh-say--sm svg { width: 15px; height: 15px; }
+.zh-say--lg { width: 48px; height: 48px; }
+.zh-say--lg svg { width: 22px; height: 22px; }
+@keyframes zh-pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(18,115,230,.45); }
+                      50%     { box-shadow: 0 0 0 7px rgba(18,115,230,0); } }
+@media (prefers-reduced-motion: reduce) { .zh-say.is-on { animation: none; } }
+
+/* ================================================ pinyin over characters */
+.zh-ruby { display: inline-flex; flex-wrap: wrap; align-items: flex-end; gap: .1rem .18rem; }
+.zh-ru { display: inline-flex; flex-direction: column; align-items: center; line-height: 1.2; }
+.zh-ru .py {
+  font-family: var(--font-py); font-size: .62em; letter-spacing: .01em;
+  color: var(--brand-600); white-space: nowrap;
+}
+.zh-ru .hz { font-family: var(--font-zh); font-size: 1em; color: var(--ink-900); }
+.zh-ru--punct .hz { color: var(--ink-400); }
+.zh-ru--punct .py::after { content: "\00a0"; }
+.zh-ruby--block { display: block; }
+.zh-ruby--block .py-line {
+  display: block; font-family: var(--font-py); font-size: .72em;
+  color: var(--brand-600); margin-bottom: .1em;
+}
+.zh-ruby--block .hz-line { display: block; font-family: var(--font-zh); }
+
+/* ================================================== pinyin chart (sound only) */
+.zh-chart-grp { margin-bottom: .9rem; }
+.zh-chart-grp h5 {
+  margin: 0 0 .4rem; font-size: .74rem; font-weight: 600; letter-spacing: .05em;
+  color: var(--ink-400);
+}
+.zh-chart {
+  display: grid; gap: .4rem; grid-template-columns: repeat(auto-fill, minmax(62px, 1fr));
+}
+.zh-cell {
+  appearance: none; cursor: pointer; font-family: var(--font-py);
+  font-size: 1.02rem; font-weight: 600; letter-spacing: .01em;
+  min-height: 48px; padding: .5rem .3rem; border-radius: var(--r-sm);
+  background: var(--surface-2); border: 1px solid var(--ink-200); color: var(--ink-800);
+  transition: all .13s var(--ease);
+}
+.zh-cell:hover { background: var(--brand-600); border-color: var(--brand-600); color: #fff; transform: translateY(-2px); }
+.zh-cell:active { transform: none; }
+.zh-cell.is-on { background: var(--brand-600); border-color: var(--brand-600); color: #fff; }
+.zh-chart--tone .zh-cell { font-size: 1.35rem; }
+
+/* ================================================================ layout */
+.zh-sec { margin-bottom: 2.6rem; scroll-margin-top: 152px; }
+.zh-sec > h3 {
+  font-size: 1.12rem; margin: 0 0 .35rem; display: flex; align-items: center;
+  gap: .55rem; flex-wrap: wrap;
+}
+.zh-sec > h3 .zh-hz { font-family: var(--font-zh); color: var(--brand-600); font-size: 1.05rem; }
+.zh-sec > .lead { margin: 0 0 1.1rem; font-size: .93rem; color: var(--ink-500); line-height: 1.75; max-width: 72ch; }
+
+.zh-panel {
+  background: var(--surface); border: 1px solid var(--ink-200);
+  border-radius: var(--r-lg); padding: clamp(1.2rem, 3vw, 2.2rem);
+  box-shadow: var(--shadow-sm);
+}
+.zh-note {
+  border-left: 4px solid var(--accent-500); background: var(--accent-100);
+  border-radius: var(--r-sm); padding: .85rem 1rem; font-size: .88rem;
+  line-height: 1.7; color: var(--ink-700); margin: 1.2rem 0;
+}
+.zh-note b { color: var(--ink-900); }
+
+/* ------------------------------------------------------------- tone cards */
+.zh-tone-grid { display: grid; gap: .9rem; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+.zh-tone {
+  background: var(--surface-2); border: 1px solid var(--ink-200);
+  border-radius: var(--r-md); padding: 1rem; text-align: center;
+}
+.zh-tone .mark {
+  font-family: var(--font-py); font-size: 2rem; font-weight: 700;
+  color: var(--brand-600); line-height: 1;
+}
+.zh-tone .curve { height: 26px; margin: .4rem 0 .2rem; color: var(--brand-500); }
+.zh-tone .curve svg { width: 62px; height: 26px; margin-inline: auto; }
+.zh-tone .zh-big { font-family: var(--font-zh); font-size: 2.1rem; line-height: 1.1; color: var(--ink-900); }
+.zh-tone .py { font-family: var(--font-py); font-size: .9rem; color: var(--brand-600); }
+.zh-tone .en { font-size: .82rem; color: var(--ink-500); }
+.zh-tone .nm { display: block; font-size: .74rem; font-weight: 700; letter-spacing: .06em;
+  text-transform: uppercase; color: var(--ink-400); margin-bottom: .3rem; }
+.zh-tone .desc { font-size: .82rem; color: var(--ink-500); line-height: 1.6; margin: .6rem 0 0; text-align: left; }
+.zh-tone .zh-say { margin: .6rem auto 0; }
+
+/* --------------------------------------------------- syllable tiles */
+.zh-grp { margin-bottom: 1.4rem; }
+.zh-grp > h4 {
+  font-size: .78rem; text-transform: uppercase; letter-spacing: .08em;
+  color: var(--ink-400); margin: 0 0 .6rem;
+}
+.zh-syl-grid { display: grid; gap: .6rem; grid-template-columns: repeat(auto-fill, minmax(148px, 1fr)); }
+.zh-syl {
+  appearance: none; font: inherit; text-align: left; cursor: pointer;
+  background: var(--surface-2); border: 1px solid var(--ink-200);
+  border-radius: var(--r-sm); padding: .6rem .7rem;
+  display: flex; align-items: center; gap: .55rem;
+  transition: all .15s var(--ease);
+}
+.zh-syl:hover { border-color: var(--brand-400); background: var(--brand-50); }
+.zh-syl.is-on { border-color: var(--brand-500); box-shadow: var(--ring); }
+.zh-syl .p { font-family: var(--font-py); font-weight: 700; font-size: 1rem; color: var(--brand-600); min-width: 2.4em; }
+.zh-syl .ex { display: flex; flex-direction: column; line-height: 1.3; min-width: 0; }
+.zh-syl .ex .hz { font-family: var(--font-zh); font-size: 1.05rem; color: var(--ink-900); }
+.zh-syl .ex .py { font-family: var(--font-py); font-size: .74rem; color: var(--ink-500); }
+.zh-syl .ic { margin-left: auto; color: var(--ink-400); display: grid; place-items: center; }
+.zh-syl .ic svg { width: 16px; height: 16px; }
+.zh-syl:hover .ic { color: var(--brand-600); }
+.zh-tip {
+  margin: .6rem 0 0; font-size: .82rem; color: var(--ink-500); line-height: 1.6;
+  background: var(--brand-50); border-radius: var(--r-sm); padding: .6rem .8rem;
+}
+
+/* ------------------------------------------------------------ rule blocks */
+.zh-rule { border: 1px solid var(--ink-200); border-radius: var(--r-md);
+  background: var(--surface-2); padding: 1rem 1.1rem; margin-bottom: .9rem; }
+.zh-rule h4 { margin: 0 0 .35rem; font-size: .98rem; padding-left: .6rem;
+  border-left: 4px solid var(--brand-500); }
+.zh-rule p { margin: 0 0 .7rem; font-size: .88rem; color: var(--ink-500); line-height: 1.7; }
+.zh-exline { display: flex; flex-wrap: wrap; gap: .5rem; }
+.zh-ex {
+  display: inline-flex; align-items: center; gap: .5rem;
+  background: var(--surface); border: 1px solid var(--ink-200);
+  border-radius: var(--r-pill); padding: .35rem .55rem .35rem .8rem;
+}
+.zh-ex .txt { display: flex; flex-direction: column; line-height: 1.25; }
+.zh-ex .en { font-size: .74rem; color: var(--ink-500); }
+
+/* ------------------------------------------------------------ pair cards */
+.zh-pairs { display: grid; gap: .6rem; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+.zh-pair {
+  display: flex; align-items: center; gap: .5rem; justify-content: space-between;
+  background: var(--surface); border: 1px solid var(--ink-200);
+  border-radius: var(--r-sm); padding: .5rem .6rem;
+}
+.zh-pair .vs { font-size: .74rem; font-weight: 700; color: var(--ink-400); }
+.zh-half { display: flex; align-items: center; gap: .45rem; }
+.zh-half .txt { display: flex; flex-direction: column; line-height: 1.25; }
+.zh-half .hz { font-family: var(--font-zh); font-size: 1.15rem; color: var(--ink-900); }
+.zh-half .py { font-family: var(--font-py); font-size: .76rem; color: var(--brand-600); }
+.zh-half .en { font-size: .7rem; color: var(--ink-400); }
+
+/* ================================================================= drills */
+.zh-drill {
+  border: 1px solid var(--brand-100); border-radius: var(--r-md);
+  background: linear-gradient(160deg, var(--brand-50) 0%, var(--surface-2) 100%);
+  padding: 1.2rem clamp(1rem, 3vw, 1.5rem); text-align: center;
+}
+.zh-drill h4 { margin: 0 0 .3rem; font-size: 1.05rem; }
+.zh-drill > p { margin: 0 auto 1rem; font-size: .86rem; color: var(--ink-500); max-width: 56ch; line-height: 1.6; }
+.zh-drill-opts { display: flex; flex-wrap: wrap; gap: .5rem; justify-content: center; margin-top: 1rem; }
+.zh-opt {
+  appearance: none; cursor: pointer; font: inherit; font-family: var(--font-py);
+  font-weight: 600; font-size: 1rem; min-height: 48px; min-width: 88px;
+  padding: .6rem 1.1rem; border-radius: var(--r-pill);
+  background: var(--surface); border: 1px solid var(--ink-200); color: var(--ink-800);
+  transition: all .14s var(--ease);
+}
+.zh-opt:hover:not(:disabled) { border-color: var(--brand-400); color: var(--brand-600); }
+.zh-opt.is-right { background: var(--success-500); border-color: var(--success-500); color: #fff; }
+.zh-opt.is-wrong { background: #dc2626; border-color: #dc2626; color: #fff; }
+.zh-opt:disabled { cursor: default; }
+.zh-drill-fb { margin: .9rem 0 0; font-size: .88rem; font-weight: 600; min-height: 1.5em; }
+.zh-drill-fb .sm { display: block; font-weight: 400; font-size: .82rem; color: var(--ink-500); margin-top: .2rem; }
+.zh-score { font-size: .8rem; color: var(--ink-500); margin-top: .6rem; }
+.zh-btn {
+  appearance: none; cursor: pointer; font: inherit; font-weight: 600; font-size: .88rem;
+  min-height: 44px; padding: .55rem 1.2rem; border-radius: var(--r-pill);
+  background: var(--surface-2); border: 1px solid var(--ink-200); color: var(--ink-700);
+}
+.zh-btn:hover { border-color: var(--brand-400); color: var(--brand-600); }
+.zh-btn--primary { background: var(--grad-brand); border: 0; color: #fff; box-shadow: var(--shadow-xs); }
+.zh-btn--primary:hover { filter: brightness(1.06); color: #fff; }
+.zh-btn-row { display: flex; flex-wrap: wrap; gap: .55rem; justify-content: center; margin-top: 1rem; }
+.zh-input {
+  font: inherit; font-size: 1.1rem; text-align: center; min-height: 48px; width: 140px;
+  border-radius: var(--r-sm); border: 1px solid var(--ink-200);
+  background: var(--surface); color: var(--ink-900); padding: .5rem .7rem;
+}
+.zh-input:focus { outline: 0; border-color: var(--brand-500); box-shadow: var(--ring); }
+
+/* ========================================================== writing pad */
+.zh-write { display: grid; gap: 1.2rem; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 860px) { .zh-write { grid-template-columns: 340px minmax(0, 1fr); align-items: start; } }
+
+.zh-stage {
+  position: relative; width: 100%; max-width: 320px; aspect-ratio: 1 / 1;
+  margin-inline: auto; border: 2px solid var(--ink-200); border-radius: var(--r-md);
+  background: var(--surface); overflow: hidden; touch-action: none;
+}
+.zh-stage .grid { position: absolute; inset: 0; width: 100%; height: 100%;
+  color: var(--ink-200); pointer-events: none; }
+/* Both layers are canvases: the guide (drawn faint) and the student's ink.
+   Keeping the guide on a canvas rather than in the DOM is what lets the
+   check compare the two as bitmaps. */
+.zh-stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.zh-ghost { pointer-events: none; }
+#zhCanvas { cursor: crosshair; touch-action: none; }
+
+/* ------------------------------------------------------------- marking */
+.zh-mark { margin-top: .8rem; }
+.zh-mark:empty { display: none; }
+.zh-mark.is-empty {
+  font-size: .85rem; color: var(--ink-500); text-align: center;
+  background: var(--surface-2); border: 1px dashed var(--ink-200);
+  border-radius: var(--r-sm); padding: .7rem .8rem;
+}
+.zh-mark.is-empty p { margin: 0; }
+
+.zh-mark.is-good, .zh-mark.is-ok, .zh-mark.is-weak, .zh-mark.is-bad {
+  display: flex; gap: .9rem; align-items: flex-start;
+  border: 1px solid var(--ink-200); border-left-width: 4px;
+  border-radius: var(--r-md); padding: .85rem 1rem; background: var(--surface-2);
+}
+.zh-mark.is-good { border-left-color: var(--success-500); }
+.zh-mark.is-ok   { border-left-color: var(--brand-500); }
+.zh-mark.is-weak { border-left-color: var(--accent-500); }
+.zh-mark.is-bad  { border-left-color: #dc2626; }
+
+.zh-mark .sc { flex: none; display: grid; place-items: center;
+  width: 62px; height: 62px; border-radius: 50%; background: var(--surface);
+  border: 2px solid var(--ink-200); }
+.zh-mark .sc b { font-size: 1.05rem; font-weight: 800; }
+.zh-mark.is-good .sc { border-color: var(--success-500); color: var(--success-500); }
+.zh-mark.is-ok   .sc { border-color: var(--brand-500);   color: var(--brand-600); }
+.zh-mark.is-weak .sc { border-color: var(--accent-500);  color: var(--accent-500); }
+.zh-mark.is-bad  .sc { border-color: #dc2626;            color: #dc2626; }
+
+.zh-mark .bd { flex: 1; min-width: 0; }
+.zh-mark .vd { margin: 0 0 .45rem; font-size: .93rem; font-weight: 600; color: var(--ink-900); }
+.zh-mark ul { list-style: none; margin: 0; padding: 0;
+  display: flex; flex-wrap: wrap; gap: .2rem 1.1rem; font-size: .82rem; color: var(--ink-500); }
+.zh-mark ul b { color: var(--ink-900); }
+.zh-mark .ok { color: var(--success-500); font-weight: 700; }
+.zh-mark .no { color: var(--accent-500); font-weight: 700; }
+.zh-mark .nb { margin: .5rem 0 0; font-size: .76rem; color: var(--ink-400); line-height: 1.6; }
+.zh-mark .lg { display: inline-flex; align-items: center; gap: .3rem; margin-right: .9rem; white-space: nowrap; }
+.zh-mark .lg i { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+.zh-mark .lg i.ok { background: var(--success-500); }
+.zh-mark .lg i.no { background: #dc2626; }
+.zh-mark .lg i.ms { background: var(--accent-500); }
+
+.zh-write-info .hz {
+  font-family: var(--font-zh); font-size: 3rem; line-height: 1.1; color: var(--ink-900);
+}
+.zh-write-info .py { font-family: var(--font-py); font-size: 1.1rem; color: var(--brand-600); }
+.zh-write-info .en { font-size: .95rem; color: var(--ink-500); }
+.zh-meta { display: flex; flex-wrap: wrap; gap: .5rem; margin: .8rem 0; }
+.zh-meta span {
+  font-size: .76rem; background: var(--brand-50); color: var(--brand-600);
+  border-radius: var(--r-pill); padding: .25rem .7rem;
+}
+.zh-order { font-size: .86rem; color: var(--ink-700); line-height: 1.7;
+  background: var(--surface-2); border: 1px solid var(--ink-200);
+  border-radius: var(--r-sm); padding: .7rem .85rem; }
+.zh-order b { color: var(--brand-600); }
+
+.zh-charlist { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: 1rem; }
+.zh-charlist button {
+  appearance: none; cursor: pointer; font-family: var(--font-zh); font-size: 1.25rem;
+  width: 46px; height: 46px; border-radius: var(--r-sm);
+  background: var(--surface-2); border: 1px solid var(--ink-200); color: var(--ink-800);
+  transition: all .14s var(--ease);
+}
+.zh-charlist button:hover { border-color: var(--brand-400); color: var(--brand-600); }
+.zh-charlist button[aria-pressed="true"] { background: var(--brand-600); border-color: var(--brand-600); color: #fff; }
+
+.zh-strokes { display: grid; gap: .5rem; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); }
+.zh-stroke {
+  display: flex; align-items: center; gap: .7rem;
+  background: var(--surface-2); border: 1px solid var(--ink-200);
+  border-radius: var(--r-sm); padding: .55rem .7rem;
+}
+.zh-stroke .sym { font-family: var(--font-zh-hand); font-size: 1.6rem; color: var(--brand-600); line-height: 1; }
+.zh-stroke .txt { display: flex; flex-direction: column; line-height: 1.35; min-width: 0; }
+.zh-stroke .nm { font-weight: 600; font-size: .86rem; }
+.zh-stroke .de { font-size: .74rem; color: var(--ink-500); }
+
+/* ============================================================= word lists */
+.zh-filters { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: .9rem; }
+.zh-filters button {
+  appearance: none; cursor: pointer; font: inherit; font-size: .82rem; font-weight: 600;
+  min-height: 40px; padding: .4rem .95rem; border-radius: var(--r-pill);
+  background: var(--surface-2); border: 1px solid var(--ink-200); color: var(--ink-500);
+  transition: all .14s var(--ease);
+}
+.zh-filters button:hover { border-color: var(--brand-400); color: var(--brand-600); }
+.zh-filters button[aria-pressed="true"] { background: var(--brand-600); border-color: var(--brand-600); color: #fff; }
+
+.zh-search { position: relative; margin-bottom: 1.1rem; }
+.zh-search input {
+  width: 100%; font: inherit; font-size: .95rem; min-height: 48px;
+  padding: .7rem 1rem .7rem 2.6rem; border-radius: var(--r-pill);
+  border: 1px solid var(--ink-200); background: var(--surface); color: var(--ink-900);
+}
+.zh-search input:focus { outline: 0; border-color: var(--brand-500); box-shadow: var(--ring); }
+.zh-search svg { position: absolute; left: .95rem; top: 50%; transform: translateY(-50%);
+  width: 18px; height: 18px; color: var(--ink-400); pointer-events: none; }
+
+.zh-words { display: grid; gap: .6rem; grid-template-columns: repeat(auto-fill, minmax(238px, 1fr)); }
+.zh-word {
+  display: flex; align-items: center; gap: .65rem;
+  background: var(--surface-2); border: 1px solid var(--ink-200);
+  border-radius: var(--r-md); padding: .7rem .8rem; transition: all .15s var(--ease);
+}
+.zh-word:hover { border-color: var(--brand-400); box-shadow: var(--shadow-xs); }
+.zh-word .txt { min-width: 0; flex: 1; }
+.zh-word .zh-ruby { font-size: 1.35rem; }
+.zh-word .gloss { display: block; font-size: .82rem; color: var(--ink-500); margin-top: .25rem; line-height: 1.5; }
+.zh-word.is-hidden { display: none; }
+.zh-empty { text-align: center; color: var(--ink-400); font-size: .9rem; padding: 2rem 0; }
+.zh-count { font-size: .78rem; color: var(--ink-400); margin: 0 0 .8rem; }
+
+/* ========================================================== conversations */
+.zh-dlg-pick { display: grid; gap: .6rem; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); margin-bottom: 1.4rem; }
+.zh-dlg-pick button {
+  appearance: none; cursor: pointer; font: inherit; text-align: left;
+  background: var(--surface-2); border: 1px solid var(--ink-200);
+  border-radius: var(--r-md); padding: .8rem .9rem; transition: all .15s var(--ease);
+  display: flex; flex-direction: column; gap: .2rem;
+}
+.zh-dlg-pick button:hover { border-color: var(--brand-400); transform: translateY(-2px); }
+.zh-dlg-pick button[aria-pressed="true"] { border-color: var(--brand-500); background: var(--brand-50); }
+.zh-dlg-pick .n { font-size: .72rem; font-weight: 700; letter-spacing: .07em;
+  text-transform: uppercase; color: var(--brand-600); }
+.zh-dlg-pick .t { font-weight: 600; font-size: .95rem; color: var(--ink-900); }
+
+.zh-dlg { display: flex; flex-direction: column; gap: .7rem; }
+.zh-line {
+  display: flex; gap: .7rem; align-items: flex-start;
+  background: var(--surface-2); border: 1px solid var(--ink-200);
+  border-left: 4px solid var(--brand-500); border-radius: var(--r-sm);
+  padding: .8rem .9rem; transition: background .2s var(--ease), border-color .2s var(--ease);
+}
+.zh-line[data-sp="B"] { border-left-color: var(--accent-500); }
+.zh-line.is-playing { background: var(--brand-50); border-color: var(--brand-400); }
+.zh-line .who {
+  flex: none; width: 28px; height: 28px; border-radius: 50%;
+  display: grid; place-items: center; font-size: .78rem; font-weight: 700;
+  background: var(--brand-600); color: #fff;
+}
+.zh-line[data-sp="B"] .who { background: var(--accent-500); color: var(--ink-900); }
+.zh-line .body { flex: 1; min-width: 0; }
+.zh-line .zh-ruby { font-size: 1.4rem; }
+.zh-line .gloss { display: block; font-size: .84rem; color: var(--ink-500); margin-top: .35rem; line-height: 1.6; }
+.zh-dlg.is-quiet .gloss { visibility: hidden; }
+
+.zh-play-row { display: flex; flex-wrap: wrap; gap: .55rem; align-items: center; margin-bottom: 1rem; }
+
+/* ============================================================== patterns */
+.zh-pat { display: grid; gap: .6rem; }
+.zh-pat > div {
+  display: flex; gap: .7rem; align-items: flex-start;
+  background: var(--surface-2); border: 1px solid var(--ink-200);
+  border-left: 4px solid var(--success-500); border-radius: var(--r-sm); padding: .8rem .9rem;
+}
+.zh-pat .zh-ruby { font-size: 1.35rem; }
+.zh-pat .gloss { display: block; font-size: .84rem; color: var(--ink-500); margin-top: .3rem; line-height: 1.6; }
+.zh-pat .why { display: block; font-size: .8rem; color: var(--ink-400); margin-top: .35rem; line-height: 1.6; }
+
+/* The shared quiz engine renders plain text, so the characters in its
+   questions need a font stack that actually contains hanzi. */
+#zhWordQuizMount {
+  font-family: "Inter", "Noto Sans SC", "PingFang SC", "Hiragino Sans GB",
+               "Microsoft YaHei", "Kantumruy Pro", sans-serif;
+}
+
+/* ================================================================ tables */
+.zh-tbl { overflow-x: auto; }
+.zh-tbl table { width: 100%; border-collapse: collapse; font-size: .9rem; min-width: 420px; }
+.zh-tbl th, .zh-tbl td { border: 1px solid var(--ink-200); padding: .55rem .7rem; text-align: left; }
+.zh-tbl th { background: var(--brand-600); color: #fff; font-weight: 600; }
+.zh-tbl tbody tr:nth-child(even) { background: var(--surface-2); }
+.zh-tbl .hz { font-family: var(--font-zh); font-size: 1.1rem; }
+.zh-tbl .py { font-family: var(--font-py); color: var(--brand-600); }
+.zh-tbl .num { font-weight: 700; }
+
+/* ============================================================== numbers */
+.zh-digits { display: grid; gap: .6rem; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
+.zh-digit {
+  background: var(--surface-2); border: 1px solid var(--ink-200);
+  border-radius: var(--r-md); padding: .8rem .6rem; text-align: center;
+}
+.zh-digit .v { font-size: 1.5rem; font-weight: 800; color: var(--ink-400); line-height: 1; }
+.zh-digit .hz { font-family: var(--font-zh); font-size: 2rem; line-height: 1.2; color: var(--ink-900); }
+.zh-digit .py { font-family: var(--font-py); font-size: .84rem; color: var(--brand-600); }
+.zh-digit .en { font-size: .74rem; color: var(--ink-500); }
+.zh-digit .zh-say { margin: .5rem auto 0; }
+
+@media (max-width: 640px) {
+  .zh-tone .zh-big { font-size: 1.9rem; }
+  .zh-line .zh-ruby, .zh-word .zh-ruby { font-size: 1.25rem; }
+}
