@@ -1,0 +1,119 @@
+/* Alpha Academy Cambodia — HSK tests
+   ---------------------------------------------------------------------------
+   The registration gate and the chapter cards. The test itself is drawn by
+   assets/js/quiz-engine.js and styled by assets/css/quiz.css, so nothing here
+   touches the quiz.
+
+   Namespaced hsk-* and aa-gate, because the shared stylesheet already owns
+   .card, .grid, .head and — the one that bites — .sub.                       */
+
+.hsk-wrap{
+  --font-zh: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", "Heiti SC", var(--font-sans);
+  width:min(1180px,100%);margin-inline:auto;padding-inline:var(--gutter);
+}
+
+/* ------------------------------------------------------------- 1. the gate */
+.aa-gate{display:grid;place-items:center;padding:clamp(1rem,4vw,2.5rem) 0}
+.aa-gate-in{
+  width:min(520px,100%);text-align:center;
+  background:var(--surface);border:1px solid var(--ink-200);border-radius:var(--r-lg);
+  box-shadow:var(--shadow-md);padding:clamp(1.4rem,4vw,2.4rem);
+}
+.aa-gate-in .em{font-size:2.6rem;line-height:1}
+.aa-gate-in h2{margin:.6rem 0 .4rem;font-size:clamp(1.2rem,3vw,1.55rem)}
+.aa-gate-in .lede{margin:0 0 1.4rem;color:var(--ink-500);font-size:.95rem;line-height:1.7}
+
+.aa-gate-in form{display:flex;flex-direction:column;gap:.8rem;text-align:left}
+.aa-gate-in label{display:flex;flex-direction:column;gap:.3rem}
+.aa-gate-in label span{font-size:.82rem;font-weight:600;color:var(--ink-700)}
+.aa-gate-in input{
+  font:inherit;font-size:1rem;min-height:50px;padding:.6rem .85rem;
+  border-radius:var(--r-sm);border:1.5px solid var(--ink-200);
+  background:var(--surface-2);color:var(--ink-900);
+}
+.aa-gate-in input:focus{outline:none;border-color:var(--brand-400);box-shadow:var(--ring)}
+/* the honeypot — off-screen rather than display:none, which some bots skip */
+.aa-hp{position:absolute!important;left:-9999px;width:1px;height:1px;opacity:0}
+
+.aa-gate-in .err{
+  margin:0;font-size:.88rem;font-weight:600;color:#dc2626;
+  background:rgba(220,38,38,.09);border-radius:var(--r-sm);padding:.55rem .75rem;
+}
+.aa-gate-in button[type="submit"]{
+  appearance:none;border:0;cursor:pointer;font:inherit;font-weight:700;font-size:1rem;
+  min-height:52px;border-radius:var(--r-pill);margin-top:.3rem;
+  background:var(--grad-brand);color:#fff;box-shadow:var(--shadow-xs);
+}
+.aa-gate-in button[type="submit"]:hover{filter:brightness(1.05)}
+.aa-gate-in .priv{margin:.2rem 0 0;font-size:.78rem;line-height:1.6;color:var(--ink-400);text-align:center}
+
+/* who is signed in */
+.aa-who{
+  display:flex;flex-wrap:wrap;align-items:center;gap:.4rem;
+  margin:0 0 1.4rem;font-size:.86rem;color:var(--ink-400);
+}
+.aa-who b{color:var(--ink-700)}
+.aa-who button{
+  appearance:none;border:0;background:none;cursor:pointer;font:inherit;font-size:.86rem;
+  color:var(--brand-600);text-decoration:underline;padding:0;
+}
+
+/* -------------------------------------------------------- 2. the chapters */
+.hsk-head{
+  display:flex;flex-wrap:wrap;gap:1.2rem;align-items:flex-start;justify-content:space-between;
+  margin-bottom:1.2rem;
+}
+.hsk-head h2{margin:0 0 .4rem;font-size:clamp(1.3rem,3.2vw,1.8rem)}
+.hsk-head .lede{margin:0;max-width:68ch;color:var(--ink-500);line-height:1.75}
+.hsk-progress{
+  flex:none;text-align:center;background:var(--surface-2);
+  border:1px solid var(--ink-200);border-radius:var(--r-md);padding:.7rem 1.1rem;
+}
+.hsk-progress b{display:block;font-family:var(--font-display);font-size:1.5rem;color:var(--brand-600);line-height:1.1}
+.hsk-progress small{font-size:.72rem;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-400)}
+
+.hsk-grid{
+  display:grid;gap:1rem;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
+  margin-bottom:1.2rem;
+}
+.hsk-card{
+  display:flex;flex-direction:column;gap:.2rem;position:relative;
+  background:var(--surface);border:1px solid var(--ink-200);border-radius:var(--r-md);
+  box-shadow:var(--shadow-xs);padding:1.1rem 1.2rem 1.2rem;
+  border-top:4px solid var(--ink-200);
+  transition:transform .16s var(--ease),box-shadow .16s,border-color .16s;
+}
+.hsk-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
+.hsk-card.is-good{border-top-color:var(--success-500)}
+.hsk-card.is-ok{border-top-color:var(--accent-500)}
+.hsk-card.is-low{border-top-color:#dc2626}
+
+.hsk-card .n{
+  font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-400);
+}
+.hsk-card h3{margin:.35rem 0 .1rem;font-size:1.35rem;line-height:1.3}
+.hsk-card .hz{font-family:var(--font-zh);font-weight:700;color:var(--ink-900)}
+.hsk-card .py{margin:0;font-size:.86rem;color:var(--brand-600);font-weight:600}
+.hsk-card .en{margin:.15rem 0 .6rem;font-size:.92rem;line-height:1.6;color:var(--ink-500)}
+.hsk-card .meta{font-size:.78rem;color:var(--ink-400);margin-top:auto}
+.hsk-card .score{
+  position:absolute;top:.9rem;right:1rem;
+  font-size:.74rem;font-weight:700;padding:.2rem .55rem;border-radius:var(--r-pill);
+  background:var(--brand-50);color:var(--brand-600);
+}
+.hsk-card.is-good .score{background:rgba(22,163,74,.12);color:var(--success-500)}
+.hsk-card.is-low .score{background:rgba(220,38,38,.1);color:#dc2626}
+.hsk-card button{
+  appearance:none;border:0;cursor:pointer;font:inherit;font-weight:600;font-size:.9rem;
+  min-height:46px;margin-top:.85rem;border-radius:var(--r-pill);
+  background:var(--grad-brand);color:#fff;box-shadow:var(--shadow-xs);
+}
+.hsk-card button:hover{filter:brightness(1.05)}
+
+.hsk-final{border-top-color:var(--brand-500);background:var(--grad-soft)}
+.hsk-final .en{max-width:60ch}
+
+@media (prefers-reduced-motion:reduce){
+  .hsk-card{transition:none}
+  .hsk-card:hover{transform:none}
+}

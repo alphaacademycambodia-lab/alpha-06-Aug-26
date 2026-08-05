@@ -24,6 +24,17 @@ grade-12-integral.html
                   Grade 12 integrals — lesson + 18 multiple choice + 10 written, Khmer and English
 grade-12-probability-exercise.html
                   Grade 12 probability — lesson + 108 exercises, Khmer and English
+english-kindergarten.html
+                  English for Kindergarten (ages 4–6) — ABC and letter sounds,
+                  numbers, colours, shapes, first words, phonics, everyday
+                  phrases, and seven picture games. Reads itself aloud
+chinese-kindergarten.html
+                  Chinese for Kindergarten (ages 4–6) — first characters, the
+                  four tones, numbers, colours, shapes, first words, everyday
+                  phrases, and seven picture games. Spoken by a Chinese voice
+hsk1-test.html    HSK 1 chapter tests — 15 tests following HSK Standard
+                  Course 1 lesson by lesson, plus a final paper. Behind the
+                  registration gate
 chinese-beginner.html
                   Chinese for Beginners — pinyin, sound, writing, numbers,
                   words and conversation, with audio on every line
@@ -32,6 +43,24 @@ contact.html      Contact — details, enquiry form, opening hours, map, quick F
 robots.txt        Crawler rules
 sitemap.xml       Sitemap (update <loc> if the domain changes)
 assets/css/chinese.css Chinese page — tabs, syllable tiles, writing pad, word lists, dialogues
+assets/css/kids.css    Both kindergarten pages — big tiles, flip cards, the game screen
+assets/js/kids-core.js The kindergarten engine both pages run on — voice, flip
+                       cards, contents rail, tab strip, the whole game round
+assets/js/kindergarten-bank.js
+                       English course content — alphabet, numbers, colours,
+                       shapes, 80 words in 8 themes, word families, sight words, phrases
+assets/js/english-kindergarten.js
+                       English modules and games — the join between bank and engine
+assets/js/chinese-kg-bank.js
+                       Chinese course content — 26 first characters, numbers,
+                       colours, shapes, 80 words in 8 themes, the four tones, phrases
+assets/js/chinese-kindergarten.js
+                       Chinese modules and games — the join between bank and engine
+assets/css/hsk.css     HSK pages — the registration gate and the chapter cards
+assets/js/aa-gate.js   The registration gate: sign-up before the tests open
+assets/js/hsk1-bank.js HSK 1 content — 15 lessons, their words, their grammar
+                       notes and 196 questions
+assets/js/hsk1-test.js HSK 1 page — chapter cards, saved scores, runs the quiz
 assets/css/style.css   Full design system — tokens, light/dark themes, components, responsive rules
 assets/js/boot.js      Render-blocking: stamps the saved theme + language on <html> before first paint
 assets/js/i18n.js      Khmer dictionary and the English ⇄ ខ្មែរ swap
@@ -286,6 +315,198 @@ duplicate survives on purpose — exercise 51 prints the same wording for parts
 
 The author card at the foot of the page uses `assets/img/nat-bunchhai.jpg`,
 the same photo now shown in the credit block of the formula book.
+
+## HSK 1 chapter tests
+
+`hsk1-test.html` — fifteen tests, one per lesson of *HSK Standard Course 1*,
+plus a final paper. 196 questions in `assets/js/hsk1-bank.js`, run through the
+shared `quiz-engine.js` that the English tenses and grammar pages already use.
+Best score per chapter lives in `localStorage` under `aa-hsk1-best`.
+
+**Where the content came from.** Both source PDFs are image-only scans — 150
+JPEG pages, no text layer, no fonts, produced by FreePic2Pdf — so nothing could
+be extracted programmatically. The pages were read visually instead. The lesson
+numbering, titles, per-lesson word lists and grammar notes all come from the
+book's own Contents (pp. 13-18) and Vocabulary index (pp. 120-125), so the
+tests line up with the book exactly. **The questions themselves were written
+for this page**, using only words a student has met by the end of that lesson.
+
+**One convention in the bank.** The right answer is always written first, so a
+question can be checked at a glance while editing. `shuffleQ` in
+`hsk1-test.js` permutes the options and moves `ans` to wherever the right one
+landed, which is what stops the answer always being A on screen. If you add a
+question, put the right answer at index 0 and leave `ans: 0`.
+
+### The registration gate
+
+`assets/js/aa-gate.js`. A student gives a name and email before the tests open;
+the details are remembered on that device under `aa-user` and sent on to the
+academy.
+
+**Be clear about what this is.** The site is static — no server, no database —
+so this is a sign-up, not a login. It captures who is studying and it keeps a
+casual visitor out. It does **not** secure anything: anyone who opens the
+browser console can clear the flag and walk in. If the tests ever need to be
+genuinely restricted, that needs real accounts (Firebase Auth, Supabase or
+similar), which cannot live in a file on a static host.
+
+The details go the same two ways the contact form's do — POST to
+`FORM_ENDPOINT` if one is set, otherwise the visitor's mail client, opened in
+a new tab so a half-finished registration is not lost. **Set the endpoint in
+two places**, `main.js` and `aa-gate.js`, and both start posting silently:
+
+```js
+var FORM_ENDPOINT = 'https://formspree.io/f/xxxxxxxx';
+```
+
+Until you do, every registration opens the student's mail client, which many
+will simply close — so setting it is the first thing to do before sharing the
+page. Only the HSK tests are gated; everything else on the site stays open.
+
+## The two kindergarten pages
+
+`english-kindergarten.html` and `chinese-kindergarten.html` are the same page
+in two languages, and they share an engine rather than a copy of one.
+
+```
+kids-core.js          the voice, the flip cards, the tab strip, the contents
+                      rail, the scroll spy, the whole game round, the saved
+                      scores, the confetti — nothing language-specific
+  ├── english-kindergarten.js  + kindergarten-bank.js
+  └── chinese-kindergarten.js  + chinese-kg-bank.js
+```
+
+A page hands the engine its tabs, a `panel(key)` that returns the HTML for a
+module, its list of games, and its praise and nudge lines; the engine does the
+rest. `KidsCore.start()` returns the engine so a page can reach its voice.
+
+Fixing a bug in the game round therefore fixes it on both pages. Adding a
+module to one page does not touch the other. Both share `kids.css`.
+
+Three seams let a page extend the engine without the engine knowing anything
+about the language:
+
+- `cfg.click(near, target)` — extra click handlers, called before the
+  fall-through that simply speaks anything carrying `data-say`. The English
+  page uses it for the blend-it-together row; both use it for the vocabulary
+  group buttons.
+- `data-flip` is a **pipe-separated list of what to say**, so `A|Apple` reads
+  the letter, a beat, then the word, while `人` just reads the character.
+- an option may carry `cls`, which is how the Chinese page gets its characters
+  set in a Chinese face without the engine having heard of Chinese.
+
+**Two class names to leave alone.** The shared stylesheet already owns `.sub`
+(the nav dropdowns, which are `visibility:hidden` until hovered) and `.card`,
+`.tabs`, `.grid`, `.opt`. Everything here is `kg-*` for that reason, and the
+one time it was not — a `.sub` for the pinyin under a game answer — the answer
+silently vanished. Note also that several `kg-*` rules set `font-family`
+directly, so `.kg-wrap .kg-hz` has to match their specificity and sit at the
+end of the file to win.
+
+## English for Kindergarten
+
+`english-kindergarten.html` is written for a student who cannot read yet, and
+almost everything unusual about it follows from that.
+
+Seven modules — **ABC, 123, Colours & Shapes, Words, Sounds, Talk, Play** —
+all rendered from `assets/js/kindergarten-bank.js` by
+`assets/js/english-kindergarten.js`, and reachable two ways: the tab strip
+across the top and the **contents rail on the left**, exactly as on the
+Chinese page. Deep links work: `english-kindergarten#play` opens the games.
+
+The rail lists all seven modules and expands the open one into its sections,
+which are read back out of the panel after it renders — the labels come from
+each `.kg-sec` heading, so the rail cannot drift from the page. Only the open
+module lists sections, because scrolling to a heading inside a module that is
+not on screen would mean nothing. From 1080px the rail is a sticky left
+column; below that it is a drawer above the lesson, closed by default and
+closing again once something is picked.
+
+**The alphabet is a flashcard deck.** The front of a card is the letter alone;
+tapping turns it over to the picture and says "A … Apple". Showing both at
+once — which the first version of this panel did — lets a child read the
+answer off the card instead of recalling it, which is the whole point of a
+flashcard. The phonics badge and the two speaker buttons sit *under* the card,
+outside the flipping part, so the sound of a letter never needs a turn to
+reach. Turning a card back is silent, so flipping a whole row back is not a
+wall of noise, and **Show every picture / Turn them all back** flip the deck
+for a teacher running a drill. Under `prefers-reduced-motion` the card still
+turns over, it just does not spin to get there.
+
+**Everything reads itself aloud.** There are no audio files. Every card is a
+speaker button that calls `speechSynthesis` with the device's English voice,
+and the toolbar reports which voice was found. Two rules when editing content:
+
+- Every word in the bank needs an `em` (emoji). The picture is not decoration —
+  it is how a question is asked to someone who cannot read the words.
+- `say` on a letter is *not* its phoneme. A browser voice reads `b` as its name
+  "bee", so the phonics sound has to be written as `buh`. That trailing schwa
+  is the sound as it is taught in most kindergartens, but it is an
+  approximation; `ph` holds the proper notation printed on screen. A real voice
+  in the room is still better, and the page says so in the parent tips.
+
+**The games.** Seven of them, ten questions each, all multiple choice with four
+huge picture answers: listen-and-find, first letter, which letter says…?, how
+many?, find the colour, find the shape, and read the word. Each generator draws
+its questions fresh from the bank, so a round is never the same twice.
+
+A wrong tap is never an ending. It says "try again" and hands the card back;
+after two tries the right answer starts glowing and the child taps it to move
+on. Every round therefore finishes. The star is what records whether the answer
+was right first time, and the best round per game is kept in `localStorage`
+under `aa-kg-best`. There is no timer and no percentage — a four-year-old who
+feels told off stops playing.
+
+The three sound effects are built with the Web Audio API rather than shipped as
+files, so they work offline. Confetti is pure CSS and is skipped entirely under
+`prefers-reduced-motion`.
+
+**Khmer.** The hero, the parent guidance and the CTA use `data-i18n` keys
+(`kg.*` in `i18n.js`). Everything else — word meanings, module headings, the
+tips, the game names — is bilingual inside the bank and the page script as
+`{en, km}` pairs, the same shape the probability bank uses, so the two
+languages cannot drift apart. The page repaints on `aa:langchange`, which is
+the only way the Khmer glosses printed inside each card can follow the switch.
+
+**On the Khmer glosses.** Roughly 200 of them were written for this page rather
+than taken from a book. They are ordinary, everyday words and should be read
+over by a native speaker before the page goes in front of a class.
+
+## Chinese for Kindergarten
+
+`chinese-kindergarten.html` is the English page's twin, and only three things
+differ. All three are the language rather than the design.
+
+**Speak characters, never pinyin.** A zh-CN voice reads 你好 correctly but
+would read `nǐ hǎo` as Latin letters, so every `data-say` and every game prompt
+is hanzi. Pinyin is printed and never spoken, which is also why an entry in
+`chinese-kg-bank.js` without an `hz` cannot be spoken at all. The page harness
+asserts this: it walks every `data-say`, `data-flip` and answer label looking
+for Latin letters, and finding one is a bug.
+
+**The flashcard runs the other way up.** The English deck hides the picture and
+shows the letter, because there the child is learning what A sounds like. Here
+the front carries the character and its pinyin and what is hidden is the
+meaning — because that is the thing being recalled.
+
+**Tones replace phonics.** There is nothing to blend, but there is the one
+thing a Khmer speaker most needs drilling on, so the fifth module is the four
+tones — four groups of ordinary words plus the 妈/麻/马/骂 contrast that shows
+why the tone is not decoration — and the game set trades "which letter says…"
+for "which tone".
+
+The seven games are listen-and-find, which character (picture → single
+character), which tone, how many, find the colour, find the shape and read the
+word (picture → multi-character word). The tone game draws only from
+single-syllable entries: the tone of a two-character word is two answers, and
+the question would then have no right one.
+
+Scores live under `aa-zkg-best`, separate from the English page's `aa-kg-best`,
+so a child's stars on one do not appear on the other.
+
+**On the Khmer and the pinyin.** Both were written for this page rather than
+taken from a book. Have a native speaker read the Khmer, and a Mandarin speaker
+check the tone marks, before the page goes in front of a class.
 
 ## Chinese for Beginners
 

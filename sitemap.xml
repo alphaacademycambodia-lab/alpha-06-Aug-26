@@ -91,6 +91,21 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.alphaacademycambodia.com/english-kindergarten.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.alphaacademycambodia.com/hsk1-test.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.alphaacademycambodia.com/chinese-kindergarten.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.alphaacademycambodia.com/chinese-beginner.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
