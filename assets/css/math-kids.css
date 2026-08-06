@@ -1,0 +1,390 @@
+/* Alpha Academy Cambodia — Maths for Kindergarten
+   ---------------------------------------------------------------------------
+   Loaded AFTER assets/css/kids.css, which this file leans on for everything
+   the three kindergarten pages share: the tokens on .kg-wrap, the tab strip,
+   the sound bar, the contents rail, the game screen and the confetti. Only
+   the things maths needs and language does not live here, namespaced mk-* so
+   nothing can reach back into the English or Chinese page.
+
+   The three rules from kids.css still hold — nothing tappable under 64px, the
+   picture carries the meaning, colour in the borders rather than the text —
+   and one more is added by the subject:
+
+     A NUMBER IS SHOWN THREE WAYS AT ONCE. The digit 4, the Khmer numeral ៤
+     and four actual things. A child who has only ever seen the digit has
+     learnt a squiggle; the four dots are what make it a quantity, and the
+     Khmer numeral is what they will meet on a school book and a price tag.  */
+
+/* ================================================================ 1. numbers
+   The card is the whole lesson in miniature: digit, Khmer numeral, ten-frame,
+   then the two words. Nothing flips — unlike a letter, a number has nothing
+   to hide behind, and hiding the dots would remove the only part that makes
+   the digit mean anything.                                                  */
+.mk-nums{display:grid;gap:.9rem;grid-template-columns:repeat(auto-fill,minmax(176px,1fr))}
+.mk-num{
+  appearance:none;cursor:pointer;font:inherit;text-align:center;
+  background:var(--kg-paper);border:3px solid var(--kg-line);border-radius:var(--kg-r);
+  padding:.85rem .7rem 1rem;
+  transition:transform .15s var(--ease),border-color .15s,box-shadow .15s;
+}
+.mk-num:hover{transform:translateY(-4px);border-color:var(--c);box-shadow:0 10px 0 -4px color-mix(in srgb,var(--c) 40%,transparent)}
+.mk-num .row{display:flex;align-items:baseline;justify-content:center;gap:.55rem}
+.mk-num .d{
+  font-family:var(--font-round,var(--font-display));font-weight:700;
+  font-size:3rem;line-height:1;color:var(--c);
+}
+.mk-num .kn{
+  font-family:"Kantumruy Pro",var(--font-sans);font-weight:600;
+  font-size:1.5rem;line-height:1;color:var(--ink-400);
+}
+.mk-num .w{display:block;font-weight:700;font-size:1.05rem;color:var(--ink-900);margin-top:.5rem;text-transform:capitalize}
+.mk-num .km{display:block;font-size:.87rem;color:var(--ink-500)}
+
+/* Lit by "count to ten with me" as the voice reaches that number. The card
+   and its tick on the number line light together, which is the whole point:
+   the two are the same number in two places. */
+.mk-num.is-lit,.mk-tick.is-lit{
+  border-color:var(--c);background:color-mix(in srgb,var(--c) 14%,var(--kg-paper));
+  transform:translateY(-4px);
+}
+.mk-tick.is-lit .d{color:var(--c)}
+
+/* the ten-frame — five across, two down, which is why we group in fives */
+.mk-frames{display:flex;flex-wrap:wrap;gap:.4rem;justify-content:center;margin:.6rem 0 .1rem;min-height:52px;align-items:center}
+.mk-frame{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:2px;
+  background:var(--kg-line);border:2px solid var(--kg-line);border-radius:8px;overflow:hidden;
+}
+.mk-frame i{
+  display:block;width:15px;height:15px;background:var(--kg-paper);
+  font-style:normal;line-height:1;
+}
+.mk-frame i.on{background:var(--c)}
+/* An empty frame with nothing in it at all — zero — still has to be visible. */
+.mk-frame.is-zero{opacity:.55}
+
+/* ------------------------------------------------------- the number line */
+.mk-linewrap{
+  overflow-x:auto;overscroll-behavior-x:contain;padding-bottom:.5rem;
+  border-radius:var(--kg-r);
+}
+.mk-line{display:flex;gap:.35rem;min-width:min-content;padding:.2rem}
+.mk-tick{
+  appearance:none;cursor:pointer;font:inherit;flex:none;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.1rem;
+  width:62px;min-height:72px;border-radius:14px;
+  background:var(--kg-paper);border:2.5px solid var(--kg-line);
+  transition:transform .12s,border-color .12s,background .12s;
+}
+.mk-tick .d{
+  font-family:var(--font-round,var(--font-display));font-weight:800;font-size:1.5rem;
+  line-height:1;color:var(--ink-900);
+}
+.mk-tick .kn{font-size:.85rem;color:var(--ink-400);line-height:1}
+.mk-tick:hover{transform:translateY(-3px);border-color:var(--c);background:color-mix(in srgb,var(--c) 10%,var(--kg-paper))}
+.mk-tick:hover .d{color:var(--c)}
+
+/* --------------------------------------------------------- counting sets */
+.mk-sets{display:grid;gap:.9rem;grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
+.mk-set{
+  appearance:none;cursor:pointer;font:inherit;text-align:left;width:100%;
+  background:var(--kg-paper);border:3px solid var(--kg-line);border-radius:var(--kg-r);
+  padding:.9rem 1rem 1rem;
+  transition:border-color .15s,transform .15s var(--ease);
+}
+.mk-set:hover{border-color:var(--c);transform:translateY(-3px)}
+.mk-set .heap{
+  display:flex;flex-wrap:wrap;gap:.2rem;font-size:1.8rem;line-height:1.15;min-height:2.4rem;
+}
+.mk-set .cap{display:flex;align-items:baseline;gap:.5rem;margin-top:.6rem;flex-wrap:wrap}
+.mk-set .n{
+  font-family:var(--font-round,var(--font-display));font-weight:800;font-size:1.6rem;
+  line-height:1;color:var(--c);
+}
+.mk-set .w{font-weight:700;color:var(--ink-900)}
+.mk-set .km{font-size:.87rem;color:var(--ink-500)}
+.mk-set .go{display:block;margin-top:.35rem;font-size:.8rem;font-weight:700;color:var(--ink-400)}
+
+/* ================================================================ 2. shapes
+   The shape cards reuse .kg-shape from kids.css. Only the sides badge and the
+   solids are new.                                                           */
+.kg-shape .mk-sides{
+  display:inline-block;margin-top:.35rem;padding:.15rem .6rem;border-radius:var(--r-pill);
+  background:color-mix(in srgb,var(--c) 16%,transparent);color:var(--c);
+  font-size:.76rem;font-weight:800;
+}
+.mk-solids{display:grid;gap:.9rem;grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
+.mk-solid{
+  appearance:none;cursor:pointer;font:inherit;text-align:center;
+  background:var(--kg-paper);border:3px solid var(--kg-line);border-radius:var(--kg-r);padding:1rem .6rem 1.05rem;
+  transition:transform .15s var(--ease),border-color .15s;
+}
+.mk-solid:hover{transform:translateY(-4px);border-color:var(--c)}
+.mk-solid .em{display:block;font-size:3rem;line-height:1.1}
+.mk-solid .w{display:block;font-weight:700;font-size:1.05rem;color:var(--ink-900);margin-top:.4rem;text-transform:capitalize}
+.mk-solid .km{display:block;font-size:.87rem;color:var(--ink-500)}
+.mk-solid .like{display:block;font-size:.78rem;color:var(--ink-400);margin-top:.25rem}
+
+/* ------------------------------------------------------------- patterns */
+.mk-pats{display:flex;flex-direction:column;gap:.7rem}
+.mk-pat{
+  appearance:none;cursor:pointer;font:inherit;width:100%;text-align:left;
+  display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;
+  background:var(--kg-paper);border:3px solid var(--kg-line);border-radius:var(--kg-r);
+  padding:.7rem .9rem;transition:border-color .15s,transform .15s var(--ease);
+}
+.mk-pat:hover{border-color:var(--c);transform:translateX(4px)}
+.mk-pat .tag{
+  flex:none;font-family:var(--font-round,var(--font-display));font-weight:800;font-size:.9rem;
+  padding:.2rem .7rem;border-radius:var(--r-pill);
+  background:color-mix(in srgb,var(--c) 16%,transparent);color:var(--c);
+}
+.mk-pat .seq{display:flex;flex-wrap:wrap;gap:.25rem;font-size:1.7rem;line-height:1.1}
+.mk-pat .seq b{font-weight:400;opacity:.35}
+.mk-pat .q{
+  flex:none;margin-left:auto;font-size:1.7rem;line-height:1;
+  filter:grayscale(1);opacity:.45;transition:filter .3s,opacity .3s;
+}
+.mk-pat.is-shown .q{filter:none;opacity:1}
+
+/* ============================================================= 3. compare */
+.mk-pairs{display:grid;gap:.9rem;grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+.mk-pair{
+  background:var(--kg-paper);border:3px solid var(--kg-line);border-radius:var(--kg-r);
+  overflow:hidden;
+}
+.mk-pair .ttl{
+  display:block;padding:.5rem .9rem;background:var(--surface-2);
+  font-size:.78rem;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-400);
+  border-bottom:2px solid var(--kg-line);
+}
+.mk-pair .two{display:grid;grid-template-columns:1fr 1fr}
+.mk-pair button{
+  appearance:none;cursor:pointer;font:inherit;text-align:center;
+  padding:.9rem .5rem 1rem;background:none;border:0;
+}
+.mk-pair button + button{border-left:2px dashed var(--kg-line)}
+.mk-pair button:hover{background:color-mix(in srgb,var(--c) 10%,transparent)}
+.mk-pair .em{display:block;line-height:1}
+/* The two sides are deliberately drawn at different sizes: the picture has to
+   show the difference the words are naming, or the card teaches nothing. */
+.mk-pair .a .em{font-size:3.2rem}
+.mk-pair .b .em{font-size:1.7rem;padding:.75rem 0}
+.mk-pair .w{display:block;font-weight:800;font-size:1.05rem;color:var(--ink-900);margin-top:.3rem;text-transform:capitalize}
+.mk-pair .km{display:block;font-size:.85rem;color:var(--ink-500)}
+
+/* more, fewer, the same — two heaps and the sign between them */
+.mk-cmps{display:flex;flex-direction:column;gap:.8rem}
+.mk-cmp{
+  display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:.6rem;
+  background:var(--kg-paper);border:3px solid var(--kg-line);border-radius:var(--kg-r);padding:.8rem .9rem;
+}
+.mk-cmp .heap{
+  display:flex;flex-wrap:wrap;gap:.15rem;justify-content:center;
+  font-size:1.5rem;line-height:1.15;
+}
+.mk-cmp .heap b{display:block;width:100%;text-align:center;font-size:.9rem;color:var(--ink-500);font-weight:700;margin-top:.3rem}
+.mk-cmp .sign{
+  appearance:none;cursor:pointer;font:inherit;flex:none;
+  font-family:var(--font-round,var(--font-display));font-weight:800;font-size:1.5rem;
+  min-width:62px;min-height:62px;border-radius:50%;
+  background:var(--surface-2);border:3px solid var(--kg-line);color:var(--ink-700);
+  display:grid;place-items:center;
+}
+.mk-cmp .sign:hover{border-color:var(--c);color:var(--c)}
+.mk-cmp .sign small{display:block;font-family:var(--font-sans);font-size:.6rem;font-weight:700;color:var(--ink-400)}
+
+/* measuring in cubes */
+.mk-meas{display:flex;flex-direction:column;gap:.6rem}
+.mk-mrow{
+  appearance:none;cursor:pointer;font:inherit;width:100%;text-align:left;
+  display:flex;align-items:center;gap:.7rem;flex-wrap:wrap;
+  background:var(--kg-paper);border:3px solid var(--kg-line);border-radius:var(--kg-r);
+  padding:.7rem .9rem;transition:border-color .15s;
+}
+.mk-mrow:hover{border-color:var(--c)}
+.mk-mrow .em{font-size:2rem;flex:none;line-height:1}
+.mk-mrow .cubes{display:flex;gap:3px;flex:none}
+.mk-mrow .cubes i{display:block;width:22px;height:22px;border-radius:5px;background:var(--c);opacity:.85}
+.mk-mrow .n{
+  margin-left:auto;font-family:var(--font-round,var(--font-display));font-weight:800;
+  font-size:1.2rem;color:var(--c);
+}
+.mk-mrow .km{font-size:.85rem;color:var(--ink-500);flex:none}
+
+/* ================================================== 4. adding and taking away
+   One row per fact, and the row is the sentence: the things, the sign, the
+   things, then the answer as a button because that is the bit to say out
+   loud. Numbers and pictures sit on the same line on purpose — a child who
+   only ever sees "3 + 2 = 5" learns a ritual, not an amount.                */
+.mk-sums{display:flex;flex-direction:column;gap:.6rem}
+.mk-sum{
+  appearance:none;cursor:pointer;font:inherit;width:100%;text-align:left;
+  display:flex;align-items:center;gap:.45rem;flex-wrap:wrap;
+  background:var(--kg-paper);border:3px solid var(--kg-line);border-radius:var(--kg-r);
+  padding:.65rem .85rem;transition:border-color .15s,transform .15s var(--ease);
+}
+.mk-sum:hover{border-color:var(--c);transform:translateX(4px)}
+.mk-sum .heap{display:flex;gap:.1rem;flex-wrap:wrap;font-size:1.35rem;line-height:1.1;flex:none}
+.mk-sum .heap.gone{opacity:.3;text-decoration:line-through;text-decoration-thickness:3px;text-decoration-color:var(--kg-red)}
+.mk-sum .op{
+  flex:none;font-family:var(--font-round,var(--font-display));font-weight:800;
+  font-size:1.3rem;color:var(--ink-400);padding-inline:.15rem;
+}
+.mk-sum .eq{
+  flex:none;margin-left:auto;
+  font-family:var(--font-round,var(--font-display));font-weight:800;font-size:1.15rem;
+  color:var(--ink-700);white-space:nowrap;
+}
+.mk-sum .eq .ans{
+  display:inline-block;min-width:2.2em;text-align:center;margin-left:.3rem;
+  padding:.1rem .5rem;border-radius:10px;
+  background:color-mix(in srgb,var(--c) 18%,transparent);color:var(--c);
+}
+
+/* number bonds — the whole on top, the two parts underneath */
+.mk-bonds{display:grid;gap:.7rem;grid-template-columns:repeat(auto-fill,minmax(132px,1fr))}
+.mk-bond{
+  appearance:none;cursor:pointer;font:inherit;
+  display:grid;gap:.3rem;justify-items:center;
+  background:var(--kg-paper);border:3px solid var(--kg-line);border-radius:var(--kg-r);
+  padding:.8rem .5rem .9rem;transition:border-color .15s,transform .15s var(--ease);
+}
+.mk-bond:hover{border-color:var(--c);transform:translateY(-3px)}
+.mk-bond .whole{
+  display:grid;place-items:center;width:52px;height:52px;border-radius:50%;
+  background:var(--c);color:#fff;
+  font-family:var(--font-round,var(--font-display));font-weight:800;font-size:1.5rem;
+}
+:root[data-theme="dark"] .mk-bond .whole{color:#0a1120}
+.mk-bond .legs{width:56%;height:14px;border:3px solid var(--kg-line);border-top:0;border-radius:0 0 12px 12px}
+.mk-bond .parts{display:flex;gap:.45rem}
+.mk-bond .parts span{
+  display:grid;place-items:center;width:44px;height:44px;border-radius:12px;
+  background:var(--surface-2);border:2.5px solid var(--kg-line);color:var(--ink-900);
+  font-family:var(--font-round,var(--font-display));font-weight:800;font-size:1.15rem;
+}
+
+/* ======================================================== 5. time and money */
+.mk-days{display:grid;gap:.7rem;grid-template-columns:repeat(auto-fill,minmax(152px,1fr))}
+.mk-day{
+  appearance:none;cursor:pointer;font:inherit;text-align:center;
+  background:var(--kg-paper);border:3px solid var(--kg-line);border-radius:var(--kg-r);padding:.8rem .5rem .9rem;
+  transition:border-color .15s,transform .15s var(--ease);
+}
+.mk-day:hover{border-color:var(--c);transform:translateY(-3px)}
+.mk-day .em{display:block;font-size:1.6rem;line-height:1}
+.mk-day .w{display:block;font-weight:700;font-size:1rem;color:var(--ink-900);margin-top:.35rem}
+.mk-day .km{display:block;font-size:.86rem;color:var(--ink-500)}
+
+.mk-clocks{display:grid;gap:.7rem;grid-template-columns:repeat(auto-fill,minmax(126px,1fr))}
+.mk-clock{
+  appearance:none;cursor:pointer;font:inherit;text-align:center;
+  background:var(--kg-paper);border:3px solid var(--kg-line);border-radius:var(--kg-r);padding:.7rem .4rem .8rem;
+  transition:border-color .15s,transform .15s var(--ease);
+}
+.mk-clock:hover{border-color:var(--c);transform:translateY(-3px)}
+.mk-clock .em{display:block;font-size:2.6rem;line-height:1}
+.mk-clock .w{display:block;font-weight:700;font-size:.95rem;color:var(--ink-900);margin-top:.3rem}
+.mk-clock .km{display:block;font-size:.84rem;color:var(--ink-500)}
+
+.mk-parts{display:grid;gap:.7rem;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.mk-part{
+  appearance:none;cursor:pointer;font:inherit;text-align:left;display:flex;gap:.7rem;align-items:center;
+  background:var(--kg-paper);border:3px solid var(--kg-line);border-radius:var(--kg-r);padding:.8rem .9rem;
+}
+.mk-part:hover{border-color:var(--c)}
+.mk-part .em{font-size:2.1rem;flex:none;line-height:1}
+.mk-part .w{display:block;font-weight:700;color:var(--ink-900);text-transform:capitalize}
+.mk-part .km{display:block;font-size:.86rem;color:var(--ink-500)}
+
+/* the riel notes, drawn as notes rather than listed as numbers */
+.mk-money{display:grid;gap:.9rem;grid-template-columns:repeat(auto-fill,minmax(210px,1fr))}
+.mk-note{
+  appearance:none;cursor:pointer;font:inherit;text-align:left;width:100%;
+  border:3px solid var(--nc);border-radius:16px;padding:.8rem .9rem .85rem;
+  background:color-mix(in srgb,var(--nc) 14%,var(--kg-paper));
+  transition:transform .15s var(--ease),box-shadow .15s;
+}
+.mk-note:hover{transform:translateY(-4px) rotate(-1deg);box-shadow:var(--shadow-md)}
+.mk-note .v{
+  display:flex;align-items:baseline;gap:.4rem;
+  font-family:var(--font-round,var(--font-display));font-weight:800;font-size:1.7rem;
+  line-height:1;color:var(--nc);
+}
+.mk-note .v .r{font-size:1.1rem}
+.mk-note .kn{display:block;margin-top:.3rem;font-size:1.05rem;color:var(--ink-700);font-weight:600}
+.mk-note .km{display:block;font-size:.85rem;color:var(--ink-500);margin-top:.1rem}
+
+/* ==================================================== 6. where things are
+   The cat really is inside, on top of or behind the box. A caption saying so
+   would be no use to a child who cannot read it.                            */
+.mk-poss{display:grid;gap:.9rem;grid-template-columns:repeat(auto-fill,minmax(168px,1fr))}
+.mk-pos{
+  appearance:none;cursor:pointer;font:inherit;text-align:center;
+  background:var(--kg-paper);border:3px solid var(--kg-line);border-radius:var(--kg-r);padding:.7rem .5rem .9rem;
+  transition:border-color .15s,transform .15s var(--ease);
+}
+.mk-pos:hover{border-color:var(--c);transform:translateY(-3px)}
+.mk-scene{
+  position:relative;height:104px;margin-bottom:.4rem;
+  display:grid;place-items:center;
+  background:var(--surface-2);border-radius:14px;overflow:hidden;
+}
+.mk-scene .box{font-size:2.6rem;line-height:1}
+/* Anchored explicitly on both axes. An absolutely positioned child of a grid
+   container with no offsets falls back to the container's top-left corner,
+   not to where it looks like it should sit — so every variant below sets the
+   horizontal anchor as well as the vertical one. */
+.mk-scene .cat{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  font-size:1.8rem;line-height:1;
+}
+.mk-scene.is-in     .cat{font-size:1.1rem;transform:translate(-50%,-32%)}
+.mk-scene.is-on     .cat{top:9px;transform:translate(-50%,0)}
+.mk-scene.is-under  .cat{top:auto;bottom:8px;transform:translate(-50%,0)}
+.mk-scene.is-behind .cat{top:11px;left:63%;opacity:.5;transform:translate(-50%,0)}
+.mk-scene.is-front  .cat{top:auto;bottom:9px;left:37%;font-size:2.1rem;transform:translate(-50%,0)}
+.mk-scene.is-next   .cat{left:auto;right:13%;transform:translateY(-50%)}
+.mk-scene.is-next   .box{margin-right:2.6rem}
+.mk-scene.is-between .cat{position:static;transform:none;font-size:1.6rem}
+.mk-scene.is-between .pair{display:flex;align-items:center;gap:.35rem}
+.mk-pos .w{display:block;font-weight:800;font-size:1.05rem;color:var(--ink-900);text-transform:capitalize}
+.mk-pos .km{display:block;font-size:.86rem;color:var(--ink-500)}
+
+.mk-ords{display:flex;flex-wrap:wrap;gap:.6rem}
+.mk-ord{
+  appearance:none;cursor:pointer;font:inherit;
+  display:flex;flex-direction:column;align-items:center;gap:.1rem;
+  min-width:96px;min-height:96px;padding:.6rem .8rem;border-radius:16px;
+  background:var(--kg-paper);border:3px solid var(--kg-line);justify-content:center;
+}
+.mk-ord:hover{border-color:var(--c)}
+.mk-ord .em{font-size:1.8rem;line-height:1}
+.mk-ord .w{font-weight:800;color:var(--ink-900);text-transform:capitalize}
+.mk-ord .km{font-size:.84rem;color:var(--ink-500)}
+
+/* ============================================================== 7. the games
+   Four extra shapes the shared game screen does not have a kind for. Each one
+   rides in on the `cls` an option or a question already carries, so none of
+   this needed a change to kids-core.js.                                     */
+
+/* a heap of pictures used as an answer — "which side has more?" */
+.kg-opt .t.mk-heap{
+  display:flex;flex-wrap:wrap;gap:.12rem;justify-content:center;align-items:center;
+  font-size:clamp(1.2rem,4.5vw,1.7rem);line-height:1.15;max-width:100%;
+}
+/* the sum in the question — narrower than a single letter, so it fits */
+.kg-ask .bigletter.mk-sum-q{font-size:clamp(2.4rem,10vw,4rem);letter-spacing:.02em}
+/* The Khmer numeral under a digit answer. Scoped to .mk because the shared
+   rule sets the Latin face, which has no Khmer glyphs to fall back on. */
+.mk .kg-opt .kg-sub{font-family:"Kantumruy Pro",var(--font-sans);font-size:1.05rem}
+/* the pattern strip and the counted heap in a question */
+.mk .kg-ask .count{gap:.45rem}
+
+/* --------------------------------------------------------------- 8. quiet */
+@media (prefers-reduced-motion:reduce){
+  .mk-num,.mk-set,.mk-solid,.mk-pat,.mk-sum,.mk-bond,.mk-day,.mk-clock,.mk-note,.mk-pos,.mk-tick{transition:none}
+  .mk-num:hover,.mk-set:hover,.mk-solid:hover,.mk-pat:hover,.mk-sum:hover,.mk-bond:hover,
+  .mk-day:hover,.mk-clock:hover,.mk-note:hover,.mk-pos:hover,.mk-tick:hover{transform:none}
+}

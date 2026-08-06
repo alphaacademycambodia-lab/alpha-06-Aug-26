@@ -24,6 +24,16 @@ grade-12-integral.html
                   Grade 12 integrals — lesson + 18 multiple choice + 10 written, Khmer and English
 grade-12-probability-exercise.html
                   Grade 12 probability — lesson + 108 exercises, Khmer and English
+khmer-kindergarten.html
+                  Khmer for Kindergarten (ages 4–6) — the 33 consonants with
+                  their series, the 23 vowel signs on both series, building
+                  syllables, ជើងអក្សរ, first words, Khmer numerals, everyday
+                  phrases, and seven games that need no sound to play
+math-kindergarten.html
+                  Maths for Kindergarten (ages 4–6) — numbers 0–20 as digits,
+                  Khmer numerals and ten-frames, shapes and patterns,
+                  comparing and measuring, adding and taking away within ten,
+                  the clock, the riel, position words, and eight picture games
 english-kindergarten.html
                   English for Kindergarten (ages 4–6) — ABC and letter sounds,
                   numbers, colours, shapes, first words, phonics, everyday
@@ -38,14 +48,38 @@ hsk1-test.html    HSK 1 chapter tests — 15 tests following HSK Standard
 chinese-beginner.html
                   Chinese for Beginners — pinyin, sound, writing, numbers,
                   words and conversation, with audio on every line
+tools.html        Tools hub — the fourth top-level tab, listing the free tools
+date-calculator.html
+                  Date Calculator — add or subtract days, weeks, months and
+                  years from any date, before or after, with the answer marked
+                  on a calendar. Runs entirely in the browser
 contact.html      Contact — details, enquiry form, opening hours, map, quick FAQ
 404.html          Not-found page
 robots.txt        Crawler rules
 sitemap.xml       Sitemap (update <loc> if the domain changes)
 assets/css/chinese.css Chinese page — tabs, syllable tiles, writing pad, word lists, dialogues
-assets/css/kids.css    Both kindergarten pages — big tiles, flip cards, the game screen
-assets/js/kids-core.js The kindergarten engine both pages run on — voice, flip
-                       cards, contents rail, tab strip, the whole game round
+assets/css/kids.css    All four kindergarten pages — big tiles, flip cards, the game screen
+assets/css/math-kids.css
+                       The maths page only — number cards, ten-frames, the
+                       number line, sum rows, number bonds, riel notes, scenes
+assets/css/khmer-kids.css
+                       The Khmer page only — the Khmer face and its leading,
+                       the series colours, the vowel table, the syllable grid
+assets/js/kids-core.js The kindergarten engine all four pages run on — voice,
+                       flip cards, contents rail, tab strip, the whole game round
+assets/js/khmer-kg-bank.js
+                       Khmer course content — 33 consonants with series and
+                       example words, 23 vowel signs on both series, the
+                       independent vowels, subscripts, 70 words in 8 themes,
+                       the numerals and everyday phrases
+assets/js/khmer-kindergarten.js
+                       Khmer modules and games — the join between bank and engine
+assets/js/math-kg-bank.js
+                       Maths course content — 0–20 in three notations, shapes
+                       and solids, patterns, opposites, number bonds, the days,
+                       o'clock, riel notes, position words, ordinals
+assets/js/math-kindergarten.js
+                       Maths modules and games — the join between bank and engine
 assets/js/kindergarten-bank.js
                        English course content — alphabet, numbers, colours,
                        shapes, 80 words in 8 themes, word families, sight words, phrases
@@ -60,7 +94,14 @@ assets/css/hsk.css     HSK pages — the registration gate and the chapter cards
 assets/js/aa-gate.js   The registration gate: sign-up before the tests open
 assets/js/hsk1-bank.js HSK 1 content — 15 lessons, their words, their grammar
                        notes and 196 questions
+assets/js/hsk1-bank-km.js
+                       The Khmer half of the HSK 1 bank, an overlay keyed on
+                       lesson and question position
 assets/js/hsk1-test.js HSK 1 page — chapter cards, saved scores, runs the quiz
+assets/css/tools.css   The Tools tab — the hub card grid and the date calculator
+assets/js/date-calculator.js
+                       The date calculator — the arithmetic, the result panel
+                       and the calendar. No dependencies, nothing stored
 assets/css/style.css   Full design system — tokens, light/dark themes, components, responsive rules
 assets/js/boot.js      Render-blocking: stamps the saved theme + language on <html> before first paint
 assets/js/i18n.js      Khmer dictionary and the English ⇄ ខ្មែរ swap
@@ -107,6 +148,33 @@ choice is stored under `aa-lang`.
 To add a string: give the element a `data-i18n="..."` attribute and add the same
 key to the `KM` object in `i18n.js`. A key with no Khmer entry simply stays in
 English rather than going blank.
+
+### Khmer in JavaScript-generated pages
+
+`data-i18n` only reaches markup that is in the HTML file. Anything a script
+writes needs its own dictionary, and there are three patterns in use — pick the
+one that matches, rather than inventing a fourth:
+
+| where | pattern |
+|---|---|
+| page furniture a script writes (`quiz-engine.js`, `aa-gate.js`, `kids-core.js`) | a local `T` object of `{en, km}` pairs and a `t()` that reads `AAi18n.get()` |
+| lesson content that is bilingual by nature (the kindergarten banks) | `km` beside `en` on each entry in the bank |
+| a large English bank that needs a Khmer twin (`hsk1-bank.js`) | a separate overlay file keyed on position — see `hsk1-bank-km.js` |
+
+**The quiz engine is fully bilingual.** Every label it draws comes from its own
+`T` block, and a bank may supply `qkm`, `whykm` and `optskm` beside `q`, `why`
+and `opts`; where they are missing the English is used. Switching language
+mid-test relabels in place and redraws the current question — the answers live
+on the Quiz object, so nothing is lost. That is why `paintResults()` is
+separate from `finish()`: redrawing the results screen in the other language
+must not fire `onFinish` again and save the score a second time.
+
+**What is still English on purpose.** The Grade 12 formula book is Khmer-only
+by design. The periodic table keeps element names and symbols in English
+because that is how they are examined. The English tenses and grammar banks ask
+about English, so their question text is the material itself — only the chrome
+around them is translated. And the quiz's keyboard hint names the physical keys
+(Enter, Backspace), which are printed in English on the keyboard.
 
 The formula book's chapter content is Khmer-only by design (it is a Khmer
 reference); the switch changes the surrounding chrome.
@@ -363,18 +431,73 @@ Until you do, every registration opens the student's mail client, which many
 will simply close — so setting it is the first thing to do before sharing the
 page. Only the HSK tests are gated; everything else on the site stays open.
 
-## The two kindergarten pages
+## Tools
 
-`english-kindergarten.html` and `chinese-kindergarten.html` are the same page
-in two languages, and they share an engine rather than a copy of one.
+`tools.html` is a top-level tab beside Learning, and it is a hub for the same
+reason Learning is one: the tab has to lead somewhere when there is more than
+one thing behind it. Its dropdown lists the tools directly, so the hub is
+never in the way of someone who knows what they came for.
+
+A tool here is held to three rules. It does **one** job. It needs **no account
+and no network** — the calculation happens in the browser, nothing is uploaded
+and nothing is stored. And it is **bilingual like everything else**, which for
+a tool means the numbers too: Khmer numerals when the page is in Khmer, not
+just Khmer labels around Latin digits.
+
+### Date Calculator
+
+`date-calculator.html` + `assets/js/date-calculator.js`. Add or subtract years,
+months, weeks and days from a date, in either direction, with the answer marked
+on a calendar. Four decisions are worth knowing before editing it.
+
+**The answer is live; there is no Calculate button.** Every keystroke
+recomputes. That is how these are actually used — nudging a number until the
+date looks right — and a submit button turns each nudge into two actions. The
+result panel is `role="status" aria-live="polite"` so a screen reader follows
+along instead of being left behind.
+
+**Months are not a fixed length, and the page says so.** 31 January plus one
+month has no honest answer. Every calendar clamps it to 28 February and so does
+this one — but it also *tells you it did*, in the amber note under the result.
+Naive `setMonth` arithmetic silently returns 3 March, and that is the classic
+bug in date calculators. The order is years, then months (clamped), then whole
+days, so `1 month + 30 days` and `30 days + 1 month` are genuinely different
+answers and the page documents which one it gives.
+
+**Dates are three integers, never a parsed string.** `new Date('2026-03-01')`
+is UTC midnight and lands on the previous day west of Greenwich;
+`new Date(2026, 2, 1)` is local midnight and is always the day you meant.
+Differences are then measured through `Date.UTC` so a daylight-saving jump
+cannot turn 90 days into 89 — Cambodia has no DST, a visitor's laptop might.
+
+**The calendar is always six rows.** A grid that changes height as you page
+through months is hard to scan, so short months are padded with the
+neighbouring days rather than collapsing the row.
+
+The arithmetic is worth testing whenever it is touched. It can be driven
+headlessly against a stub DOM — set the date input's value, fire the direction
+button's click handler, then read the ISO date the Copy button carries — which
+covers the clamp cases, the leap years, the year boundaries and the order of
+operations without needing a browser.
+
+## The four kindergarten pages
+
+`english-kindergarten.html`, `chinese-kindergarten.html`,
+`math-kindergarten.html` and `khmer-kindergarten.html` are one page in four
+subjects, and they share an engine rather than a copy of one.
 
 ```
 kids-core.js          the voice, the flip cards, the tab strip, the contents
                       rail, the scroll spy, the whole game round, the saved
-                      scores, the confetti — nothing language-specific
+                      scores, the confetti — nothing subject-specific
   ├── english-kindergarten.js  + kindergarten-bank.js
-  └── chinese-kindergarten.js  + chinese-kg-bank.js
+  ├── chinese-kindergarten.js  + chinese-kg-bank.js
+  ├── math-kindergarten.js     + math-kg-bank.js
+  └── khmer-kindergarten.js    + khmer-kg-bank.js
 ```
+
+Scores are namespaced per page — `aa-kg-best`, `aa-zkg-best`, `aa-mkg-best`,
+`aa-kkg-best` — so a child's stars on one never appear on another.
 
 A page hands the engine its tabs, a `panel(key)` that returns the HTML for a
 module, its list of games, and its praise and nudge lines; the engine does the
@@ -383,13 +506,15 @@ rest. `KidsCore.start()` returns the engine so a page can reach its voice.
 Fixing a bug in the game round therefore fixes it on both pages. Adding a
 module to one page does not touch the other. Both share `kids.css`.
 
-Three seams let a page extend the engine without the engine knowing anything
-about the language:
+Four seams let a page extend the engine without the engine knowing anything
+about the subject:
 
 - `cfg.click(near, target)` — extra click handlers, called before the
   fall-through that simply speaks anything carrying `data-say`. The English
-  page uses it for the blend-it-together row; both use it for the vocabulary
-  group buttons.
+  page uses it for the blend-it-together row, the two language pages for the
+  vocabulary group buttons, and the maths page for counting along out loud.
+- `cfg.playP` — replaces the blurb above the game menu. The default one counts
+  seven games out loud, and the maths page has eight.
 - `data-flip` is a **pipe-separated list of what to say**, so `A|Apple` reads
   the letter, a beat, then the word, while `人` just reads the character.
 - an option may carry `cls`, which is how the Chinese page gets its characters
@@ -507,6 +632,96 @@ so a child's stars on one do not appear on the other.
 **On the Khmer and the pinyin.** Both were written for this page rather than
 taken from a book. Have a native speaker read the Khmer, and a Mandarin speaker
 check the tone marks, before the page goes in front of a class.
+
+## Maths for Kindergarten
+
+`math-kindergarten.html` is the third page on the same engine, and the one
+place it departs from the other two is the point of it.
+
+**A number is shown three ways at once.** English and Chinese are subjects a
+child learns *in* a language; maths is not — four is four whether the child
+says "four" or reads ៤. So every entry in `math-kg-bank.js` carries the digit,
+the **Khmer numeral**, the English word and the Khmer word, and the number
+cards print the first three together with a ten-frame. Matching `4`, `៤` and
+four dots to each other is the most useful thing on the page, and no other
+page on this site teaches the Khmer numerals at all.
+
+**The voice still speaks English**, for the same reason the Chinese page uses a
+zh-CN voice: a Khmer speech voice is on almost no phone in Cambodia while an
+English one is on nearly all of them, and a maths page that cannot count out
+loud is a worksheet. Everything spoken is also printed in Khmer underneath.
+
+Six modules — **Numbers, Shapes, Compare, Adding, Taking away, Day & money** —
+plus the games. Beyond the counting and arithmetic the last module carries the
+things a maths question assumes a child already has: the days of the week,
+o'clock, the riel notes, the position words (in, on, under, behind, in front
+of, next to, between) and the ordinals. The position cards are drawn rather
+than captioned — the cat really is inside, on top of or behind the box — since
+a caption saying so would be no use to a child who cannot read it.
+
+**Eight games**: how many?, find the number, add them up, take some away, more
+or fewer, find the shape, what comes next?, and before and after. Digit answers
+carry the Khmer numeral underneath, so every game quietly drills `4 = ៤`
+whatever else it is asking. Scores live under `aa-mkg-best`, separate from the
+other two pages.
+
+Four extra visual kinds ride in on the `cls` an option or a question already
+carries, so none of them needed a change to `kids-core.js`: a heap of pictures
+as an answer, the sum in a question, the Khmer numeral under a digit and the
+pattern strip.
+
+**One trap worth knowing.** In a repeating-pattern question the distractors
+must differ from the answer *and* from each other: an `AAB` unit starts and
+continues with the same picture, so slicing the unit blindly offers the right
+answer twice and then marks the right tap wrong. `collect()` in the pattern
+game exists only to prevent that.
+
+## Khmer for Kindergarten
+
+`khmer-kindergarten.html` is the fourth page on the engine and the one whose
+design is dictated by something outside it.
+
+**Assume there is no voice.** A Khmer speech voice ships with Chrome for
+Android carrying Google Text-to-Speech and with very little else, so on most
+phones in Cambodia this page is silent. The `km` profile in `kids-core.js`
+hunts for one anyway and the toolbar says what it found — but *nothing on the
+page may depend on the answer*. That is why **all seven games are answered by
+looking**, not by listening: where the English page opens a round with "listen
+and find", a silent device would give a child ten questions with no way in.
+The voice here is a bonus, never the mechanism. If you add a game, that is the
+rule to keep.
+
+**A bare vowel sign rides on a dotted circle.** ា is a combining mark, not a
+letter: printed alone it vanishes or lands on the character before it. `sign()`
+prefixes U+25CC to produce ◌ា, which is also exactly how a Khmer school book
+prints one. Every vowel shown without a consonant goes through that function —
+the vowel cards, the grid headers and the answers in the vowel game.
+
+**The series is the lesson, so it is a colour.** Every consonant carries `s: 1`
+or `s: 2`, and first and second series are tinted `--kk-s1` and `--kk-s2`
+wherever they appear. This is not decoration: the same vowel sign says two
+different sounds depending on the series of the consonant in front of it, so
+each of the 23 vowel cards shows the sign on ក *and* on គ with both readings.
+A child taught one sound per sign has to unlearn half of it later.
+
+**Khmer stacks, so it needs leading.** A subscript hangs below the baseline and
+a vowel can sit above it. Every Khmer run on the page carries `.kk-km`, which
+sets Kantumruy Pro at `line-height: 1.75`; set tighter, ខ្ញុំ collides with the
+line above and the page looks broken to the only people who can read it.
+
+**Six modules** — ព្យញ្ជនៈ, ស្រៈ, ការផ្សំ, ពាក្យ, លេខ, និយាយ — and seven games:
+which letter does it start with, find the picture, read the word, find the
+vowel, Khmer numerals, read the colour, and what comes next in the alphabet.
+Two letters, ឋ and ឍ, appear almost only in Pali and Sanskrit borrowings;
+rather than invent a chart word for them the bank marks them `rare`, the card
+says so, and the games leave them out.
+
+**On the romanisation.** Every card carries one so an adult who does not read
+Khmer can say the word, and it follows no official system — Cambodia has
+several and none of them is what a parent reads. It is a handrail; the Khmer
+is the authority. Both the romanisation and the two readings on each vowel
+card were written for this page and should be read over by a Khmer teacher
+before the page goes in front of a class.
 
 ## Chinese for Beginners
 

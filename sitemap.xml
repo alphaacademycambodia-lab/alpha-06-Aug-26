@@ -91,6 +91,26 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.alphaacademycambodia.com/tools.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.alphaacademycambodia.com/date-calculator.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.alphaacademycambodia.com/khmer-kindergarten.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.alphaacademycambodia.com/math-kindergarten.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.alphaacademycambodia.com/english-kindergarten.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

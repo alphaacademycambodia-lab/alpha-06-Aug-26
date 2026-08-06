@@ -32,6 +32,60 @@
 
   var LETTERS = 'ABCD';
 
+  /* --------------------------------------------------------------- Khmer
+     Every word this engine puts on screen, in both languages. A student who
+     reads only Khmer could not use any test on the site while these were
+     hard-coded English, which is the whole reason they are here.
+
+     Questions themselves are the caller's business: a bank may supply `qkm`
+     and `whykm` beside `q` and `why` and they will be used when the page is
+     in Khmer. A bank with no Khmer simply stays English rather than going
+     blank, exactly as i18n.js does for a missing key.                      */
+  var T = {
+    question:  { en:'Question',            km:'សំណួរ' },
+    time:      { en:'Time',                km:'ពេលវេលា' },
+    skip:      { en:'Skip →',              km:'រំលង →' },
+    skipEnd:   { en:'Skip and finish',     km:'រំលង និងបញ្ចប់' },
+    back:      { en:'← Back',              km:'← ថយក្រោយ' },
+    next:      { en:'Next question',       km:'សំណួរបន្ទាប់' },
+    finish:    { en:'Finish and see score',km:'បញ្ចប់ និងមើលពិន្ទុ' },
+    leave:     { en:'Leave quiz',          km:'ចាកចេញពីតេស្ត' },
+    backList:  { en:'Back to the list',    km:'ត្រឡប់ទៅបញ្ជី' },
+    nextUnit:  { en:'Next',                km:'បន្ទាប់' },
+    hint:      { en:'Keyboard: A–D to answer · Enter for next · S to skip · Backspace to go back.',
+                 km:'គ្រាប់ចុច៖ A–D ដើម្បីឆ្លើយ · Enter ដើម្បីបន្ត · S ដើម្បីរំលង · Backspace ដើម្បីថយក្រោយ។' },
+    done:      { en:'Test complete',       km:'តេស្តបានបញ្ចប់' },
+    score:     { en:'Score',               km:'ពិន្ទុ' },
+    mTotal:    { en:'Total questions',     km:'សំណួរសរុប' },
+    mOk:       { en:'Correct',             km:'ត្រូវ' },
+    mNo:       { en:'Incorrect',           km:'ខុស' },
+    mSkip:     { en:'Skipped',             km:'បានរំលង' },
+    mTime:     { en:'Time taken',          km:'ពេលវេលាប្រើ' },
+    mAvg:      { en:'Average per question',km:'មធ្យមក្នុងមួយសំណួរ' },
+    mRate:     { en:'Rating',              km:'កម្រិត' },
+    retake:    { en:'Retake this test',    km:'ធ្វើតេស្តនេះម្តងទៀត' },
+    review:    { en:'Questions to look at again', km:'សំណួរដែលគួរមើលម្តងទៀត' },
+    correct:   { en:'Correct',             km:'ត្រូវហើយ' },
+    wrongA:    { en:'Not quite — the answer is ', km:'មិនទាន់ត្រូវទេ — ចម្លើយគឺ ' },
+    skipped:   { en:'You skipped this one',km:'អ្នកបានរំលងសំណួរនេះ' },
+    skippedP:  { en:'Choose an answer now, or skip past it again — it stays marked as skipped until you answer.',
+                 km:'សូមជ្រើសរើសចម្លើយឥឡូវនេះ ឬរំលងវាម្តងទៀត — វានឹងនៅជាការរំលងរហូតដល់អ្នកឆ្លើយ។' },
+    yours:     { en:'Your answer: ',       km:'ចម្លើយរបស់អ្នក៖ ' },
+    right:     { en:'Correct: ',           km:'ចម្លើយត្រូវ៖ ' },
+    excellent: { en:'Excellent',           km:'ល្អឥតខ្ចោះ' },
+    good:      { en:'Good',                km:'ល្អ' },
+    fair:      { en:'Fair',                km:'មធ្យម' },
+    poor:      { en:'Needs review',        km:'ត្រូវរំលឹកឡើងវិញ' }
+  };
+
+  function lang() { return (global.AAi18n && global.AAi18n.get() === 'km') ? 'km' : 'en'; }
+  function t(k) { var o = T[k]; return (lang() === 'km' && o && o.km) ? o.km : (o ? o.en : ''); }
+
+  /* A bank may carry Khmer beside the English on any question. */
+  function qText(q) { return (lang() === 'km' && q.qkm) ? q.qkm : q.q; }
+  function qWhy(q)  { return (lang() === 'km' && q.whykm) ? q.whykm : q.why; }
+  function qOpts(q) { return (lang() === 'km' && q.optskm) ? q.optskm : q.opts; }
+
   function esc(s) {
     return String(s).replace(/[&<>"]/g, function (c) {
       return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
@@ -77,8 +131,8 @@
             '<h2 data-aq="title"></h2>' +
           '</div>' +
           '<div class="aq-stats">' +
-            '<div><small>Question</small><b data-aq="count">1 / 1</b></div>' +
-            '<div class="aq-clock"><small>Time</small><b data-aq="clock">00:00</b></div>' +
+            '<div><small data-t="question"></small><b data-aq="count">1 / 1</b></div>' +
+            '<div class="aq-clock"><small data-t="time"></small><b data-aq="clock">00:00</b></div>' +
           '</div>' +
         '</div>' +
         '<div class="aq-bar"><i data-aq="bar"></i></div>' +
@@ -86,18 +140,18 @@
         '<div class="aq-opts" data-aq="opts"></div>' +
         '<div class="aq-why aq-hide" data-aq="why"><b data-aq="verdict"></b><p data-aq="text"></p></div>' +
         '<div class="aq-foot">' +
-          '<button class="aq-exit" type="button" data-aq="exit">&larr; Leave quiz</button>' +
+          '<button class="aq-exit" type="button" data-aq="exit"></button>' +
           '<span class="spacer"></span>' +
-          '<button class="aq-nav" type="button" data-aq="back">&larr; Back</button>' +
-          '<button class="aq-nav" type="button" data-aq="skip">Skip &rarr;</button>' +
-          '<button class="aq-next" type="button" data-aq="next">Next question</button>' +
-          '<p class="aq-hint">Keyboard: A&ndash;D to answer &middot; Enter for next &middot; S to skip &middot; Backspace to go back.</p>' +
+          '<button class="aq-nav" type="button" data-aq="back" data-t="back"></button>' +
+          '<button class="aq-nav" type="button" data-aq="skip"></button>' +
+          '<button class="aq-next" type="button" data-aq="next"></button>' +
+          '<p class="aq-hint" data-t="hint"></p>' +
         '</div>' +
       '</div>' +
 
       '<div class="aq-card aq-done aq-hide" data-aq="done">' +
         (c.badge ? '<span class="aq-pill" data-aq="dbadge"></span>' : '') +
-        '<h2>Test complete</h2>' +
+        '<h2 data-t="done"></h2>' +
         '<p class="sub" data-aq="dsub"></p>' +
         '<div class="aq-grid">' +
           '<div class="aq-donut">' +
@@ -106,24 +160,24 @@
               '<circle data-aq="arc" cx="60" cy="60" r="52" fill="none" stroke="var(--brand-500)" stroke-width="14" ' +
                 'stroke-linecap="round" stroke-dasharray="0 999" style="transition:stroke-dasharray .7s var(--ease)"/>' +
             '</svg>' +
-            '<div class="mid"><b data-aq="pct">0%</b><small>Score</small></div>' +
+            '<div class="mid"><b data-aq="pct">0%</b><small data-t="score"></small></div>' +
           '</div>' +
           '<div class="aq-metrics">' +
-            '<div><span>Total questions</span><b data-aq="mTotal">0</b></div>' +
-            '<div><span>Correct</span><b data-aq="mOk" style="color:var(--success-500)">0</b></div>' +
-            '<div><span>Incorrect</span><b data-aq="mNo" style="color:#dc2626">0</b></div>' +
-            '<div><span>Skipped</span><b data-aq="mSkip" style="color:var(--accent-500)">0</b></div>' +
-            '<div><span>Time taken</span><b data-aq="mTime">00:00</b></div>' +
-            '<div><span>Average per question</span><b data-aq="mAvg">0s</b></div>' +
-            '<div><span>Rating</span><b data-aq="mRate">&mdash;</b></div>' +
+            '<div><span data-t="mTotal"></span><b data-aq="mTotal">0</b></div>' +
+            '<div><span data-t="mOk"></span><b data-aq="mOk" style="color:var(--success-500)">0</b></div>' +
+            '<div><span data-t="mNo"></span><b data-aq="mNo" style="color:#dc2626">0</b></div>' +
+            '<div><span data-t="mSkip"></span><b data-aq="mSkip" style="color:var(--accent-500)">0</b></div>' +
+            '<div><span data-t="mTime"></span><b data-aq="mTime">00:00</b></div>' +
+            '<div><span data-t="mAvg"></span><b data-aq="mAvg">0s</b></div>' +
+            '<div><span data-t="mRate"></span><b data-aq="mRate">&mdash;</b></div>' +
           '</div>' +
         '</div>' +
         '<div class="aq-btns">' +
-          (c.onRetake ? '<button class="aq-next" type="button" data-aq="retake">Retake this test</button>' : '') +
+          (c.onRetake ? '<button class="aq-next" type="button" data-aq="retake" data-t="retake"></button>' : '') +
           (c.onNextUnit ? '<button class="aq-nav" type="button" data-aq="nextUnit"></button>' : '') +
           '<button class="aq-nav" type="button" data-aq="dexit"></button>' +
         '</div>' +
-        '<div class="aq-review aq-hide" data-aq="review"><h3>Questions to look at again</h3><ol data-aq="rlist"></ol></div>' +
+        '<div class="aq-review aq-hide" data-aq="review"><h3 data-t="review"></h3><ol data-aq="rlist"></ol></div>' +
       '</div>';
 
     var self = this;
@@ -135,9 +189,7 @@
     if (c.badge) { this.el.badge.textContent = c.badge; this.el.dbadge.textContent = c.badge; }
     this.el.title.textContent = c.title || '';
     this.el.dsub.textContent = c.subtitle || c.title || '';
-    this.el.exit.innerHTML = '&larr; ' + (c.exitLabel || 'Leave quiz');
-    this.el.dexit.textContent = c.exitLabel || 'Back to the list';
-    if (c.onNextUnit) { this.el.nextUnit.textContent = c.nextLabel || 'Next'; }
+    this.relabel();
 
     this.el.opts.addEventListener('click', function (e) {
       var b = e.target.closest('.aq-opt');
@@ -163,6 +215,19 @@
     document.addEventListener('keydown', this.onKey);
   };
 
+  /* Writes every fixed label in the current language. Called once on build
+     and again whenever the header's EN ⇄ ខ្មែរ switch fires, so a student can
+     change language mid-test without losing a single answer. */
+  Quiz.prototype.relabel = function () {
+    var c = this.cfg;
+    this.cfg.mount.querySelectorAll('[data-t]').forEach(function (n) {
+      n.textContent = t(n.getAttribute('data-t'));
+    });
+    this.el.exit.innerHTML = '&larr; ' + (c.exitLabel || t('leave'));
+    this.el.dexit.textContent = c.exitLabel || t('backList');
+    if (c.onNextUnit) { this.el.nextUnit.textContent = c.nextLabel || t('nextUnit'); }
+  };
+
   /* ----------------------------------------------------------- the clock */
   Quiz.prototype.startClock = function () {
     var self = this;
@@ -182,9 +247,9 @@
 
     this.el.count.textContent = (this.i + 1) + ' / ' + total;
     this.el.bar.style.width = (this.i / total * 100) + '%';
-    this.el.q.innerHTML = '<span class="n">' + (this.i + 1) + '.</span> ' + withGap(q.q);
+    this.el.q.innerHTML = '<span class="n">' + (this.i + 1) + '.</span> ' + withGap(qText(q));
 
-    this.el.opts.innerHTML = q.opts.map(function (o, k) {
+    this.el.opts.innerHTML = qOpts(q).map(function (o, k) {
       return '<button class="aq-opt" type="button" data-i="' + k + '">' +
                '<span class="key">' + LETTERS[k] + '</span>' +
                '<span class="txt">' + esc(o) + '</span>' +
@@ -193,19 +258,19 @@
     }).join('');
 
     this.el.back.disabled = this.i === 0;
-    this.el.skip.textContent = (this.i === total - 1) ? 'Skip and finish' : 'Skip →';
+    this.el.skip.textContent = (this.i === total - 1) ? t('skipEnd') : t('skip');
 
     if (given !== null && given !== SKIPPED) {
       this.lock(given);
     } else {
       this.el.why.className = 'aq-why aq-hide';
       this.el.next.disabled = true;
-      this.el.next.textContent = (this.i === total - 1) ? 'Finish and see score' : 'Next question';
+      this.el.next.textContent = (this.i === total - 1) ? t('finish') : t('next');
       if (given === SKIPPED) {
         this.el.why.className = 'aq-why skip';
-        this.el.verdict.textContent = 'You skipped this one';
+        this.el.verdict.textContent = t('skipped');
         this.el.verdict.style.color = 'var(--accent-500)';
-        this.el.text.textContent = 'Choose an answer now, or skip past it again — it stays marked as skipped until you answer.';
+        this.el.text.textContent = t('skippedP');
       }
     }
   };
@@ -228,12 +293,12 @@
     });
 
     this.el.why.className = 'aq-why ' + (ok ? 'ok' : 'no');
-    this.el.verdict.textContent = ok ? 'Correct' : 'Not quite — the answer is ' + LETTERS[q.ans] + '.';
+    this.el.verdict.textContent = ok ? t('correct') : t('wrongA') + LETTERS[q.ans] + '.';
     this.el.verdict.style.color = ok ? 'var(--success-500)' : '#dc2626';
-    this.el.text.textContent = q.why;
+    this.el.text.textContent = qWhy(q);
 
     this.el.next.disabled = false;
-    this.el.next.textContent = (this.i === this.qs.length - 1) ? 'Finish and see score' : 'Next question';
+    this.el.next.textContent = (this.i === this.qs.length - 1) ? t('finish') : t('next');
   };
 
   Quiz.prototype.answer = function (pick) {
@@ -265,11 +330,11 @@
     if (this.cfg.onExit) { this.cfg.onExit(); }
   };
 
-  /* ------------------------------------------------------------- results */
-  Quiz.prototype.finish = function () {
-    this.finished = true;
-    this.stopClock();
-
+  /* ------------------------------------------------------------- results
+     Drawing the result is kept apart from reaching it, so a language switch
+     on the results screen can redraw it without firing onFinish a second
+     time and saving the score all over again. */
+  Quiz.prototype.paintResults = function () {
     var total = this.qs.length, ok = 0, skipped = 0, self = this;
     this.answers.forEach(function (a, k) {
       if (a === SKIPPED || a === null) { skipped++; }
@@ -286,8 +351,8 @@
     this.el.mAvg.textContent = Math.round(this.seconds / total) + 's';
     this.el.pct.textContent = pct + '%';
 
-    var rate = pct >= 90 ? 'Excellent' : pct >= 70 ? 'Good' : pct >= 50 ? 'Fair' : 'Needs review';
-    this.el.mRate.textContent = rate;
+    this.el.mRate.textContent =
+      pct >= 90 ? t('excellent') : pct >= 70 ? t('good') : pct >= 50 ? t('fair') : t('poor');
     this.el.mRate.style.color = pct >= 70 ? 'var(--success-500)' : pct >= 50 ? 'var(--brand-600)' : '#dc2626';
 
     var circ = 2 * Math.PI * 52;
@@ -295,28 +360,31 @@
 
     var rows = [];
     this.answers.forEach(function (a, k) {
-      var q = self.qs[k];
+      var q = self.qs[k], opts = qOpts(q);
       if (a !== null && a !== SKIPPED && a === q.ans) { return; }
       var yours = (a === null || a === SKIPPED)
-        ? '<span class="skipped">Skipped</span>'
-        : '<span class="yours">Your answer: ' + esc(q.opts[a]) + '</span>';
-      rows.push('<li>' + withGap(q.q) + '<br>' + yours +
-                ' &nbsp;&middot;&nbsp; <span class="right">Correct: ' + esc(q.opts[q.ans]) + '</span>' +
-                '<br><span class="note">' + esc(q.why) + '</span></li>');
+        ? '<span class="skipped">' + t('mSkip') + '</span>'
+        : '<span class="yours">' + t('yours') + esc(opts[a]) + '</span>';
+      rows.push('<li>' + withGap(qText(q)) + '<br>' + yours +
+                ' &nbsp;&middot;&nbsp; <span class="right">' + t('right') + esc(opts[q.ans]) + '</span>' +
+                '<br><span class="note">' + esc(qWhy(q)) + '</span></li>');
     });
     this.el.review.classList.toggle('aq-hide', rows.length === 0);
     this.el.rlist.innerHTML = rows.join('');
 
     this.el.play.classList.add('aq-hide');
     this.el.done.classList.remove('aq-hide');
-    this.cfg.mount.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-    if (this.cfg.onFinish) {
-      this.cfg.onFinish({
-        total: total, correct: ok, wrong: wrong, skipped: skipped,
-        pct: pct, seconds: this.seconds
-      });
-    }
+    return { total: total, correct: ok, wrong: wrong, skipped: skipped,
+             pct: pct, seconds: this.seconds };
+  };
+
+  Quiz.prototype.finish = function () {
+    this.finished = true;
+    this.stopClock();
+    var result = this.paintResults();
+    this.cfg.mount.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (this.cfg.onFinish) { this.cfg.onFinish(result); }
   };
 
   Quiz.prototype.destroy = function () {
@@ -327,6 +395,16 @@
   };
 
   var current = null;
+
+  /* Switching language mid-test relabels everything in place and redraws the
+     question — the answers live in `current.answers`, so nothing is lost. On
+     the results screen the metrics are already on screen, so only the labels
+     and the review list need doing again. */
+  document.addEventListener('aa:langchange', function () {
+    if (!current || current.destroyed) { return; }
+    current.relabel();
+    if (current.finished) { current.paintResults(); } else { current.paintQuestion(); }
+  });
 
   global.AAQuiz = {
     start: function (cfg) {

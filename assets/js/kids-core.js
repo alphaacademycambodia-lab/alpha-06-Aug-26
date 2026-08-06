@@ -11,6 +11,7 @@
          tabs:    [ {key, em, en, km, c} ],
          panel:   function (key) { return html; },
          games:   [ {key, em, c, t:{en,km}, p:{en,km}, make: fn} ],
+         playP:   {en,km},            // optional — replaces the games blurb
          praise:  [ {s, em} ],        // said aloud, so in the taught language
          nudge:   [ {s, em} ],
          click:   function (near, target) { return handled; }   // optional
@@ -82,9 +83,11 @@
 
   /* ==================================================================== 1
      THE VOICE
-     One hunt, two targets. English voices are on practically every device;
-     Chinese ones are on Chrome, Edge and Safari but not always elsewhere, so
-     the toolbar reports what was found and warns when there is nothing.     */
+     One hunt, three targets. English voices are on practically every device;
+     Chinese ones are on Chrome, Edge and Safari but not always elsewhere;
+     Khmer ones are on very little at all. So the toolbar reports what was
+     found and warns when there is nothing — and a page whose language may
+     well have no voice has to be built so that it still teaches in silence.  */
   var VOICE = {
     en: {
       fallback: 'en-GB',
@@ -110,6 +113,21 @@
       loading: { en: 'Loading the Chinese voice…', km: 'កំពុងផ្ទុកសំឡេងចិន…' },
       none:    { en: 'No Chinese voice on this device — Chrome, Edge or Safari has one.',
                  km: 'គ្មានសំឡេងចិននៅលើឧបករណ៍នេះទេ — Chrome, Edge ឬ Safari មាន។' }
+    },
+    /* Khmer is the one language here that usually has no voice at all: only
+       Chrome on Android with Google Text-to-Speech reliably carries one. The
+       warning therefore says what to do about it rather than just reporting
+       the lack, and the Khmer page is built to work in silence regardless. */
+    km: {
+      fallback: 'km-KH',
+      score: function (l) {
+        if (l === 'km' || l.indexOf('km-') === 0 || l.indexOf('khm') === 0) { return 4; }
+        return 0;
+      },
+      found:   { en: 'Khmer voice: ', km: 'សំឡេងខ្មែរ៖ ' },
+      loading: { en: 'Looking for a Khmer voice…', km: 'កំពុងរកសំឡេងខ្មែរ…' },
+      none:    { en: 'No Khmer voice on this device — every card still works, but a grown-up reads them. Chrome on Android with Google Text-to-Speech has one.',
+                 km: 'គ្មានសំឡេងខ្មែរនៅលើឧបករណ៍នេះទេ — កាតទាំងអស់នៅតែប្រើបាន តែត្រូវឲ្យមនុស្សធំអានជូន។ Chrome លើ Android ដែលមាន Google Text-to-Speech មានសំឡេងនេះ។' }
     }
   };
 
@@ -337,7 +355,9 @@
       var b = bests();
       var h = '<div id="kgMenu"' + (run ? ' class="kg-hide"' : '') + '>' +
               '<section class="kg-sec"><h3><span class="em" aria-hidden="true">🎮</span>' + t(T.play.h) + '</h3>' +
-              '<p class="say">' + t(T.play.p) + '</p><div class="kg-games">';
+              /* The default blurb counts seven games out loud, so a page with
+                 a different number of them supplies its own. */
+              '<p class="say">' + t(cfg.playP || T.play.p) + '</p><div class="kg-games">';
       cfg.games.forEach(function (g) {
         h += '<button class="kg-gcard" type="button" data-game="' + g.key + '" style="--c:' + g.c + '">' +
                (b[g.key] ? '<span class="best">' + t(T.play.best) + ' ' + b[g.key] + '/10 ⭐</span>' : '') +

@@ -1,0 +1,242 @@
+/* Alpha Academy Cambodia — Khmer for Kindergarten
+   ---------------------------------------------------------------------------
+   Loaded AFTER assets/css/kids.css, which this file leans on for everything
+   the four kindergarten pages share: the tokens on .kg-wrap, the flip cards,
+   the tab strip, the sound bar, the contents rail, the game screen. Only what
+   the Khmer script needs lives here, namespaced kk-* so nothing can reach
+   back into the other three pages.
+
+   THE SCRIPT SETS THE RULES ON THIS PAGE.
+
+   · Khmer stacks. A subscript hangs below the line and a vowel sign can sit
+     above it, so every line of Khmer needs far more leading than Latin does.
+     Set too tight, ខ្ញុំ collides with the line above and the page looks
+     broken to the only people who can read it.
+   · A vowel sign is not a letter and cannot stand alone. Printed by itself a
+     combining mark either vanishes or lands on whatever came before, so every
+     bare vowel on this page is drawn on a dotted circle — ◌ា — which is the
+     same convention a Khmer school book uses.
+   · The two series are a colour, not a footnote. Which series a consonant
+     belongs to decides how every vowel after it is read, so first and second
+     series are tinted differently everywhere they appear and the legend says
+     which is which.                                                          */
+
+/* ------------------------------------------------------- 1. the Khmer face
+   Scoped .kg-wrap .kk-km, and at the top only because nothing else in this
+   file sets font-family. Several rules in kids.css set it directly on the
+   very elements this has to beat — .kg-opt .t, .kg-face .pair, .kg-num .d —
+   so matching their (0,2,0) specificity is what makes it stick. */
+.kg-wrap .kk-km{
+  font-family:"Kantumruy Pro",var(--font-sans);
+  font-weight:600;line-height:1.75;
+}
+.kk .kg-sec h3,.kk .kg-sec .say,.kk .kg-tip{line-height:1.85}
+
+/* series colours, used by every card that shows a consonant */
+.kk{--kk-s1:#1c7ed6;--kk-s2:#c2255c}
+:root[data-theme="dark"] .kk{--kk-s1:#74b8ff;--kk-s2:#ff8fb0}
+
+.kk-legend{display:flex;flex-wrap:wrap;gap:.6rem;margin:0 0 1.2rem}
+.kk-legend span{
+  display:inline-flex;align-items:center;gap:.45rem;
+  padding:.4rem .9rem;border-radius:var(--r-pill);
+  background:color-mix(in srgb,var(--sc) 14%,transparent);color:var(--sc);
+  font-size:.88rem;font-weight:700;line-height:1.7;
+}
+.kk-legend span i{
+  font-style:normal;font-family:"Kantumruy Pro",var(--font-sans);font-size:1.15rem;
+}
+
+/* ================================================== 2. the consonant deck
+   The flip card itself is .kg-flip from kids.css. What changes is only what
+   goes on the faces and the row underneath. */
+.kk-cons{display:grid;gap:.8rem;grid-template-columns:repeat(auto-fill,minmax(146px,1fr))}
+.kg-wrap .kg-face .pair.kk-km{font-size:clamp(3.2rem,8vw,4rem);line-height:1.5;letter-spacing:0}
+.kk .kg-back .w{line-height:1.7}
+.kk .kg-back .w.kk-km{font-size:1.15rem}
+.kk .kg-back .km{line-height:1.5}
+
+/* the row under a card: say it, its romanisation, its series */
+.kk-row{display:flex;gap:.35rem;align-items:center}
+.kk-row .r{
+  flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  font-size:.9rem;font-weight:700;color:var(--ink-500);text-align:center;
+}
+.kk-row .s{
+  flex:none;display:grid;place-items:center;width:30px;height:30px;border-radius:50%;
+  background:color-mix(in srgb,var(--sc) 18%,transparent);color:var(--sc);
+  font-weight:800;font-size:.85rem;
+}
+.kk-row .spk{
+  flex:none;appearance:none;cursor:pointer;font:inherit;font-size:.95rem;
+  width:38px;height:38px;border-radius:11px;padding:0;
+  background:var(--surface-2);border:1.5px solid var(--kg-line);color:var(--ink-500);
+}
+.kk-row .spk:hover{border-color:var(--c);color:var(--c)}
+/* A letter that turns up almost only in Pali and Sanskrit words. Saying so is
+   more honest than inventing a word for the chart. */
+.kk-rare .kg-front{border-style:dashed}
+.kk-rare .kg-back .w{color:var(--ink-400);font-style:italic}
+
+/* ====================================================== 3. the vowel table
+   Sign, then the same sign on a first-series and a second-series consonant,
+   because the sign on its own has no single sound to learn.                */
+.kk-vows{display:grid;gap:.7rem;grid-template-columns:repeat(auto-fill,minmax(232px,1fr))}
+.kk-vow{
+  appearance:none;cursor:pointer;font:inherit;text-align:left;width:100%;
+  display:grid;grid-template-columns:auto 1fr;gap:.2rem .8rem;align-items:center;
+  background:var(--kg-paper);border:3px solid var(--kg-line);border-radius:var(--kg-r);
+  padding:.7rem .9rem .8rem;transition:border-color .15s,transform .15s var(--ease);
+}
+.kk-vow:hover{border-color:var(--c);transform:translateY(-3px)}
+.kk-vow .sign{
+  grid-row:span 2;display:grid;place-items:center;
+  min-width:62px;min-height:62px;padding:0 .3rem;border-radius:16px;
+  background:color-mix(in srgb,var(--c) 13%,transparent);color:var(--c);
+  font-family:"Kantumruy Pro",var(--font-sans);font-weight:700;
+  font-size:1.9rem;line-height:1.6;
+}
+.kk-vow .one,.kk-vow .two{
+  display:flex;align-items:baseline;gap:.5rem;font-size:.92rem;color:var(--ink-500);
+}
+.kk-vow .one b,.kk-vow .two b{
+  font-family:"Kantumruy Pro",var(--font-sans);font-weight:700;
+  font-size:1.5rem;line-height:1.6;min-width:2.4em;
+}
+.kk-vow .one b{color:var(--kk-s1)}
+.kk-vow .two b{color:var(--kk-s2)}
+
+.kk-ivows{display:grid;gap:.7rem;grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
+.kk-ivow{
+  appearance:none;cursor:pointer;font:inherit;text-align:center;
+  background:var(--kg-paper);border:3px solid var(--kg-line);border-radius:var(--kg-r);
+  padding:.8rem .5rem .9rem;transition:border-color .15s,transform .15s var(--ease);
+}
+.kk-ivow:hover{border-color:var(--c);transform:translateY(-3px)}
+.kk-ivow .v{
+  display:block;font-family:"Kantumruy Pro",var(--font-sans);font-weight:700;
+  font-size:2.4rem;line-height:1.5;color:var(--c);
+}
+.kk-ivow .r{display:block;font-size:.86rem;font-weight:700;color:var(--ink-400)}
+.kk-ivow .em{display:block;font-size:1.7rem;line-height:1.2;margin-top:.3rem}
+.kk-ivow .w{display:block;font-family:"Kantumruy Pro",var(--font-sans);font-weight:600;
+  font-size:1.02rem;line-height:1.7;color:var(--ink-900)}
+.kk-ivow .en{display:block;font-size:.84rem;color:var(--ink-500)}
+
+/* ================================================= 4. building a syllable */
+.kk-build{display:flex;flex-direction:column;gap:.6rem;margin-bottom:1.4rem}
+.kk-brow{
+  appearance:none;cursor:pointer;font:inherit;width:100%;text-align:left;
+  display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;
+  background:var(--kg-paper);border:3px solid var(--kg-line);border-radius:var(--kg-r);
+  padding:.7rem .9rem;transition:border-color .15s,transform .15s var(--ease);
+}
+.kk-brow:hover{border-color:var(--c);transform:translateX(4px)}
+.kk-brow .p{
+  font-family:"Kantumruy Pro",var(--font-sans);font-weight:700;font-size:1.6rem;
+  line-height:1.6;padding:.1rem .55rem;border-radius:11px;
+  background:var(--surface-2);color:var(--ink-800);
+}
+.kk-brow .p.v{background:color-mix(in srgb,var(--c) 18%,transparent);color:var(--c)}
+.kk-brow .op{font-weight:800;font-size:1.2rem;color:var(--ink-400)}
+.kk-brow .out{
+  font-family:"Kantumruy Pro",var(--font-sans);font-weight:700;font-size:1.7rem;
+  line-height:1.6;padding:.1rem .7rem;border-radius:12px;background:var(--c);color:#fff;
+}
+:root[data-theme="dark"] .kk-brow .out{color:#0a1120}
+.kk-brow .r{margin-left:auto;font-size:.9rem;font-weight:700;color:var(--ink-500)}
+.kk-brow .en{font-size:.86rem;color:var(--ink-400)}
+
+/* the syllable grid — consonants down the side, vowels across the top */
+.kk-gridwrap{overflow-x:auto;overscroll-behavior-x:contain;padding-bottom:.4rem}
+.kk-grid{border-collapse:separate;border-spacing:4px;min-width:min-content}
+.kk-grid th{
+  font-family:"Kantumruy Pro",var(--font-sans);font-weight:700;font-size:1.3rem;
+  line-height:1.6;color:var(--ink-400);padding:.2rem .4rem;
+}
+.kk-grid th.c{color:var(--kk-s1)}
+.kk-grid td{padding:0}
+.kk-grid button{
+  appearance:none;cursor:pointer;font:inherit;
+  font-family:"Kantumruy Pro",var(--font-sans);font-weight:700;font-size:1.4rem;
+  min-width:62px;min-height:62px;line-height:1.6;border-radius:13px;padding:.1rem .3rem;
+  background:var(--kg-paper);border:2.5px solid var(--kg-line);color:var(--ink-900);
+  transition:transform .12s,border-color .12s,background .12s;
+}
+.kk-grid button:hover{
+  transform:scale(1.06);border-color:var(--kg-blue);
+  background:color-mix(in srgb,var(--kg-blue) 12%,var(--kg-paper));color:var(--kg-blue);
+}
+
+/* ជើងអក្សរ — the subscript, drawn so the two letters can be told apart */
+.kk-feet{display:grid;gap:.8rem;grid-template-columns:repeat(auto-fill,minmax(176px,1fr))}
+.kk-foot{
+  appearance:none;cursor:pointer;font:inherit;text-align:center;
+  background:var(--kg-paper);border:3px solid var(--kg-line);border-radius:var(--kg-r);
+  padding:.8rem .6rem .9rem;transition:border-color .15s,transform .15s var(--ease);
+}
+.kk-foot:hover{border-color:var(--c);transform:translateY(-3px)}
+.kk-foot .em{display:block;font-size:2rem;line-height:1}
+.kk-foot .w{
+  display:block;font-family:"Kantumruy Pro",var(--font-sans);font-weight:700;
+  font-size:1.9rem;line-height:1.9;color:var(--ink-900);margin-top:.2rem;
+}
+.kk-foot .parts{
+  display:flex;justify-content:center;align-items:center;gap:.3rem;margin:.3rem 0 .25rem;
+  font-family:"Kantumruy Pro",var(--font-sans);font-size:1.05rem;line-height:1.7;
+}
+.kk-foot .parts .t{color:var(--kk-s1);font-weight:700}
+.kk-foot .parts .f{color:var(--kk-s2);font-weight:700}
+.kk-foot .parts em{font-style:normal;color:var(--ink-400);font-size:.85rem}
+.kk-foot .r{display:block;font-size:.86rem;font-weight:700;color:var(--ink-500)}
+.kk-foot .en{display:block;font-size:.84rem;color:var(--ink-400)}
+
+/* ===================================================== 5. words and numbers
+   The word cards are .kg-word from kids.css; only the two Khmer lines inside
+   them need anything from here.                                             */
+.kk .kg-word .w{font-family:"Kantumruy Pro",var(--font-sans);font-size:1.15rem;line-height:1.7;text-transform:none}
+.kk .kg-word .km{line-height:1.5}
+.kk .kg-word .r{display:block;font-size:.82rem;font-weight:700;color:var(--ink-400)}
+
+.kk-nums{display:grid;gap:.8rem;grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
+.kk-num{
+  appearance:none;cursor:pointer;font:inherit;text-align:center;
+  background:var(--kg-paper);border:3px solid var(--kg-line);border-radius:var(--kg-r);
+  padding:.8rem .5rem .9rem;transition:border-color .15s,transform .15s var(--ease);
+}
+.kk-num:hover{border-color:var(--c);transform:translateY(-3px)}
+.kk-num .kn{
+  display:block;font-family:"Kantumruy Pro",var(--font-sans);font-weight:700;
+  font-size:2.8rem;line-height:1.4;color:var(--c);
+}
+.kk-num .d{display:block;font-size:1rem;font-weight:700;color:var(--ink-400)}
+.kk-num .w{
+  display:block;font-family:"Kantumruy Pro",var(--font-sans);font-weight:600;
+  font-size:1.05rem;line-height:1.7;color:var(--ink-900);margin-top:.25rem;
+}
+.kk-num .r{display:block;font-size:.82rem;color:var(--ink-500)}
+
+/* the talk lines are .kg-line; the Khmer inside them needs the leading */
+.kk .kg-line .s{font-family:"Kantumruy Pro",var(--font-sans);font-size:1.25rem;line-height:1.8}
+.kk .kg-line .a{font-family:"Kantumruy Pro",var(--font-sans);font-size:1.1rem;line-height:1.8}
+.kk .kg-line .r{display:block;font-size:.85rem;color:var(--ink-400);font-weight:600}
+.kk .kg-line .km{line-height:1.55}
+
+/* ============================================================== 6. the games
+   Every question here is answerable by looking, because most devices have no
+   Khmer voice to hear one with. All these rules do is give the script the
+   room it needs inside the shared game screen.                              */
+.kk .kg-ask .bigletter.kk-km{font-size:clamp(3.4rem,13vw,5.5rem);line-height:1.5}
+.kk .kg-opt .t.kk-km{font-size:clamp(1.9rem,6vw,2.6rem);line-height:1.6;word-break:keep-all}
+.kk .kg-opt .t.small.kk-km{font-size:clamp(1.2rem,4vw,1.6rem);line-height:1.7}
+.kk .kg-opt .kg-sub{font-family:var(--font-sans);font-size:.9rem}
+.kk .kg-ask .ask{font-family:"Kantumruy Pro",var(--font-sans);line-height:1.8}
+.kk .kg-said{line-height:1.8;min-height:62px}
+.kk .kg-gcard h4{font-family:"Kantumruy Pro",var(--font-sans);line-height:1.7}
+
+/* --------------------------------------------------------------- 7. quiet */
+@media (prefers-reduced-motion:reduce){
+  .kk-vow,.kk-ivow,.kk-brow,.kk-foot,.kk-num,.kk-grid button{transition:none}
+  .kk-vow:hover,.kk-ivow:hover,.kk-brow:hover,.kk-foot:hover,.kk-num:hover,
+  .kk-grid button:hover{transform:none}
+}

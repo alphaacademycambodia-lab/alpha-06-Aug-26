@@ -1,0 +1,259 @@
+/* Alpha Academy Cambodia — Tools
+   ---------------------------------------------------------------------------
+   The Tools tab and everything inside it. Two namespaces, both deliberate:
+
+     tl-*   the Tools hub — the card grid that lists what is in here
+     dc-*   the Date Calculator
+
+   Namespaced rather than reusing .res / .card / .field, because the shared
+   stylesheet already owns those and a tool is not a lesson. The one thing
+   this file does borrow wholesale is the token set on :root — colours,
+   radii, shadows and the dark theme all come from style.css, so a tool looks
+   like the rest of the site without restating any of it.
+
+   A note on the audience. Unlike the kindergarten pages, this is built for an
+   adult doing a small piece of admin — a visa date, a contract end, a due
+   date. So it optimises for a different thing: the answer must be visible
+   without pressing anything, and it must be obvious that it is correct. That
+   is why the result is a live region beside the inputs rather than behind a
+   Calculate button, and why the calendar is there at all.                    */
+
+/* ==================================================================== 1. hub */
+.tl-grid{
+  display:grid;gap:1.25rem;margin-top:2rem;
+  grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+}
+.tl-card{
+  display:flex;flex-direction:column;gap:.6rem;
+  background:var(--surface);border:1px solid var(--ink-100);border-radius:var(--r-lg);
+  padding:clamp(1.3rem,3vw,1.8rem);box-shadow:var(--shadow-xs);
+  transition:transform .25s var(--ease),border-color .25s var(--ease),box-shadow .25s var(--ease);
+}
+a.tl-card:hover{transform:translateY(-3px);border-color:var(--brand-300);box-shadow:var(--shadow-md)}
+.tl-card .ico{
+  display:grid;place-items:center;width:52px;height:52px;flex:none;
+  border-radius:15px;background:var(--brand-100);color:var(--brand-600);
+}
+.tl-card .ico svg{width:26px;height:26px}
+.tl-card h3{margin:.4rem 0 0;font-size:1.18rem;color:var(--ink-900)}
+.tl-card p{margin:0;font-size:.96rem;line-height:1.7;color:var(--ink-500)}
+.tl-card .go{
+  display:inline-flex;align-items:center;gap:.4rem;margin-top:auto;padding-top:.7rem;
+  font-weight:700;font-size:.94rem;color:var(--brand-600);
+}
+.tl-card .go svg{width:17px;height:17px}
+.tl-card .tag{
+  align-self:flex-start;font-size:.72rem;font-weight:800;letter-spacing:.07em;text-transform:uppercase;
+  padding:.25rem .65rem;border-radius:var(--r-pill);
+  background:color-mix(in srgb,var(--success-500) 15%,transparent);color:var(--success-500);
+}
+
+/* ========================================================= 2. the calculator */
+.dc-layout{
+  display:grid;gap:1.25rem;align-items:start;
+  grid-template-columns:minmax(0,400px) minmax(0,1fr);
+}
+@media (max-width:940px){ .dc-layout{grid-template-columns:minmax(0,1fr)} }
+.dc-side{display:grid;gap:1.25rem;min-width:0}
+
+.dc-card{
+  background:var(--surface);border:1px solid var(--ink-100);border-radius:var(--r-lg);
+  padding:clamp(1.25rem,3vw,1.75rem);box-shadow:var(--shadow-sm);
+}
+.dc-card h2{font-size:1.12rem;margin:0 0 1.1rem;color:var(--ink-900)}
+.dc-eyebrow{
+  display:block;font-size:.73rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ink-400);margin-bottom:.5rem;
+}
+
+/* ------------------------------------------------------------ 2a. the form */
+.dc-field{display:grid;gap:.4rem;margin-bottom:1.15rem}
+/* .dc-lbl is the same thing for a group of controls rather than one control:
+   a <label> may only name a single field, so the direction, amount and preset
+   groups use a span and aria-labelledby instead. */
+.dc-field > label,.dc-field > .dc-lbl{font-size:.85rem;font-weight:700;color:var(--ink-800)}
+.dc-dateline{display:flex;gap:.5rem}
+.dc-dateline input{
+  flex:1;min-width:0;font:inherit;font-size:1.02rem;font-weight:600;color:var(--ink-900);
+  padding:.72rem .85rem;border:1.5px solid var(--ink-200);border-radius:var(--r-sm);
+  background:var(--surface);
+  transition:border-color .2s var(--ease),box-shadow .2s var(--ease);
+}
+.dc-dateline input:focus{outline:none;border-color:var(--brand-500);box-shadow:0 0 0 3px rgba(18,115,230,.15)}
+.dc-mini{
+  flex:none;font:inherit;font-size:.85rem;font-weight:700;cursor:pointer;
+  padding:.4rem .95rem;border-radius:var(--r-sm);
+  background:var(--brand-50);border:1.5px solid var(--brand-100);color:var(--brand-700);
+  transition:background-color .18s var(--ease),border-color .18s var(--ease);
+}
+.dc-mini:hover{background:var(--brand-100);border-color:var(--brand-300)}
+.dc-under{margin:.15rem 0 0;font-size:.85rem;color:var(--ink-400);min-height:1.2em}
+
+/* before / after — a segmented control, because it is a choice of two and a
+   dropdown for two options is a tap wasted */
+.dc-dir{
+  display:grid;grid-template-columns:1fr 1fr;gap:.3rem;
+  background:var(--surface-2);border:1px solid var(--ink-100);border-radius:var(--r-sm);padding:.3rem;
+}
+.dc-dir button{
+  font:inherit;font-size:.93rem;font-weight:700;cursor:pointer;
+  display:inline-flex;align-items:center;justify-content:center;gap:.4rem;
+  padding:.6rem .4rem;border:0;border-radius:calc(var(--r-sm) - 2px);
+  background:transparent;color:var(--ink-500);
+  transition:background-color .18s var(--ease),color .18s var(--ease),box-shadow .18s var(--ease);
+}
+.dc-dir button:hover{color:var(--ink-900)}
+.dc-dir button[aria-pressed="true"]{
+  background:var(--surface);color:var(--brand-700);box-shadow:var(--shadow-xs);
+}
+.dc-dir button .sign{font-size:1.05rem;line-height:1}
+
+/* the four amounts */
+.dc-amounts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.7rem}
+@media (min-width:1200px){ .dc-amounts{grid-template-columns:repeat(4,minmax(0,1fr))} }
+@media (max-width:940px){ .dc-amounts{grid-template-columns:repeat(4,minmax(0,1fr))} }
+@media (max-width:520px){ .dc-amounts{grid-template-columns:repeat(2,minmax(0,1fr))} }
+.dc-amt{display:grid;gap:.3rem}
+.dc-amt label{font-size:.78rem;font-weight:700;color:var(--ink-500);text-align:center}
+.dc-amt input{
+  width:100%;font:inherit;font-size:1.15rem;font-weight:700;text-align:center;color:var(--ink-900);
+  padding:.6rem .3rem;border:1.5px solid var(--ink-200);border-radius:var(--r-sm);
+  background:var(--surface);
+  transition:border-color .2s var(--ease),box-shadow .2s var(--ease);
+}
+.dc-amt input:focus{outline:none;border-color:var(--brand-500);box-shadow:0 0 0 3px rgba(18,115,230,.15)}
+
+.dc-quick{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.3rem}
+.dc-quick button{
+  font:inherit;font-size:.83rem;font-weight:650;cursor:pointer;
+  padding:.4rem .8rem;border-radius:var(--r-pill);
+  background:var(--surface-2);border:1px solid var(--ink-200);color:var(--ink-700);
+  transition:border-color .18s var(--ease),color .18s var(--ease),background-color .18s var(--ease);
+}
+.dc-quick button:hover{border-color:var(--brand-400);color:var(--brand-700);background:var(--brand-50)}
+
+.dc-actions{display:flex;gap:.6rem;margin-top:1.2rem}
+.dc-actions .dc-mini{padding:.6rem 1.1rem}
+
+/* ---------------------------------------------------------- 2b. the result */
+.dc-result{
+  background:linear-gradient(160deg,var(--brand-50) 0%,var(--surface) 62%);
+  border-color:var(--brand-100);
+}
+.dc-big{
+  font-family:var(--font-display);font-weight:800;line-height:1.25;
+  font-size:clamp(1.5rem,4.2vw,2.15rem);color:var(--ink-900);
+  letter-spacing:-.015em;overflow-wrap:break-word;
+}
+.dc-alt{
+  margin-top:.3rem;font-size:1.02rem;line-height:1.9;color:var(--ink-500);font-weight:600;
+}
+.dc-facts{list-style:none;margin:1.1rem 0 0;padding:0;display:flex;flex-wrap:wrap;gap:.45rem}
+.dc-facts li{
+  display:inline-flex;align-items:center;gap:.4rem;
+  padding:.42rem .85rem;border-radius:var(--r-pill);
+  background:var(--surface);border:1px solid var(--ink-200);
+  font-size:.87rem;font-weight:600;color:var(--ink-700);
+}
+.dc-facts li b{color:var(--ink-900);font-weight:800}
+.dc-facts li.is-key{background:var(--brand-600);border-color:var(--brand-600);color:#fff}
+.dc-facts li.is-key b{color:#fff}
+:root[data-theme="dark"] .dc-facts li.is-key{color:#0a1120}
+:root[data-theme="dark"] .dc-facts li.is-key b{color:#0a1120}
+
+.dc-note{
+  display:none;gap:.6rem;align-items:flex-start;margin:1rem 0 0;
+  padding:.75rem .95rem;border-radius:var(--r-sm);
+  background:var(--accent-100);color:var(--ink-700);
+  font-size:.86rem;line-height:1.65;
+}
+.dc-note.is-on{display:flex}
+.dc-note svg{width:17px;height:17px;flex:none;margin-top:.15rem;color:var(--accent-500)}
+
+.dc-copy{
+  margin-top:1rem;font:inherit;font-size:.86rem;font-weight:700;cursor:pointer;
+  display:inline-flex;align-items:center;gap:.45rem;
+  padding:.5rem 1rem;border-radius:var(--r-pill);
+  background:var(--surface);border:1.5px solid var(--ink-200);color:var(--ink-700);
+  transition:border-color .18s var(--ease),color .18s var(--ease);
+}
+.dc-copy:hover{border-color:var(--brand-400);color:var(--brand-700)}
+.dc-copy svg{width:15px;height:15px}
+.dc-copy.is-done{border-color:var(--success-500);color:var(--success-500)}
+
+/* An impossible entry should say so quietly, not blank the whole panel. */
+.dc-bad .dc-big{color:var(--ink-400);font-size:clamp(1.1rem,3vw,1.35rem);font-weight:700}
+.dc-bad .dc-facts,.dc-bad .dc-copy,.dc-bad .dc-alt{display:none}
+
+/* -------------------------------------------------------- 2c. the calendar */
+.dc-calhead{
+  display:flex;align-items:center;gap:.5rem;margin-bottom:.9rem;flex-wrap:wrap;
+}
+.dc-calhead .ttl{
+  flex:1;min-width:8ch;text-align:center;
+  font-family:var(--font-display);font-weight:800;font-size:1.06rem;color:var(--ink-900);
+}
+.dc-nav{
+  font:inherit;cursor:pointer;flex:none;
+  display:grid;place-items:center;width:40px;height:40px;border-radius:var(--r-sm);
+  background:var(--surface-2);border:1px solid var(--ink-200);color:var(--ink-700);
+  transition:border-color .18s var(--ease),color .18s var(--ease);
+}
+.dc-nav:hover{border-color:var(--brand-400);color:var(--brand-700)}
+.dc-nav svg{width:18px;height:18px}
+
+.dc-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:.3rem}
+.dc-dow{
+  text-align:center;font-size:.74rem;font-weight:800;letter-spacing:.05em;
+  text-transform:uppercase;color:var(--ink-400);padding-bottom:.3rem;
+}
+.dc-day{
+  position:relative;display:grid;place-items:center;
+  aspect-ratio:1/1;min-height:38px;border-radius:11px;
+  font-size:.95rem;font-weight:650;color:var(--ink-800);
+  background:var(--surface-2);border:1.5px solid transparent;
+}
+.dc-day.is-out{background:transparent;color:var(--ink-400);opacity:.55}
+.dc-day.is-weekend{color:var(--ink-500)}
+.dc-day.is-today{border-color:var(--ink-400);border-style:dashed}
+.dc-day.is-start{
+  background:var(--brand-100);border-color:var(--brand-400);color:var(--brand-700);font-weight:800;
+}
+/* The answer. Last so it wins over start and today when they coincide. */
+.dc-day.is-result{
+  background:var(--brand-600);border-color:var(--brand-600);color:#fff;font-weight:800;
+  box-shadow:var(--shadow-md);
+}
+:root[data-theme="dark"] .dc-day.is-result{color:#0a1120}
+.dc-day.is-between{background:var(--brand-50)}
+:root[data-theme="dark"] .dc-day.is-between{background:var(--brand-50)}
+
+.dc-legend{
+  display:flex;flex-wrap:wrap;gap:.9rem;margin-top:1rem;padding-top:.9rem;
+  border-top:1px solid var(--ink-100);font-size:.82rem;color:var(--ink-500);
+}
+.dc-legend span{display:inline-flex;align-items:center;gap:.4rem}
+.dc-legend i{
+  width:15px;height:15px;border-radius:5px;flex:none;border:1.5px solid transparent;display:block;
+}
+.dc-legend i.k-start{background:var(--brand-100);border-color:var(--brand-400)}
+.dc-legend i.k-result{background:var(--brand-600);border-color:var(--brand-600)}
+.dc-legend i.k-today{border-color:var(--ink-400);border-style:dashed;background:var(--surface-2)}
+
+/* ------------------------------------------------------------ 3. how it works */
+.dc-notes{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:1.5rem}
+.dc-notes article{
+  background:var(--surface);border:1px solid var(--ink-100);border-radius:var(--r-md);
+  padding:1.1rem 1.2rem 1.25rem;
+}
+.dc-notes h4{margin:0 0 .35rem;font-size:1rem;color:var(--ink-900)}
+.dc-notes p{margin:0;font-size:.92rem;line-height:1.75;color:var(--ink-500)}
+.dc-notes code{
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88em;
+  background:var(--surface-2);padding:.1rem .35rem;border-radius:5px;color:var(--ink-800);
+}
+
+@media (prefers-reduced-motion:reduce){
+  .tl-card,.dc-mini,.dc-quick button,.dc-nav,.dc-copy{transition:none}
+  a.tl-card:hover{transform:none}
+}

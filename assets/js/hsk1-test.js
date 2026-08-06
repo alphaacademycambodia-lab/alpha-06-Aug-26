@@ -34,11 +34,46 @@
   /* Every question in the bank is written with its right answer first, so a
      question can be checked at a glance while editing. That would put the
      answer at A every single time on screen, so the options are permuted here
-     and `ans` is moved to wherever the right one landed. */
-  function shuffleQ(q) {
-    var right = q.opts[q.ans];
-    var opts = shuffle(q.opts);
-    return { q: q.q, opts: opts, ans: opts.indexOf(right), why: q.why };
+     and `ans` is moved to wherever the right one landed.
+
+     The Khmer overlay (assets/js/hsk1-bank-km.js) is merged in at the same
+     time. Both languages are permuted by the SAME index list — shuffling them
+     separately would put the Khmer answer in a different place from the
+     English one, and switching language mid-question would silently change
+     which option is correct. */
+  function shuffleQ(q, km) {
+    var order = shuffle(q.opts.map(function (_, i) { return i; }));
+    var out = {
+      q:    q.q,
+      opts: order.map(function (i) { return q.opts[i]; }),
+      ans:  order.indexOf(q.ans),
+      why:  q.why
+    };
+    if (km) {
+      if (km.q)   { out.qkm = km.q; }
+      if (km.why) { out.whykm = km.why; }
+      /* Khmer options only exist where the English ones were English words;
+         where they are Chinese characters the overlay leaves them off and the
+         originals are used in both languages. */
+      if (km.opts && km.opts.length === q.opts.length) {
+        out.optskm = order.map(function (i) { return km.opts[i]; });
+      }
+    }
+    return out;
+  }
+
+  /* The overlay for one lesson, or null if it has none. */
+  function kmFor(key) {
+    var o = window.HSK1_KM;
+    if (!o) { return null; }
+    return o[key === 'final' ? 'final' : 'L' + key] || null;
+  }
+
+  /* What the lesson is about, in whichever language is on. Falls back to the
+     English rather than going blank if a title has no Khmer yet. */
+  function title(L) {
+    var km = window.HSK1_KM && window.HSK1_KM.titles;
+    return (lang() === 'km' && km && km[L.n]) ? km[L.n] : L.en;
   }
 
   var T = {
@@ -105,7 +140,7 @@
              '<span class="n">' + t(T.lesson) + ' ' + L.n + '</span>' +
              '<h3><span class="hz">' + esc(L.hz) + '</span></h3>' +
              '<p class="py">' + esc(L.py) + '</p>' +
-             '<p class="en">' + esc(L.en) + '</p>' +
+             '<p class="en">' + esc(title(L)) + '</p>' +
              '<span class="meta">' + L.qs.length + ' ' + t(T.qs) +
                ' · ' + L.words.length + ' ' + t(T.words) + '</span>' +
              (pct == null ? '' : '<span class="score">' + t(T.best) + ' ' + pct + '%</span>') +
@@ -146,10 +181,16 @@
     var L = isFinal ? null : lessonBy(key);
     if (!isFinal && !L) { return; }
 
-    var questions = shuffle((isFinal ? B.final : L.qs).map(shuffleQ));
-    var title = isFinal
+    var src = isFinal ? B.final : L.qs;
+    var km = kmFor(key);
+    var questions = shuffle(src.map(function (q, i) {
+      return shuffleQ(q, km ? km[i] : null);
+    }));
+    /* heading, not `title` — a local of that name would shadow the title()
+       helper that is being called on the very next line */
+    var heading = isFinal
       ? 'HSK 1 — ' + t(T.finalH)
-      : t(T.lesson) + ' ' + L.n + ' · ' + L.hz + ' — ' + L.en;
+      : t(T.lesson) + ' ' + L.n + ' · ' + L.hz + ' — ' + title(L);
 
     list.classList.add('kg-hide');
 
@@ -161,7 +202,7 @@
       mount: mount,
       questions: questions,
       badge: isFinal ? 'HSK 1' : 'HSK 1 · ' + t(T.lesson) + ' ' + L.n,
-      title: title,
+      title: heading,
       subtitle: isFinal ? t(T.finalP) : L.py,
       exitLabel: t(T.exit),
       onExit: paintList,
