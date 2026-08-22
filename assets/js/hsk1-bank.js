@@ -561,7 +561,7 @@
       { q:'In 明天会下雨, 会 means…', opts:['will — a prediction','can — a skill','may — permission','must'], ans:0,
         why:'This is the second use of 会: not a learned skill but a likelihood. 明天会下雨 it will rain tomorrow.' },
       { q:'In 我今天身体很好, the predicate is…', opts:['身体很好 — itself a subject and a predicate','很好 only','今天','我'], ans:0,
-        why:'身体很好 is a small sentence in its own right, and the whole of it describes 我. That is a subject-predicate predicate.' },
+        why:'身体很好 is a small sentence in its own right, and the whole of it describes 我. That is a subject-predicate predicate sentence (主谓谓语句).' },
       { q:'下雨 means…', opts:['to rain','under the rain','rainy season','umbrella'], ans:0,
         why:'下 xià here is "to fall": 下雨 rain falls. The same 下 gives 下雪 to snow.' },
       { q:'冷 is the opposite of…', opts:['热','水','来','太'], ans:0,

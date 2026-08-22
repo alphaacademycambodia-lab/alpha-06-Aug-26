@@ -49,10 +49,15 @@ chinese-beginner.html
                   Chinese for Beginners — pinyin, sound, writing, numbers,
                   words and conversation, with audio on every line
 tools.html        Tools hub — the fourth top-level tab, listing the free tools
+calendar.html     Cambodia Holiday Calendar — a whole year with the public
+                  holidays marked, the list underneath, and a print layout
 date-calculator.html
                   Date Calculator — add or subtract days, weeks, months and
                   years from any date, before or after, with the answer marked
                   on a calendar. Runs entirely in the browser
+countdown.html    Countdown — days, hours, minutes and seconds to any date and
+                  time, or to one of the Cambodian public holidays and the
+                  other dates people count to, with a celebration at zero
 contact.html      Contact — details, enquiry form, opening hours, map, quick FAQ
 404.html          Not-found page
 robots.txt        Crawler rules
@@ -98,10 +103,20 @@ assets/js/hsk1-bank-km.js
                        The Khmer half of the HSK 1 bank, an overlay keyed on
                        lesson and question position
 assets/js/hsk1-test.js HSK 1 page — chapter cards, saved scores, runs the quiz
-assets/css/tools.css   The Tools tab — the hub card grid and the date calculator
+assets/css/tools.css   The Tools tab — the hub grid, the date calculator, the
+                       holiday calendar and its print stylesheet, and the
+                       countdown with its confetti
+assets/js/countdown.js The countdown — the clock, the event list built from
+                       kh-holidays.js, the celebration and the confetti
 assets/js/date-calculator.js
                        The date calculator — the arithmetic, the result panel
                        and the calendar. No dependencies, nothing stored
+assets/js/kh-holidays.js
+                       THE HOLIDAY LIST. Cambodian public holidays, fixed and
+                       movable, with the Khmer names. Read its header before
+                       touching a date — these are set by sub-decree
+assets/js/holiday-calendar.js
+                       Draws the year grid and the holiday list from that file
 assets/css/style.css   Full design system — tokens, light/dark themes, components, responsive rules
 assets/js/boot.js      Render-blocking: stamps the saved theme + language on <html> before first paint
 assets/js/i18n.js      Khmer dictionary and the English ⇄ ខ្មែរ swap
@@ -444,6 +459,88 @@ and nothing is stored. And it is **bilingual like everything else**, which for
 a tool means the numbers too: Khmer numerals when the page is in Khmer, not
 just Khmer labels around Latin digits.
 
+### Cambodia Holiday Calendar
+
+`calendar.html` + `assets/js/holiday-calendar.js`, with the holidays themselves
+in `assets/js/kh-holidays.js`. Two views off one set of data, and a print
+stylesheet so either can go on a wall.
+
+- **Year** (the default) — twelve small months, holidays highlighted. This is
+  the planning view: when to close, when to book, how the year falls.
+- **Month** — the wall calendar. Cells big enough to print the holiday's name
+  *inside* the day it falls on, with "day 2 of 3" on the multi-day ones. Below
+  640px the names drop out and the list underneath does the naming, because
+  seven columns on a phone cannot carry text.
+
+One pair of arrows drives both: a year at a time on the year view, a month at
+a time on the month view, rolling over the year end. The holiday list and the
+day count follow whichever view is showing, and a three-day holiday that spans
+a month end appears in both months' lists.
+
+**The month view also carries the Khmer lunar date** — ៦កើត under each day, the
+lunar month named on its first day, and ខែចេត្រ · ឆ្នាំរោង ឆស័ក ព.ស. ២៥៦៨ under
+the month heading. That comes from `assets/js/kh-lunar.js`; see below.
+
+### The Khmer lunar date
+
+`assets/js/kh-lunar.js` converts a Gregorian date to its Khmer lunar date. The
+moon-day and month arithmetic is the Suriyeatr (សុរិយាត្រ) reckoning, ported
+from `seanghay/khmercal` — transcribed, not approximated. Three things about it
+are worth knowing before editing.
+
+**It is verified, not assumed.** The port is checked against known dates before
+it ships: 14 April 2024 = ៦កើត ខែចេត្រ (the momentkh documentation), and the
+full moons that Visak Bochea 2023/2024 and the Water Festival 2023/2024 fall
+on. The epoch offset (`ANCHOR`) was *solved for* against those, not guessed.
+
+**It has no clock in it.** The original shifts a timestamp by seven hours to
+land in Cambodian time and then rounds a millisecond difference, which makes
+the answer depend on the reader's own time zone — for a calendar that is a
+bug, since a Khmer date must read the same in Phnom Penh and in Paris. Here
+every date is reduced to `Date.UTC(y, m, d) / 86400000`, a whole number of
+days, so there is no time of day anywhere in the arithmetic.
+
+**The year names are counted, not derived, and the rule is contested.** The two
+published implementations disagree with each other on the animal/sak
+transition, so the cycle is anchored on a documented fact — 2024 is ឆ្នាំរោង
+ឆស័ក — and stepped. On when ព.ស. turns there is genuinely no single answer:
+the Khmer calendar reference at tovnah.com says opinions differ. The religious
+reckoning turns it at Visak Bochea; everyday Cambodian usage turns it at Khmer
+New Year, which is why Khmer New Year 2026 is printed everywhere as ព.ស. ២៥៧០.
+This page follows everyday usage, so the animal year, the sak and ព.ស. all turn
+on the same day.
+
+**It does not decide public holidays.** The lunar date of the full moon of
+ពិសាខ is astronomy; the public holiday is whatever the sub-decree says, and the
+two can differ. Holidays stay in `kh-holidays.js`.
+
+Everything is cached per year — without that a single month view walks decades
+of year lengths 42 times over and takes minutes rather than milliseconds.
+
+**The important thing here is not the calendar, it is the data.** Cambodian
+public holidays are confirmed each year by a sub-decree (អនុក្រឹត្យ) of the
+Royal Government. That document is the authority — not this repository. Two
+kinds of day sit on it:
+
+- **Fixed** — 1 January, 8 March, Khmer New Year in April, 1 May, the two royal
+  birthdays, 24 September, 15 and 29 October, 9 November. Same Gregorian date
+  every year, so they are encoded once in `FIXED` and appear for any year.
+- **Movable** — Visak Bochea, the Royal Ploughing Ceremony, Pchum Ben and the
+  Water Festival follow the Khmer lunar calendar and move every year.
+
+**The movable dates are deliberately empty.** They cannot be derived by
+arithmetic and they are not guessed. Until a year is entered into `YEARS` from
+its sub-decree, the page lists those four by name with their lunar rule, under
+a heading that says the date is set annually, and the grid shows an amber
+notice that only the fixed dates are marked. A holiday calendar printing a
+plausible-but-wrong Pchum Ben is worse than one printing nothing: the wrong
+date gets believed and put in a diary.
+
+Adding a year is one object — `source` plus the four ISO dates — and the header
+of `kh-holidays.js` shows the exact shape. A three-day holiday is stored by its
+first day and `len`, and spans a month end correctly, so Pchum Ben starting on
+30 September still marks 1 and 2 October.
+
 ### Date Calculator
 
 `date-calculator.html` + `assets/js/date-calculator.js`. Add or subtract years,
@@ -479,6 +576,50 @@ headlessly against a stub DOM — set the date input's value, fire the direction
 button's click handler, then read the ISO date the Copy button carries — which
 covers the clamp cases, the leap years, the year boundaries and the order of
 operations without needing a browser.
+
+### Countdown
+
+`countdown.html` + `assets/js/countdown.js`. Days, hours, minutes and seconds
+to any date and time, or to an event from the list, and a celebration when it
+lands. It loads `kh-holidays.js` as well as its own script. Five things are
+worth knowing before editing it.
+
+**The moment is the point.** A countdown that reaches zero and shows four
+zeros has failed at the one job it had, so at zero the panel turns over, the
+confetti fires once, a chime plays and the clock carries on the other way. The
+celebration also fires for anyone opening the page **within a day** of the
+event — someone visiting on New Year's morning is not late. The confetti is
+pure CSS and the chime is Web Audio, so both work offline, and both are
+skipped under `prefers-reduced-motion`.
+
+**The clock is read, never accumulated.** Every tick recomputes
+`target - Date.now()` and then schedules itself to the next whole second. A
+`setInterval(1000)` that adds a second per firing drifts, and drifts badly
+once a browser throttles the background tab to one tick a minute; this way a
+tab left open all night is exact the moment it is looked at again.
+
+**Nothing is stored, so the URL is the storage.** The Tools page promises
+nothing is uploaded and nothing is stored, so the target goes in the address
+bar instead — `#t=2027-04-14`, plus `e=` for a preset or `n=` for a name. That
+makes a countdown bookmarkable and sendable without keeping a byte anywhere.
+Deep links work: `countdown#e=cny` opens Chinese New Year.
+
+**The event list has one source of truth and one rule.** The Cambodian
+holidays are read out of `kh-holidays.js`, so a holiday is spelt the same here
+as on the calendar. Its four lunar holidays have no Gregorian date until the
+year's sub-decree is entered there, so they are **named and explained rather
+than counted down to**. Chinese New Year is a published table (`CNY`, 2026–35)
+for the same reason: it is the second new moon after the winter solstice in
+Chinese standard time, which is astronomy, not arithmetic — and when the table
+runs out the event stops being offered instead of being extrapolated. Add
+years to `CNY` when you need them.
+
+**Only the seconds move, and nothing is a live region.** A ticking clock
+behind `aria-live` would be read aloud sixty times a minute, so the only
+announced element is the celebration line, and it is written only when it
+changes. The badge beside each event uses the same whole-days-of-elapsed-time
+measure the clock does rather than counting calendar days, because "in 33
+days" beside a clock reading 32 looks like one of them is broken.
 
 ## The four kindergarten pages
 

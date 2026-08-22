@@ -1,15 +1,23 @@
 /* Alpha Academy Cambodia — Tools
    ---------------------------------------------------------------------------
-   The Tools tab and everything inside it. Two namespaces, both deliberate:
+   The Tools tab and everything inside it. Four namespaces, all deliberate:
 
      tl-*   the Tools hub — the card grid that lists what is in here
      dc-*   the Date Calculator
+     cal-*  the Holiday Calendar
+     cd-*   the Countdown
 
    Namespaced rather than reusing .res / .card / .field, because the shared
    stylesheet already owns those and a tool is not a lesson. The one thing
    this file does borrow wholesale is the token set on :root — colours,
    radii, shadows and the dark theme all come from style.css, so a tool looks
    like the rest of the site without restating any of it.
+
+   Where a rule is genuinely about "a panel in a tool" rather than about one
+   particular tool — the card, the eyebrow, the little button, the fact chips,
+   the notes grid — the selector lists both namespaces instead of the rule
+   being written twice. Two tools that drift apart visually would be worse
+   than the coupling.
 
    A note on the audience. Unlike the kindergarten pages, this is built for an
    adult doing a small piece of admin — a visa date, a contract end, a due
@@ -56,38 +64,39 @@ a.tl-card:hover{transform:translateY(-3px);border-color:var(--brand-300);box-sha
 @media (max-width:940px){ .dc-layout{grid-template-columns:minmax(0,1fr)} }
 .dc-side{display:grid;gap:1.25rem;min-width:0}
 
-.dc-card{
+.dc-card,.cd-card{
   background:var(--surface);border:1px solid var(--ink-100);border-radius:var(--r-lg);
   padding:clamp(1.25rem,3vw,1.75rem);box-shadow:var(--shadow-sm);
 }
-.dc-card h2{font-size:1.12rem;margin:0 0 1.1rem;color:var(--ink-900)}
-.dc-eyebrow{
+.dc-card h2,.cd-card h2{font-size:1.12rem;margin:0 0 1.1rem;color:var(--ink-900)}
+.dc-eyebrow,.cd-eyebrow{
   display:block;font-size:.73rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;
   color:var(--ink-400);margin-bottom:.5rem;
 }
 
 /* ------------------------------------------------------------ 2a. the form */
-.dc-field{display:grid;gap:.4rem;margin-bottom:1.15rem}
+.dc-field,.cd-field{display:grid;gap:.4rem;margin-bottom:1.15rem}
 /* .dc-lbl is the same thing for a group of controls rather than one control:
    a <label> may only name a single field, so the direction, amount and preset
    groups use a span and aria-labelledby instead. */
-.dc-field > label,.dc-field > .dc-lbl{font-size:.85rem;font-weight:700;color:var(--ink-800)}
-.dc-dateline{display:flex;gap:.5rem}
-.dc-dateline input{
+.dc-field > label,.dc-field > .dc-lbl,
+.cd-field > label,.cd-field > .cd-lbl{font-size:.85rem;font-weight:700;color:var(--ink-800)}
+.dc-dateline,.cd-dateline{display:flex;gap:.5rem}
+.dc-dateline input,.cd-dateline input{
   flex:1;min-width:0;font:inherit;font-size:1.02rem;font-weight:600;color:var(--ink-900);
   padding:.72rem .85rem;border:1.5px solid var(--ink-200);border-radius:var(--r-sm);
   background:var(--surface);
   transition:border-color .2s var(--ease),box-shadow .2s var(--ease);
 }
-.dc-dateline input:focus{outline:none;border-color:var(--brand-500);box-shadow:0 0 0 3px rgba(18,115,230,.15)}
-.dc-mini{
+.dc-dateline input:focus,.cd-dateline input:focus{outline:none;border-color:var(--brand-500);box-shadow:0 0 0 3px rgba(18,115,230,.15)}
+.dc-mini,.cd-mini{
   flex:none;font:inherit;font-size:.85rem;font-weight:700;cursor:pointer;
   padding:.4rem .95rem;border-radius:var(--r-sm);
   background:var(--brand-50);border:1.5px solid var(--brand-100);color:var(--brand-700);
   transition:background-color .18s var(--ease),border-color .18s var(--ease);
 }
-.dc-mini:hover{background:var(--brand-100);border-color:var(--brand-300)}
-.dc-under{margin:.15rem 0 0;font-size:.85rem;color:var(--ink-400);min-height:1.2em}
+.dc-mini:hover,.cd-mini:hover{background:var(--brand-100);border-color:var(--brand-300)}
+.dc-under,.cd-under{margin:.15rem 0 0;font-size:.85rem;color:var(--ink-400);min-height:1.2em}
 
 /* before / after — a segmented control, because it is a choice of two and a
    dropdown for two options is a tap wasted */
@@ -148,18 +157,20 @@ a.tl-card:hover{transform:translateY(-3px);border-color:var(--brand-300);box-sha
 .dc-alt{
   margin-top:.3rem;font-size:1.02rem;line-height:1.9;color:var(--ink-500);font-weight:600;
 }
-.dc-facts{list-style:none;margin:1.1rem 0 0;padding:0;display:flex;flex-wrap:wrap;gap:.45rem}
-.dc-facts li{
+.dc-facts,.cd-facts{list-style:none;margin:1.1rem 0 0;padding:0;display:flex;flex-wrap:wrap;gap:.45rem}
+.dc-facts li,.cd-facts li{
   display:inline-flex;align-items:center;gap:.4rem;
   padding:.42rem .85rem;border-radius:var(--r-pill);
   background:var(--surface);border:1px solid var(--ink-200);
   font-size:.87rem;font-weight:600;color:var(--ink-700);
 }
-.dc-facts li b{color:var(--ink-900);font-weight:800}
-.dc-facts li.is-key{background:var(--brand-600);border-color:var(--brand-600);color:#fff}
-.dc-facts li.is-key b{color:#fff}
-:root[data-theme="dark"] .dc-facts li.is-key{color:#0a1120}
-:root[data-theme="dark"] .dc-facts li.is-key b{color:#0a1120}
+.dc-facts li b,.cd-facts li b{color:var(--ink-900);font-weight:800}
+.dc-facts li.is-key,.cd-facts li.is-key{background:var(--brand-600);border-color:var(--brand-600);color:#fff}
+.dc-facts li.is-key b,.cd-facts li.is-key b{color:#fff}
+:root[data-theme="dark"] .dc-facts li.is-key,
+:root[data-theme="dark"] .cd-facts li.is-key{color:#0a1120}
+:root[data-theme="dark"] .dc-facts li.is-key b,
+:root[data-theme="dark"] .cd-facts li.is-key b{color:#0a1120}
 
 .dc-note{
   display:none;gap:.6rem;align-items:flex-start;margin:1rem 0 0;
@@ -241,19 +252,474 @@ a.tl-card:hover{transform:translateY(-3px);border-color:var(--brand-300);box-sha
 .dc-legend i.k-today{border-color:var(--ink-400);border-style:dashed;background:var(--surface-2)}
 
 /* ------------------------------------------------------------ 3. how it works */
-.dc-notes{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:1.5rem}
-.dc-notes article{
+.dc-notes,.cd-notes{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:1.5rem}
+.dc-notes article,.cd-notes article{
   background:var(--surface);border:1px solid var(--ink-100);border-radius:var(--r-md);
   padding:1.1rem 1.2rem 1.25rem;
 }
-.dc-notes h4{margin:0 0 .35rem;font-size:1rem;color:var(--ink-900)}
-.dc-notes p{margin:0;font-size:.92rem;line-height:1.75;color:var(--ink-500)}
+.dc-notes h4,.cd-notes h4{margin:0 0 .35rem;font-size:1rem;color:var(--ink-900)}
+.dc-notes p,.cd-notes p{margin:0;font-size:.92rem;line-height:1.75;color:var(--ink-500)}
 .dc-notes code{
   font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88em;
   background:var(--surface-2);padding:.1rem .35rem;border-radius:5px;color:var(--ink-800);
 }
 
+/* ================================================= 4. the holiday calendar
+   Twelve small months rather than one big one: a person opening a holiday
+   calendar is planning a year, not reading a date. Everything here is sized
+   so all twelve fit a laptop screen without scrolling, and so a phone gets
+   two columns rather than a single very long strip.                        */
+.cal-bar{
+  display:flex;flex-wrap:wrap;align-items:center;gap:.6rem;margin-bottom:1rem;
+}
+.cal-yearpick{display:flex;align-items:center;gap:.35rem}
+.cal-yearpick select{
+  font:inherit;font-family:var(--font-display);font-weight:800;font-size:1.25rem;
+  color:var(--ink-900);background:var(--surface);
+  border:1.5px solid var(--ink-200);border-radius:var(--r-sm);
+  padding:.4rem 2.2rem .4rem .8rem;appearance:none;cursor:pointer;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235b6b85' stroke-width='2.5' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right .7rem center;background-size:16px;
+}
+.cal-yearpick select:focus{outline:none;border-color:var(--brand-500);box-shadow:0 0 0 3px rgba(18,115,230,.15)}
+.cal-bar .spacer{flex:1 1 auto}
+.cal-count{
+  font-size:.88rem;font-weight:700;color:var(--brand-700);
+  background:var(--brand-50);border:1px solid var(--brand-100);
+  padding:.4rem .9rem;border-radius:var(--r-pill);
+}
+
+.cal-src{
+  margin:0 0 1.4rem;font-size:.85rem;line-height:1.7;color:var(--ink-400);
+}
+.cal-src.is-warn{
+  display:flex;gap:.55rem;padding:.8rem 1rem;border-radius:var(--r-sm);
+  background:var(--accent-100);color:var(--ink-700);border:1px solid color-mix(in srgb,var(--accent-500) 35%,transparent);
+}
+
+/* the twelve months */
+.cal-grid{
+  display:grid;gap:.9rem;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+}
+@media (max-width:1080px){ .cal-grid{grid-template-columns:repeat(3,minmax(0,1fr))} }
+@media (max-width:760px){  .cal-grid{grid-template-columns:repeat(2,minmax(0,1fr))} }
+@media (max-width:400px){  .cal-grid{grid-template-columns:minmax(0,1fr)} }
+
+.cal-month{
+  background:var(--surface);border:1px solid var(--ink-100);border-radius:var(--r-md);
+  padding:.75rem .7rem .85rem;box-shadow:var(--shadow-xs);break-inside:avoid;
+}
+.cal-month h3{
+  margin:0 0 .5rem;text-align:center;
+  font-family:var(--font-display);font-weight:800;font-size:.98rem;color:var(--ink-900);
+}
+.cal-mgrid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:2px;text-align:center}
+.cal-dow{
+  font-size:.66rem;font-weight:800;color:var(--ink-400);padding-bottom:.25rem;
+  overflow:hidden;text-overflow:clip;
+}
+.cal-dow.is-we{color:var(--ink-300,var(--ink-400));opacity:.75}
+.cal-pad{display:block}
+.cal-d{
+  display:grid;place-items:center;aspect-ratio:1/1;min-height:24px;
+  border-radius:7px;font-size:.78rem;font-weight:600;color:var(--ink-700);
+  border:1.5px solid transparent;
+}
+.cal-d.is-we{color:var(--ink-400)}
+.cal-d.is-today{border-color:var(--ink-400);border-style:dashed;font-weight:800}
+/* A public holiday. Last, so it beats the weekend and today styling when a
+   holiday falls on a Saturday - which happens and still counts. */
+.cal-d.is-hol{
+  background:var(--brand-600);color:#fff;font-weight:800;cursor:help;
+}
+:root[data-theme="dark"] .cal-d.is-hol{color:#0a1120}
+.cal-d.is-flash{animation:cal-flash 2.4s var(--ease)}
+@keyframes cal-flash{
+  0%,100%{box-shadow:0 0 0 0 transparent}
+  15%,55%{box-shadow:0 0 0 5px color-mix(in srgb,var(--accent-500) 70%,transparent)}
+}
+
+/* ------------------------------------------------------- the month view
+   The wall calendar. The point of the extra size is that the holiday's name
+   fits inside the day it falls on — a highlight you have to look up in a
+   list underneath is what the year view is for. */
+.cal-modes{
+  display:inline-flex;gap:.25rem;flex:none;
+  background:var(--surface-2);border:1px solid var(--ink-100);border-radius:var(--r-sm);padding:.25rem;
+}
+.cal-modes button{
+  font:inherit;font-size:.85rem;font-weight:700;cursor:pointer;
+  padding:.42rem 1rem;border:0;border-radius:calc(var(--r-sm) - 3px);
+  background:transparent;color:var(--ink-500);
+  transition:background-color .18s var(--ease),color .18s var(--ease),box-shadow .18s var(--ease);
+}
+.cal-modes button:hover{color:var(--ink-900)}
+.cal-modes button[aria-pressed="true"]{background:var(--surface);color:var(--brand-700);box-shadow:var(--shadow-xs)}
+
+.cal-big{
+  background:var(--surface);border:1px solid var(--ink-100);border-radius:var(--r-lg);
+  padding:clamp(.7rem,2vw,1.2rem);box-shadow:var(--shadow-sm);
+}
+.cal-bighead h3{
+  margin:0;text-align:center;
+  font-family:var(--font-display);font-weight:800;
+  font-size:clamp(1.2rem,3.4vw,1.7rem);color:var(--ink-900);
+}
+/* the Khmer lunar month and year, under the Gregorian one */
+.cal-bigsub{
+  margin:.2rem 0 0;text-align:center;
+  font-family:"Kantumruy Pro",var(--font-sans);font-weight:600;
+  font-size:.92rem;line-height:1.8;color:var(--brand-700);
+}
+.cal-bighead{margin-bottom:.8rem}
+.cal-biggrid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:.35rem}
+.cal-bdow{
+  text-align:center;padding-bottom:.35rem;
+  font-size:.8rem;font-weight:800;color:var(--ink-400);
+}
+.cal-bdow b{display:none;font-weight:800}
+.cal-bdow i{font-style:normal}
+.cal-bdow.is-we{color:var(--brand-600);opacity:.8}
+
+.cal-b{
+  display:flex;flex-direction:column;gap:.2rem;min-height:clamp(64px,11vw,104px);
+  padding:.4rem .45rem;border-radius:10px;overflow:hidden;
+  background:var(--surface-2);border:1.5px solid transparent;
+}
+.cal-b .n{font-size:.98rem;font-weight:700;color:var(--ink-800);line-height:1.3}
+/* the lunar day: quieter than the Gregorian number it sits under, because it
+   is the second reading of the same day and not a competing one */
+.cal-b .lun{
+  font-family:"Kantumruy Pro",var(--font-sans);font-weight:600;
+  font-size:.68rem;line-height:1.55;color:var(--ink-400);
+  overflow:hidden;overflow-wrap:anywhere;
+}
+.cal-b.is-hol .lun{color:rgba(255,255,255,.82)}
+:root[data-theme="dark"] .cal-b.is-hol .lun{color:rgba(10,17,32,.72)}
+.cal-b .ev{
+  font-size:.7rem;font-weight:700;line-height:1.45;color:var(--brand-700);
+  overflow:hidden;overflow-wrap:anywhere;
+}
+.cal-b .ev em{display:block;font-style:normal;font-weight:600;opacity:.75;font-size:.94em}
+.cal-b.is-out{background:transparent;opacity:.4}
+.cal-b.is-we .n{color:var(--ink-500)}
+.cal-b.is-today{border-color:var(--ink-400);border-style:dashed}
+.cal-b.is-hol{background:var(--brand-600)}
+.cal-b.is-hol .n,.cal-b.is-hol .ev{color:#fff}
+:root[data-theme="dark"] .cal-b.is-hol .n,
+:root[data-theme="dark"] .cal-b.is-hol .ev{color:#0a1120}
+.cal-b.is-flash{animation:cal-flash 2.4s var(--ease)}
+
+/* On a phone seven columns cannot carry a name, so the day keeps its
+   highlight and the list underneath does the naming. */
+@media (max-width:640px){
+  .cal-b .ev,.cal-b .lun{display:none}
+  .cal-b{min-height:44px;justify-content:center;align-items:center}
+  .cal-b .n{font-size:.9rem}
+  .cal-bdow i{display:none}
+  .cal-bdow b{display:inline}
+}
+
+.cal-none{
+  list-style:none;padding:.9rem 1rem;border-radius:var(--r-md);
+  background:var(--surface-2);border:1px dashed var(--ink-200);
+  color:var(--ink-500);font-size:.93rem;
+}
+
+/* the list underneath */
+.cal-listwrap{margin-top:2rem}
+.cal-listwrap h3{font-size:1.15rem;margin:0 0 1rem;color:var(--ink-900)}
+.cal-list{
+  list-style:none;margin:0;padding:0;
+  display:grid;gap:.5rem;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+}
+.cal-row{
+  display:flex;gap:.9rem;align-items:flex-start;cursor:pointer;
+  background:var(--surface);border:1px solid var(--ink-100);border-radius:var(--r-md);
+  padding:.75rem .9rem;
+  transition:border-color .18s var(--ease),transform .18s var(--ease);
+}
+.cal-row:hover{border-color:var(--brand-300);transform:translateX(3px)}
+.cal-row .when{flex:none;width:9.5em;display:flex;flex-direction:column;gap:.1rem}
+.cal-row .when b{font-size:.95rem;color:var(--brand-700);font-weight:800;line-height:1.5}
+.cal-row .when small{font-size:.76rem;color:var(--ink-400);line-height:1.5}
+.cal-row .what{flex:1;min-width:0;font-size:.93rem;line-height:1.6;color:var(--ink-800);font-weight:600}
+.cal-row .what small{
+  display:block;margin-top:.25rem;font-size:.79rem;font-weight:500;
+  color:var(--ink-400);line-height:1.6;
+}
+.cal-row.is-movable .when b{color:var(--accent-500)}
+
+/* what is not yet fixed */
+.cal-pending{
+  margin-top:1.6rem;padding:1.1rem 1.2rem 1.25rem;
+  border:1px dashed var(--ink-200);border-radius:var(--r-md);background:var(--surface-2);
+}
+.cal-pending h4{margin:0 0 .3rem;font-size:1rem;color:var(--ink-900)}
+.cal-pending > p{margin:0 0 .9rem;font-size:.89rem;line-height:1.75;color:var(--ink-500);max-width:72ch}
+.cal-pending ul{list-style:none;margin:0;padding:0;display:grid;gap:.5rem}
+.cal-pending li{
+  display:flex;flex-wrap:wrap;gap:.3rem .9rem;align-items:baseline;
+  padding:.6rem .8rem;background:var(--surface);border:1px solid var(--ink-100);border-radius:var(--r-sm);
+}
+.cal-pending .nm{font-weight:700;font-size:.93rem;color:var(--ink-800);line-height:1.6}
+.cal-pending .rule{flex:1;min-width:14ch;font-size:.83rem;color:var(--ink-400);line-height:1.6}
+.cal-pending .len{
+  flex:none;font-size:.76rem;font-weight:800;color:var(--accent-500);
+  background:var(--accent-100);padding:.15rem .55rem;border-radius:var(--r-pill);
+}
+
+.cal-legend{
+  display:flex;flex-wrap:wrap;gap:.9rem;margin-top:1.2rem;
+  font-size:.82rem;color:var(--ink-500);
+}
+.cal-legend span{display:inline-flex;align-items:center;gap:.4rem}
+.cal-legend i{width:15px;height:15px;border-radius:5px;flex:none;border:1.5px solid transparent;display:block}
+.cal-legend i.k-hol{background:var(--brand-600);border-color:var(--brand-600)}
+.cal-legend i.k-today{border-color:var(--ink-400);border-style:dashed;background:var(--surface-2)}
+.cal-legend i.k-we{background:var(--surface-2);border-color:var(--ink-200)}
+
+/* ======================================================= 5. the countdown
+   The stage is the page. Everything else — the picker, the event list, the
+   notes — is furniture around four numbers, so the four numbers get the
+   gradient panel, the display face and all of the available width, and the
+   controls sit in a narrower column beside them.
+
+   One rule runs through the whole section: only the seconds move. A page
+   where several things animate at once reads as busy rather than alive, so
+   the tick is the single piece of motion until the moment it reaches zero —
+   and then, for five seconds, it is allowed to be as loud as it likes. */
+.cd-layout{
+  display:grid;gap:1.25rem;align-items:start;
+  grid-template-columns:minmax(0,1fr) minmax(0,380px);
+}
+@media (max-width:1040px){ .cd-layout{grid-template-columns:minmax(0,1fr)} }
+.cd-side{display:grid;gap:1.25rem;min-width:0}
+/* The event list is long and the stage is short, so on a wide screen the
+   stage stays put while the list scrolls past it — the clock is the thing
+   you came for and it should not leave the screen while you browse. */
+@media (min-width:1041px){
+  .cd-stage{position:sticky;top:94px}
+}
+
+/* ----------------------------------------------------------- 5a. the stage */
+.cd-stage{
+  position:relative;overflow:hidden;
+  background:linear-gradient(160deg,var(--brand-50) 0%,var(--surface) 62%);
+  border:1px solid var(--brand-100);border-radius:var(--r-lg);
+  padding:clamp(1.3rem,3.4vw,2.1rem);box-shadow:var(--shadow-sm);
+}
+.cd-name{
+  font-family:var(--font-display);font-weight:800;line-height:1.25;letter-spacing:-.015em;
+  font-size:clamp(1.45rem,4vw,2.1rem);color:var(--ink-900);overflow-wrap:break-word;
+}
+.cd-when{margin-top:.35rem;font-size:1.02rem;line-height:1.85;color:var(--ink-500);font-weight:600}
+.cd-when em{font-style:normal;display:block;font-size:.92rem;color:var(--ink-400);font-weight:500}
+
+/* the four numbers */
+.cd-clock{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(.4rem,1.4vw,.75rem);
+  margin-top:clamp(1.1rem,3vw,1.6rem);
+}
+.cd-unit{
+  display:grid;place-items:center;gap:.25rem;
+  padding:clamp(.75rem,2.4vw,1.25rem) .3rem clamp(.6rem,2vw,.95rem);
+  border-radius:var(--r-md);background:var(--surface);border:1px solid var(--ink-100);
+  box-shadow:var(--shadow-xs);
+}
+.cd-unit b{
+  font-family:var(--font-display);font-weight:800;line-height:1;letter-spacing:-.03em;
+  font-size:clamp(1.9rem,7.5vw,3.6rem);color:var(--ink-900);
+  font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1;
+}
+.cd-unit span{
+  font-size:clamp(.62rem,1.7vw,.75rem);font-weight:800;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-400);text-align:center;
+}
+.cd-unit.is-days b{color:var(--brand-600)}
+/* "Seconds" is the widest label and a phone gives each card about 80px, so
+   the tracking comes off before the word is allowed to wrap. */
+@media (max-width:520px){
+  .cd-clock{gap:.3rem}
+  .cd-unit{padding-inline:.15rem}
+  .cd-unit span{letter-spacing:.02em}
+}
+/* the only thing on the page that moves, and only once a second */
+.cd-unit.is-secs b{display:inline-block;transform-origin:50% 60%}
+.cd-unit.is-secs.is-tick b{animation:cd-tick .42s var(--ease)}
+@keyframes cd-tick{
+  0%{transform:translateY(-9%) scale(1.07);opacity:.55}
+  60%{transform:none;opacity:1}
+  100%{transform:none}
+}
+/* Khmer numerals sit lower on the line than Latin ones and need the Khmer
+   face; without this the digits clip against the label underneath. */
+:root[lang="km"] .cd-unit b{
+  font-family:"Kantumruy Pro","Noto Sans Khmer",var(--font-sans);
+  line-height:1.3;letter-spacing:0;
+}
+:root[lang="km"] .cd-unit span{letter-spacing:.02em;text-transform:none}
+
+/* how far through the wait we are — only drawn when there is an honest
+   anchor to measure from, which means the previous occurrence of a
+   repeating event. A custom date has nothing to measure from. */
+.cd-bar{margin-top:1.15rem}
+.cd-bar .track{
+  height:9px;border-radius:var(--r-pill);background:var(--surface-2);
+  border:1px solid var(--ink-100);overflow:hidden;
+}
+.cd-bar .fill{
+  display:block;height:100%;border-radius:var(--r-pill);
+  background:linear-gradient(90deg,var(--brand-400),var(--brand-600));
+  transition:width 1s linear;
+}
+.cd-bar p{margin:.5rem 0 0;font-size:.82rem;color:var(--ink-400);line-height:1.6}
+
+.cd-actions{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.3rem}
+.cd-actions .cd-mini{padding:.55rem 1.05rem;display:inline-flex;align-items:center;gap:.45rem}
+/* a class rule beats the browser's own [hidden]{display:none}, so the
+   display it sets has to be withdrawn explicitly */
+.cd-actions .cd-mini[hidden]{display:none}
+.cd-actions .cd-mini svg{width:15px;height:15px}
+.cd-mini.is-done{border-color:var(--success-500);color:var(--success-500);background:var(--surface)}
+.cd-mini[aria-pressed="false"]{background:var(--surface-2);border-color:var(--ink-200);color:var(--ink-500)}
+
+/* an empty or impossible target says so quietly rather than blanking */
+.cd-stage.is-idle .cd-clock,
+.cd-stage.is-idle .cd-bar,
+.cd-stage.is-idle .cd-facts,
+.cd-stage.is-idle .cd-actions{display:none}
+.cd-stage.is-idle .cd-name{color:var(--ink-400);font-size:clamp(1.1rem,3vw,1.35rem);font-weight:700}
+
+/* --------------------------------------------------------- 5b. zero hour
+   The whole reason a person sets a countdown is the moment it ends, so the
+   page has to do something at that moment rather than quietly showing four
+   zeros. The panel turns brand-coloured, the confetti fires once, and the
+   clock keeps running the other way so the moment is still legible an hour
+   later. Under prefers-reduced-motion the confetti is skipped entirely and
+   the message alone carries it. */
+.cd-stage.is-done{
+  background:linear-gradient(160deg,var(--brand-600) 0%,var(--brand-700) 100%);
+  border-color:var(--brand-700);
+}
+.cd-stage.is-done .cd-name,
+.cd-stage.is-done .cd-unit b{color:#fff}
+.cd-stage.is-done .cd-when,
+.cd-stage.is-done .cd-when em,
+.cd-stage.is-done .cd-unit span{color:rgba(255,255,255,.78)}
+.cd-stage.is-done .cd-unit{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.22);box-shadow:none}
+.cd-stage.is-done .cd-facts li{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.25);color:#fff}
+.cd-stage.is-done .cd-facts li b{color:#fff}
+.cd-stage.is-done .cd-mini{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.3);color:#fff}
+.cd-stage.is-done .cd-mini:hover{background:rgba(255,255,255,.24)}
+.cd-stage.is-done .cd-bar{display:none}
+
+.cd-hooray{
+  display:none;align-items:center;gap:.7rem;margin:0 0 .5rem;
+  font-family:var(--font-display);font-weight:800;letter-spacing:-.015em;
+  font-size:clamp(1.5rem,4.6vw,2.3rem);line-height:1.25;
+  color:#fff;                     /* the panel is brand blue underneath it */
+  overflow-wrap:break-word;
+}
+.cd-stage.is-done .cd-hooray{display:flex}
+/* the celebration line replaces the name rather than repeating it */
+.cd-stage.is-done .cd-name{display:none}
+.cd-hooray .pop{font-size:1.15em;line-height:1}
+@media (prefers-reduced-motion:no-preference){
+  .cd-stage.is-done .cd-hooray .pop{animation:cd-pop 2.4s var(--ease) 3}
+}
+@keyframes cd-pop{
+  0%,70%,100%{transform:none}
+  78%{transform:scale(1.25) rotate(-9deg)}
+  86%{transform:scale(1.25) rotate(9deg)}
+}
+
+/* Pure CSS, so it works with the network off, and absolutely positioned
+   inside the stage so it can never push the layout around. */
+.cd-confetti{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.cd-confetti i{
+  position:absolute;top:-12%;width:9px;height:15px;border-radius:2px;opacity:0;
+  animation:cd-fall linear forwards;
+}
+@keyframes cd-fall{
+  0%{opacity:0;transform:translate3d(0,0,0) rotate(0deg)}
+  8%{opacity:1}
+  100%{opacity:0;transform:translate3d(var(--dx,0px),115vh,0) rotate(var(--spin,540deg))}
+}
+@media (prefers-reduced-motion:reduce){ .cd-confetti{display:none} }
+
+/* ----------------------------------------------------- 5c. the event list */
+.cd-groups{display:grid;gap:1.1rem}
+.cd-group > h3{
+  margin:0 0 .55rem;font-size:.95rem;color:var(--ink-900);
+  display:flex;align-items:baseline;gap:.5rem;flex-wrap:wrap;
+}
+.cd-group > h3 small{font-size:.78rem;font-weight:600;color:var(--ink-400)}
+.cd-events{list-style:none;margin:0;padding:0;display:grid;gap:.4rem}
+.cd-ev{
+  display:flex;align-items:center;gap:.7rem;width:100%;text-align:left;cursor:pointer;
+  font:inherit;padding:.6rem .75rem;border-radius:var(--r-sm);
+  background:var(--surface-2);border:1px solid var(--ink-100);color:var(--ink-800);
+  transition:border-color .18s var(--ease),background-color .18s var(--ease);
+}
+.cd-ev:hover{border-color:var(--brand-300);background:var(--brand-50)}
+.cd-ev .em{flex:none;font-size:1.15rem;line-height:1}
+.cd-ev .nm{flex:1;min-width:0;font-size:.9rem;font-weight:650;line-height:1.5}
+.cd-ev .nm small{display:block;font-size:.77rem;font-weight:500;color:var(--ink-400);line-height:1.5}
+.cd-ev .in{
+  flex:none;font-size:.78rem;font-weight:800;color:var(--brand-700);
+  background:var(--brand-50);border:1px solid var(--brand-100);
+  padding:.2rem .6rem;border-radius:var(--r-pill);white-space:nowrap;
+}
+.cd-ev:hover .in{background:var(--surface)}
+.cd-ev[aria-pressed="true"]{
+  border-color:var(--brand-500);background:var(--brand-50);
+  box-shadow:0 0 0 2px color-mix(in srgb,var(--brand-500) 22%,transparent);
+}
+
+/* The four lunar holidays. Same honesty as the holiday calendar: a date that
+   comes from a sub-decree is not guessed here either, so they are named and
+   explained rather than offered as a countdown that would be wrong. */
+.cd-nodate{
+  margin-top:.9rem;padding:.85rem .95rem;border-radius:var(--r-sm);
+  background:var(--surface-2);border:1px dashed var(--ink-200);
+}
+.cd-nodate h4{margin:0 0 .3rem;font-size:.88rem;color:var(--ink-800)}
+.cd-nodate p{margin:0 0 .5rem;font-size:.81rem;line-height:1.7;color:var(--ink-400)}
+.cd-nodate ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:.35rem}
+.cd-nodate li{
+  font-size:.78rem;font-weight:650;color:var(--ink-600,var(--ink-700));
+  background:var(--surface);border:1px solid var(--ink-100);
+  padding:.22rem .6rem;border-radius:var(--r-pill);
+}
+
+/* ------------------------------------------------------------- 6. printing
+   Half the point of a holiday calendar is being on a wall. Everything that is
+   navigation on screen is noise on paper. */
+@media print{
+  .site-header,.site-footer,.float-actions,.page-hero,.wave,
+  .cal-bar,.cta-band,.skip-link,.dc-notes,.cal-pending .rule{display:none !important}
+  .section{padding:0 !important}
+  .cal-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:.5rem}
+  .cal-month{border-color:#bbb;box-shadow:none;padding:.5rem .4rem}
+  .cal-d.is-hol{background:#000 !important;color:#fff !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  /* the month view prints as the wall calendar it is */
+  .cal-big{border:0;box-shadow:none;padding:0}
+  .cal-b{min-height:78px;background:#fff;border:1px solid #ddd}
+  .cal-b .ev{display:block;color:#000}
+  .cal-b.is-hol{background:#eee !important;border-color:#000 !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .cal-b.is-hol .n,.cal-b.is-hol .ev{color:#000 !important}
+  .cal-row{border-color:#ccc;break-inside:avoid}
+  .cal-list{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .cal-src{color:#444}
+}
+
 @media (prefers-reduced-motion:reduce){
-  .tl-card,.dc-mini,.dc-quick button,.dc-nav,.dc-copy{transition:none}
+  .tl-card,.dc-mini,.dc-quick button,.dc-nav,.dc-copy,.cal-row,.cd-mini,.cd-ev{transition:none}
   a.tl-card:hover{transform:none}
+  .cal-row:hover{transform:none}
+  .cal-d.is-flash{animation:none;outline:3px solid var(--accent-500)}
+  .cd-unit.is-secs.is-tick b{animation:none}
+  .cd-bar .fill{transition:none}
 }

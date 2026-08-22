@@ -27,14 +27,14 @@
 <header class="site-header">
   <div class="wrap">
     <nav class="nav" aria-label="Main">
-      <a class="brand" href="index">
+      <a class="brand" href="./">
         <img src="assets/img/logo.png" alt="Alpha Academy Cambodia logo" width="44" height="44">
         <span class="brand-text"><span class="brand-name">Alpha Academy</span><span class="brand-tag">Cambodia</span></span>
       </a>
 
       <div class="nav-menu" id="nav-menu">
         <ul class="nav-links">
-          <li><a href="index" data-i18n="nav.home">Home</a></li>
+          <li><a href="./" data-i18n="nav.home">Home</a></li>
           <li><a href="services" data-i18n="nav.services">Services</a></li>
           <li><a href="about" data-i18n="nav.about">About</a></li>
 
@@ -102,6 +102,8 @@
             </a>
             <ul class="sub">
               <li><a href="date-calculator"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16" rx="2.5"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4"/><path d="M9 14.5h6M12 11.5v6"/></svg></i><span><span data-i18n="nav.datecalc">Date Calculator</span><small data-i18n="nav.datecalcSub">Days, weeks, months, years</small></span></a></li>
+              <li><a href="calendar"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16" rx="2.5"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4"/><circle cx="8.5" cy="14" r="1.2" fill="currentColor" stroke="none"/><circle cx="15.5" cy="14" r="1.2" fill="currentColor" stroke="none"/><circle cx="12" cy="17.5" r="1.2" fill="currentColor" stroke="none"/></svg></i><span><span data-i18n="nav.calendar">Holiday Calendar</span><small data-i18n="nav.calendarSub">Cambodian public holidays</small></span></a></li>
+              <li><a href="countdown"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13.8" r="7.4"/><path d="M12 9.8v4.2l2.6 1.6M9.3 2.2h5.4M19.4 6.6l1.3-1.3"/></svg></i><span><span data-i18n="nav.countdown">Countdown</span><small data-i18n="nav.countdownSub">Days to any date</small></span></a></li>
             </ul>
           </li>
           <li><a href="contact" data-i18n="nav.contact">Contact</a></li>
@@ -138,7 +140,7 @@
   <div class="wrap">
     <div class="page-hero-inner">
       <nav class="crumbs" aria-label="Breadcrumb">
-        <a href="index" data-i18n="nav.home">Home</a> <span>/</span>
+        <a href="./" data-i18n="nav.home">Home</a> <span>/</span>
         <span data-i18n="nav.tools">Tools</span>
       </nav>
       <h1 data-i18n="tools.h1">Tools 🧰</h1>
@@ -160,14 +162,30 @@
 <section class="section" style="padding-top:clamp(2rem,5vw,3.5rem)">
   <div class="wrap">
     <h2 data-i18n="tools.h2">What is in here</h2>
-    <p style="max-width:70ch;color:var(--ink-500);line-height:1.8" data-i18n="tools.p2">One tool so far. Each one is built because we needed it ourselves — for enrolment dates, term planning and the paperwork that comes with both.</p>
+    <p style="max-width:70ch;color:var(--ink-500);line-height:1.8" data-i18n="tools.p2">Each one is built because we needed it ourselves — for enrolment dates, term planning and the paperwork that comes with both.</p>
 
     <div class="tl-grid">
+      <a class="tl-card" href="calendar">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16" rx="2.5"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4"/><circle cx="8.5" cy="14" r="1.2" fill="currentColor" stroke="none"/><circle cx="15.5" cy="14" r="1.2" fill="currentColor" stroke="none"/><circle cx="12" cy="17.5" r="1.2" fill="currentColor" stroke="none"/></svg></span>
+        <span class="tag" data-i18n="learn.open">Open</span>
+        <h3 data-i18n="tools.calT">Cambodia Holiday Calendar</h3>
+        <p data-i18n="tools.calP">A whole year on one screen with the Cambodian public holidays marked, and the list underneath showing which weekday each falls on. The fixed dates are on the grid; the four that follow the lunar calendar are named separately, because those are set by the annual sub-decree and are not worth guessing. Prints on one page for the office wall.</p>
+        <span class="go"><span data-i18n="tools.openIt">Open the tool</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+
       <a class="tl-card" href="date-calculator">
         <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16" rx="2.5"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4"/><path d="M9 14.5h6M12 11.5v6"/></svg></span>
         <span class="tag" data-i18n="learn.open">Open</span>
         <h3 data-i18n="tools.dcT">Date Calculator</h3>
         <p data-i18n="tools.dcP">What date is 90 days from today? What was the date six months ago? Add or subtract days, weeks, months and years from any date, and see the answer marked on a calendar — with the number of days between the two, the weekday, and a warning when a month is too short to land on the same day number.</p>
+        <span class="go"><span data-i18n="tools.openIt">Open the tool</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+
+      <a class="tl-card" href="countdown">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13.8" r="7.4"/><path d="M12 9.8v4.2l2.6 1.6M9.3 2.2h5.4M19.4 6.6l1.3-1.3"/></svg></span>
+        <span class="tag" data-i18n="learn.open">Open</span>
+        <h3 data-i18n="tools.cdT">Countdown</h3>
+        <p data-i18n="tools.cdP">How many days to Khmer New Year? To the examination, the wedding, the flight? Pick a date and time — or tap one of the Cambodian public holidays and the other dates people count to — and watch the days, hours, minutes and seconds fall away. When it reaches zero the page celebrates properly, and the countdown you set lives in the address bar so you can bookmark it or send the link on.</p>
         <span class="go"><span data-i18n="tools.openIt">Open the tool</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </a>
     </div>
@@ -209,7 +227,7 @@
       <div>
         <h4 data-i18n="foot.explore">Explore</h4>
         <ul class="footer-links">
-          <li><a href="index" data-i18n="nav.home">Home</a></li>
+          <li><a href="./" data-i18n="nav.home">Home</a></li>
           <li><a href="services" data-i18n="nav.services">Services</a></li>
 <li><a href="about" data-i18n="foot.aboutUs">About us</a></li>
           <li><a href="tools" data-i18n="nav.tools">Tools</a></li>
