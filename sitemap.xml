@@ -26,6 +26,15 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.alphaacademycambodia.com/cambridge-lower-secondary-maths-7.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>  <url>
+    <loc>https://www.alphaacademycambodia.com/oxford-maths-pyp-4.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.alphaacademycambodia.com/grade-12-math-formula.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -112,6 +121,11 @@
   </url>
   <url>
     <loc>https://www.alphaacademycambodia.com/khmer-kindergarten.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.alphaacademycambodia.com/khmer-conversational-mastery.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

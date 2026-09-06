@@ -843,7 +843,12 @@ p:last-child { margin-bottom: 0; }
     opacity: 0; visibility: hidden; pointer-events: none;
     transform: translateY(-6px);
     transition: opacity .2s var(--ease), transform .2s var(--ease), visibility .2s;
+    max-height: calc(100vh - 96px); overflow-y: auto; overscroll-behavior: contain;
+    scrollbar-width: thin; scrollbar-color: var(--ink-200) transparent;
   }
+  .sub::-webkit-scrollbar, .sub2::-webkit-scrollbar { width: 8px; }
+  .sub::-webkit-scrollbar-thumb, .sub2::-webkit-scrollbar-thumb { background: var(--ink-200); border-radius: 8px; }
+  .sub::-webkit-scrollbar-track, .sub2::-webkit-scrollbar-track { background: transparent; }
   .sub  { top: calc(100% + .55rem); left: -.4rem; }
   /* keeps the pointer path from the trigger to the panel hoverable */
   .has-sub::after { content: ""; position: absolute; inset: 100% 0 auto; height: .6rem; }

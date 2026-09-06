@@ -24,6 +24,13 @@ grade-12-integral.html
                   Grade 12 integrals — lesson + 18 multiple choice + 10 written, Khmer and English
 grade-12-probability-exercise.html
                   Grade 12 probability — lesson + 108 exercises, Khmer and English
+cambridge-lower-secondary-maths-7.html
+                  Cambridge Lower Secondary Mathematics Stage 7 — all 30 units
+                  and 3 section reviews, each with objectives, a summary, key
+                  terms, worked examples, common mistakes and graded exercises.
+                  540 questions with answers, 171 inline SVG diagrams, progress
+                  tracker, editable notes and a copy/download of the whole guide
+                  with the reader's progress baked in. English (Cambridge syllabus)
 khmer-kindergarten.html
                   Khmer for Kindergarten (ages 4–6) — the 33 consonants with
                   their series, the 23 vowel signs on both series, building
